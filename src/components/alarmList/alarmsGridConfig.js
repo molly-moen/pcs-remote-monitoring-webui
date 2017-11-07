@@ -2,7 +2,7 @@
 
 import React from 'react';
 import lang from '../../common/lang';
-import SeverityCellRenderer from '../cellRenderers/severityCellRenderer/severityCellRenderer';
+import SystemGridCellRenderer from '../cellRenderers/systemGridCellRenderer/systemGridCellRenderer';
 import ElipsisCellRenderer from '../cellRenderers/elipsisCellRenderer/elipsisCellRenderer';
 import { gridValueFormatters } from '../pcsGrid/pcsGridConfig';
 
@@ -22,20 +22,15 @@ export const alarmColumnDefs = {
     headerName: lang.RULENAME,
     field: 'ruleName',
     tooltipField: "ruleName",
-    headerTooltip: lang.RULENAME
+    headerTooltip: lang.RULENAME,
+    width: 800
   },
   severity: {
     headerName: lang.SEVERITY,
     field: 'severity',
     tooltipField: "severity",
     headerTooltip: lang.SEVERITY,
-    cellRendererFramework: SeverityCellRenderer
-  },
-  created: {
-    headerName: lang.CREATED,
-    field: 'created',
-    tooltipField: "created",
-    headerTooltip: lang.CREATED
+    cellRendererFramework: SystemGridCellRenderer
   },
   firmware: {
     headerName: lang.FIRMWARE,
@@ -44,9 +39,10 @@ export const alarmColumnDefs = {
     headerTooltip: lang.FIRMWARE,
   },
   occurrences: {
-    headerName: lang.OPENOCCURRENCES,
+    headerName: lang.OPEN,
     field: 'occurrences',
     tooltipField: "occurrences",
+    cellStyle: {'padding-left':'15px'},
     headerTooltip: lang.OPENOCCURRENCES,
     valueFormatter: ({ value }) => checkForEmpty(value)
   },
