@@ -2,7 +2,7 @@
 
 import React from 'react';
 import lang from '../../common/lang';
-import SystemGridCellRenderer from '../cellRenderers/systemGridCellRenderer/systemGridCellRenderer';
+import SeverityCellRenderer from '../cellRenderers/severityCellRenderer/severityCellRenderer';
 import ElipsisCellRenderer from '../cellRenderers/elipsisCellRenderer/elipsisCellRenderer';
 import { gridValueFormatters } from '../pcsGrid/pcsGridConfig';
 
@@ -30,7 +30,7 @@ export const alarmColumnDefs = {
     field: 'severity',
     tooltipField: "severity",
     headerTooltip: lang.SEVERITY,
-    cellRendererFramework: SystemGridCellRenderer
+    cellRendererFramework: SeverityCellRenderer
   },
   firmware: {
     headerName: lang.FIRMWARE,
