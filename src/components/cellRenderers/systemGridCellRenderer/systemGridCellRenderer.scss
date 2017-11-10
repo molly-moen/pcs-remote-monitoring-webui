@@ -1,0 +1,13 @@
+// Copyright (c) Microsoft. All rights reserved.
+
+$iconSize: 12px;
+
+.pcs-renderer-cell.severity {
+
+  .pcs-renderer-icon {
+    width: $iconSize;
+    height: $iconSize;
+    margin-top: 15px;
+    margin-left: 20px;
+  }
+}

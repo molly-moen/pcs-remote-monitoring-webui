@@ -2,7 +2,7 @@
 
 import React from 'react';
 import lang from '../../common/lang';
-import SeverityCellRenderer from '../cellRenderers/severityCellRenderer/severityCellRenderer';
+import systemGridCellRenderer from '../cellRenderers/systemGridCellRenderer/systemGridCellRenderer';
 import ElipsisCellRenderer from '../cellRenderers/elipsisCellRenderer/elipsisCellRenderer';
 import { gridValueFormatters } from '../pcsGrid/pcsGridConfig';
 
@@ -30,7 +30,8 @@ export const alarmColumnDefs = {
     field: 'severity',
     tooltipField: "severity",
     headerTooltip: lang.SEVERITY,
-    cellRendererFramework: SeverityCellRenderer
+    width: 300,
+    cellRendererFramework: systemGridCellRenderer
   },
   firmware: {
     headerName: lang.FIRMWARE,
@@ -47,10 +48,11 @@ export const alarmColumnDefs = {
     valueFormatter: ({ value }) => checkForEmpty(value)
   },
   explore: {
-    headerName: lang.EXPLOREALARM,
+    headerName: lang.EXPLORE,
     field: 'Connected',
     tooltipField: "Connected",
     headerTooltip: lang.EXPLOREALARM,
+    width: 300,
     cellRendererFramework: ({ data }) => <ElipsisCellRenderer to={`/maintenance/rule/${data.ruleId}`} />
   }
 };
