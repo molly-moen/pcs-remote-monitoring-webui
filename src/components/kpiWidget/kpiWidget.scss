@@ -67,6 +67,9 @@ $titleRowHeight: 36px;
     font-size: 14px;
     padding-top: 5px;
     padding-left: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .pie-line-chart { border-top: 1px solid #000; }
@@ -81,11 +84,20 @@ $titleRowHeight: 36px;
     border-right: 1px solid #000;
   }
 
+  #pieChart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .percentage-critical {
     margin-top: 40px;
     display: flex;
     align-items: center;
     color: $white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     .percentage { display: inline-block; }
 
@@ -110,6 +122,9 @@ $titleRowHeight: 36px;
     padding-bottom: 19px;
     padding-top: 20px;
     fill: $white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .c3 .c3-axis path,
