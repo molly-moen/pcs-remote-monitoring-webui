@@ -84,7 +84,7 @@ $titleRowHeight: 36px;
     border-right: 1px solid #000;
   }
 
-  #pieChart {
+  #pieChart ,.percentage-critical, .bar-chart {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -95,9 +95,6 @@ $titleRowHeight: 36px;
     display: flex;
     align-items: center;
     color: $white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
     .percentage { display: inline-block; }
 
@@ -122,9 +119,6 @@ $titleRowHeight: 36px;
     padding-bottom: 19px;
     padding-top: 20px;
     fill: $white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   .c3 .c3-axis path,
