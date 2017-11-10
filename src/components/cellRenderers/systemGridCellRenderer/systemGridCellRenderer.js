@@ -23,7 +23,7 @@ class SeverityCellRenderer extends React.Component {
 
     return (
       <div className={cellClasses}>
-        <img src={svg} className="pcs-renderer-icon" alt='Connection Status Icon' />
+        <img src={svg} className="pcs-system-renderer-icon" alt='Connection Status Icon' />
       </div>
     );
   }
