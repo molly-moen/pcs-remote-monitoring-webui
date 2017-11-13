@@ -12,6 +12,7 @@ import './severityCellRenderer.css'
 class SeverityCellRenderer extends React.Component {
   render() {
     const value = this.props.value.toLowerCase();
+    console.log(this.props, "value");
     const cellClasses = `pcs-renderer-cell severity ${value && 'highlight'}`;
 
     let svg = InfoSvg;
@@ -24,9 +25,10 @@ class SeverityCellRenderer extends React.Component {
     return (
       <div className={cellClasses}>
         <img src={svg} className="pcs-renderer-icon" alt='Connection Status Icon' />
-        <div className="pcs-renderer-text">
-          {value}
-        </div>
+        {this.props.colDef.hideSeverityValue ?
+         null : <div className="pcs-renderer-text">
+           {value}
+         </div>}
       </div>
     );
   }

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import lang from '../../common/lang';
-import systemGridCellRenderer from '../cellRenderers/systemGridCellRenderer/systemGridCellRenderer';
+import severityCellRenderer from '../cellRenderers/severityCellRenderer/severityCellRenderer';
 import ElipsisCellRenderer from '../cellRenderers/elipsisCellRenderer/elipsisCellRenderer';
 import { gridValueFormatters } from '../pcsGrid/pcsGridConfig';
 
@@ -28,10 +28,12 @@ export const alarmColumnDefs = {
   severity: {
     headerName: lang.SEVERITY,
     field: 'severity',
+    hideSeverityValue: true,
     tooltipField: "severity",
+    cellStyle: {'padding-top': '10px', 'padding-left':'25px'},
     headerTooltip: lang.SEVERITY,
     width: 300,
-    cellRendererFramework: systemGridCellRenderer
+    cellRendererFramework: severityCellRenderer
   },
   firmware: {
     headerName: lang.FIRMWARE,
@@ -44,6 +46,7 @@ export const alarmColumnDefs = {
     field: 'occurrences',
     tooltipField: "occurrences",
     cellStyle: {'padding-left':'15px'},
+    width: 300,
     headerTooltip: lang.OPENOCCURRENCES,
     valueFormatter: ({ value }) => checkForEmpty(value)
   },
