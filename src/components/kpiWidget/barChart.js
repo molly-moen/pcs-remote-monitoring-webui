@@ -91,7 +91,7 @@ const sortByCount = (alpha, beta) => {
 };
 
 const getBarChartData = (state, ownProps) => {
-  if (!state.deviceReducer || !state.deviceReducer.devices || !state.kpiReducer || !state.kpiReducer.alarmsByRule) {
+  if (!state.deviceReducer || !state.deviceReducer.devices || !state.kpiReducer || !state.kpiReducer.alarmsByRule ||!state.ruleReducer.rulesAndActions) {
     return [];
   }
   const alarmsByRule = state.kpiReducer.alarmsByRule || [];

@@ -41,18 +41,11 @@ export const notShowingRulesPage = () => {
 export const loadRulesList = groupId => {
   return (dispatch, getState) => {
     const state = getState();
-    return state.filterReducer.selectedDeviceGroupId === "default_AllDevices"
-      ? DeviceTelemetryService.getRuleList()
+    return DeviceTelemetryService.getRuleList()
          .then(data => dispatch(loadRulesSuccess(data)))
          .catch(error => {
            dispatch(loadRulesFailed(error));
            throw error;
-         })
-      : DeviceTelemetryService.getRuleList({groupId: state.filterReducer.selectedDeviceGroupId})
-          .then(data => dispatch(loadRulesSuccess(data)))
-          .catch(error => {
-            dispatch(loadRulesFailed(error));
-            throw error;
-          });
+         });
    };
 };
