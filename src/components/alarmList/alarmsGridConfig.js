@@ -30,7 +30,7 @@ export const alarmColumnDefs = {
     field: 'severity',
     hideSeverityValue: true,
     tooltipField: "severity",
-    cellStyle: {'padding-top': '10px', 'padding-left':'25px'},
+    cellStyle: {'padding-top': '15px', 'padding-left':'25px'},
     headerTooltip: lang.SEVERITY,
     width: 300,
     cellRendererFramework: severityCellRenderer
