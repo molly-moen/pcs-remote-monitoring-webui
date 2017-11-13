@@ -39,8 +39,7 @@ export const notShowingRulesPage = () => {
 };
 
 export const loadRulesList = groupId => {
-  return (dispatch, getState) => {
-    const state = getState();
+  return dispatch => {
     return DeviceTelemetryService.getRuleList()
          .then(data => dispatch(loadRulesSuccess(data)))
          .catch(error => {
