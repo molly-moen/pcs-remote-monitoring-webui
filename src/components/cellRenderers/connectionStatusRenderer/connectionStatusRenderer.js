@@ -15,7 +15,7 @@ class ConnectionStatusRenderer extends React.Component {
 
     return (
       <div className={cellClasses}>
-        <img src={value ? EnabledSvg : DisabledSvg} className="pcs-renderer-icon" alt='Connection Status Icon' />
+        {value ? null :<img src={DisabledSvg} className="pcs-renderer-icon" alt='Connection Status Icon'/>}
         <div className="pcs-renderer-text">
           {value ? lang.CONNECTED : lang.OFFLINE}
         </div>
