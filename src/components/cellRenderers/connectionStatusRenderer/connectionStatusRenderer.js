@@ -3,7 +3,6 @@
 import React from "react";
 import lang from "../../../common/lang";
 
-import EnabledSvg from '../../../assets/icons/Enabled.svg';
 import DisabledSvg from '../../../assets/icons/Disabled.svg';
 
 import '../cellRenderer.css'
