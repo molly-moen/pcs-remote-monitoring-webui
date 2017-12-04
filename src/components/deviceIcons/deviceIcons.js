@@ -9,6 +9,8 @@ import TruckSvg from '../../assets/icons/Truck.svg';
 import PrototypingDeviceSvg from '../../assets/icons/PrototypingDevice.svg';
 import DeviceIconSvg from '../../assets/icons/DeviceIcon.svg';
 
+import './deviceIcons.css';
+
 class DeviceIcons extends React.Component {
   render() {
     const value = this.props.content.device.Properties.Reported.Type;
