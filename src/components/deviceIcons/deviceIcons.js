@@ -9,14 +9,12 @@ import TruckSvg from '../../assets/icons/Truck.svg';
 import PrototypingDeviceSvg from '../../assets/icons/PrototypingDevice.svg';
 import DeviceIconSvg from '../../assets/icons/DeviceIcon.svg';
 
-import './deviceIcons.css';
-
 class DeviceIcons extends React.Component {
   render() {
     const value = this.props.content.device.Properties.Reported.Type;
 		console.log(this.props.content.device.Properties.Reported.Type, 'props needed');
 
-    let svg = DeviceIconSvg;
+    let svg;
     if (value === 'Chiller') {
         svg = ChillerSvg;
     } else if (value === 'Elevator') {
@@ -27,13 +25,11 @@ class DeviceIcons extends React.Component {
         svg = PrototypingDeviceSvg;
 		} else if (value === 'Truck') {
         svg = TruckSvg;
-		}
+		} else {
+        svg = DeviceIconSvg;
+    }
 
-    return (
-      <div>
-        <img src={svg} className="device-renderer-icon" alt='Device Icon' />
-      </div>
-    );
+    return <img src={svg} className="device-renderer-icon" alt='Device Icon' />
   }
 }
 
