@@ -163,19 +163,17 @@ class DeviceScheduleFlyout extends React.Component {
                         value={this.state.firmwareURIValue}
                       />
                     </div>}
-                    <SummarySection count={devices.length} content={lang.AFFECTED_DEVICES} />
+                    <SummarySection count={devices.length} content={this.state.jobApplied ? lang.DEVICE_SCHEDULED: lang.AFFECTED_DEVICES} />
                 </div>}
-              <div className="btn-group">
-                <PcsBtn svg={CancelX} onClick={this.props.onClose}>{lang.CANCEL}</PcsBtn>
-                {this.state.showSpinner && <Spinner size="medium" />}
-                {this.state.jobApplied
-                  ? <PcsBtn svg={Apply} disabled>{lang.APPLIED}</PcsBtn>
-                  : <PcsBtn svg={Apply}
-                      className="primary"
-                      onClick={this.onConfirm}
-                      disabled={disabledButton}>{lang.APPLY}</PcsBtn>
-                }
-              </div>
+              {this.state.jobApplied ? null :
+                <div className="btn-group">
+                  <PcsBtn svg={CancelX} onClick={this.props.onClose}>{lang.CANCEL}</PcsBtn>
+                  {this.state.showSpinner && <Spinner size="medium" />}
+                  <PcsBtn svg={Apply}
+                        className="primary"
+                        onClick={this.onConfirm}
+                        disabled={disabledButton}>{lang.APPLY}</PcsBtn>
+                </div> }
             </div>
           : <div className="device-schdule-content">
               <div className="content-title">
