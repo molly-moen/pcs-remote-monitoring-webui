@@ -8,7 +8,7 @@ import Rx from 'rxjs';
 
 import Drawer from './drawer';
 import JsonViewer from '../jsonViewer/jsonViewer';
-import DeviceIcon from '../../assets/icons/DeviceIcon1.svg';
+import DeviceIcons from '../deviceIcons/deviceIcons.js';
 import lang from '../../common/lang';
 import ApiService from '../../common/apiService';
 import Timeline from '../charts/timeline';
@@ -463,7 +463,7 @@ class DeviceDetailFlyout extends Component {
         <div className="device-detail-tile">
           <div className="device-detail">
             <div className="device-icon">
-              <img src={DeviceIcon} height="72" alt={`${DeviceIcon}`} />
+              <DeviceIcons {...this.props} />
             </div>
             <div>
               <div className="device-name">
