@@ -13,22 +13,21 @@ import './deviceIcons.css';
 
 class DeviceIcons extends React.Component {
   render() {
-    const value = this.props.content.device.Properties.Reported.Type;
-		console.log(this.props.content.device.Properties.Reported.Type, 'props needed');
+    const deviceType = this.props.content.device.Properties.Reported.Type;
 
     let svg;
-    if (value === 'Chiller') {
-        svg = ChillerSvg;
-    } else if (value === 'Elevator') {
-        svg = ElevatorSvg;
-    } else if (value === 'Engine') {
-        svg = EngineSvg;
-		} else if (value === 'Prototyping') {
-        svg = PrototypingDeviceSvg;
-		} else if (value === 'Truck') {
-        svg = TruckSvg;
+    if (deviceType === 'Chiller') {
+       svg = ChillerSvg;
+    } else if (deviceType === 'Elevator') {
+       svg = ElevatorSvg;
+    } else if (deviceType === 'Engine') {
+       svg = EngineSvg;
+		} else if (deviceType === 'Prototyping') {
+       svg = PrototypingDeviceSvg;
+		} else if (deviceType === 'Truck') {
+       svg = TruckSvg;
 		} else {
-        svg = DeviceIconSvg;
+       svg = DeviceIconSvg;
     }
 
     return <img src={svg} className="device-renderer-icon" alt='Device Icon' />
