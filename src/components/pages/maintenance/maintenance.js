@@ -87,7 +87,7 @@ class MaintenancePage extends Component {
   }
 
   componentDidMount() {
-    const deviceIds = ((this.props.devices || {}).items || []).map(({Id}) => Id) || [];
+    const deviceIds = ((this.props.devices || {}).Items || []).map(({Id}) => Id) || [];
     this.props.actions.loadMaintenanceData({
       from: `NOW-${this.state.timerange}`,
       to: 'NOW',
@@ -102,7 +102,7 @@ class MaintenancePage extends Component {
   }
 
   refreshData() {
-    const deviceIds = ((this.props.devices || {}).items || []).map(({Id}) => Id) || [];
+    const deviceIds = ((this.props.devices || {}).Items || []).map(({Id}) => Id) || [];
     this.props.actions.loadMaintenanceData({
       from: `NOW-${this.state.timerange}`,
       to: 'NOW',
@@ -253,8 +253,8 @@ class MaintenancePage extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { devices } = nextProps;
-    if (devices && devices.items.length && !_.isEqual(devices, this.props.devices)) {
-      const deviceIds = devices.items.map(({Id}) => Id);
+    if (devices && devices.Items.length && !_.isEqual(devices, this.props.devices)) {
+      const deviceIds = devices.Items.map(({Id}) => Id);
       this.props.actions.loadMaintenanceData({
         from: `NOW-${this.state.timerange}`,
         to: 'NOW',
@@ -287,8 +287,8 @@ class MaintenancePage extends Component {
   onDeviceJobSoftSelectChange({deviceId}) {
     const selectedDeviceIdInJob = deviceId;
     let deviceJob;
-    if (!this.props.devices || !this.props.devices.items) { return false; }
-    this.props.devices.items.some(device => {
+    if (!this.props.devices || !this.props.devices.Items) { return false; }
+    this.props.devices.Items.some(device => {
       if (device.Id === selectedDeviceIdInJob) {
         deviceJob = device;
         return true;

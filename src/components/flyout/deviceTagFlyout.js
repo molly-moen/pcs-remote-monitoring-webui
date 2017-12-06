@@ -58,7 +58,7 @@ class DeviceTagFlyout extends React.Component {
       commonTagTypes: [],
       showCreateFilter: false,
       jobApplied: false,
-      jobId: ''
+      JobId: ''
     };
     this.addNewTag = this.addNewTag.bind(this);
     this.deleteExistingTag = this.deleteExistingTag.bind(this);
@@ -153,12 +153,12 @@ class DeviceTagFlyout extends React.Component {
     const jobs = getRelatedJobs(devices, twinUpdateJobs);
     const deviceIdSet = new Set(devices.map(({Id}) => Id));
     Rx.Observable.from(jobs)
-      .flatMap(({ jobId, deviceIds }) =>
+      .flatMap(({ JobId, deviceIds }) =>
         Rx.Observable
-          .fromPromise(ApiService.getJobStatus(jobId))
+          .fromPromise(ApiService.getJobStatus(JobId))
           // Get completed jobs
           .filter(({ status }) => status === 3)
-          .do(_ => this.props.actions.removeTwinJob(jobId))
+          .do(_ => this.props.actions.removeTwinJob(JobId))
           .flatMap(_ => deviceIds)
       )
       .distinct()
@@ -196,7 +196,7 @@ class DeviceTagFlyout extends React.Component {
 
     this.setState({ newTags: [], overiddenDeviceTagValues }, () => this.computeState(this.props));
     const devices = _.cloneDeep(this.props.devices);
-    devices.forEach(device => (device.Etag = deviceETags[device.Id] ? deviceETags[device.Id] : device.Etag));
+    devices.forEach(device => (device.ETag = deviceETags[device.Id] ? deviceETags[device.Id] : device.ETag));
     this.props.actions.deviceListCommonTagsValueChanged(devices, overiddenDeviceTagValues);
   }
 
@@ -242,15 +242,15 @@ class DeviceTagFlyout extends React.Component {
       }
     };
     this.setState({ showSpinner: true });
-    ApiService.scheduleJobs(payload).then(({ jobId }) => {
+    ApiService.scheduleJobs(payload).then(({ JobId }) => {
         this.props.actions.updateTwinJobs({
-          jobId,
+          JobId,
           deviceIds : devices.map(({ Id }) => Id)
         });
         this.setState({
           showSpinner: false,
           jobApplied: true,
-          jobId
+          JobId
         })
       }
     );
@@ -360,7 +360,7 @@ class DeviceTagFlyout extends React.Component {
 
   render() {
     const deepLinkSectionProps = {
-      path: `/maintenance/job/${this.state.jobId}`,
+      path: `/maintenance/job/${this.state.JobId}`,
       description: lang.VIEW_JOB_STATUS,
       linkText: lang.VIEW
     };
