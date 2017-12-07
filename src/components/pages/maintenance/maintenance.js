@@ -274,11 +274,11 @@ class MaintenancePage extends Component {
         const { Devices } = jobDetails;
         const systemStatusDetailsDevices = Devices.map(device => ({
           deviceId: device.DeviceId,
-          startTimeUtc: device.StartTimeUtc,
-          status: device.Status,
-          endTimeUtc: device.EndTimeUtc,
+          StartTimeUtc: device.StartTimeUtc,
+          Status: device.Status,
+          EndTimeUtc: device.EndTimeUtc,
           JobId: jobDetails.JobId,
-          methodName: (jobDetails.methodParameter || {}).name || ''
+          methodName: (jobDetails.MethodParameter || {}).Name || ''
         }));
         this.setState({ systemStatusDetailsDevices, jobDetails });
       });
