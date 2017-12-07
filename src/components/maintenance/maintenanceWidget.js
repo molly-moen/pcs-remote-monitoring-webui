@@ -22,8 +22,8 @@ class MaintenanceWidget extends Component {
     this.selectGrid = this.selectGrid.bind(this);
   }
 
-  onSoftSelectChange({ jobId }) {
-    browserHistory.push({ pathname: `/maintenance/job/${jobId}`});
+  onSoftSelectChange({ JobId }) {
+    browserHistory.push({ pathname: `/maintenance/job/${JobId}`});
   }
 
   selectGrid(e) {

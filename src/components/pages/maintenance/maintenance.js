@@ -266,10 +266,10 @@ class MaintenancePage extends Component {
 
   // Retrieving the deviceIds from "queryCondition": "deviceId in ['Simulated.prototype-01.0','Simulated.prototype-01.1']".
   selectJobAndSetState(props) {
-    if (!props.params || !props.params.jobId) {
+    if (!props.params || !props.params.JobId) {
       return;
     }
-    ApiService.getJobStatus(props.params.jobId)
+    ApiService.getJobStatus(props.params.JobId)
       .then(jobDetails => {
         const { Devices } = jobDetails;
         const systemStatusDetailsDevices = Devices.map(device => ({
@@ -277,7 +277,7 @@ class MaintenancePage extends Component {
           startTimeUtc: device.StartTimeUtc,
           status: device.Status,
           endTimeUtc: device.EndTimeUtc,
-          jobId: jobDetails.jobId,
+          JobId: jobDetails.JobId,
           methodName: (jobDetails.methodParameter || {}).name || ''
         }));
         this.setState({ systemStatusDetailsDevices, jobDetails });
@@ -344,14 +344,14 @@ class MaintenancePage extends Component {
     });
       breadcrumbs = <span>{parentLink} <img src={ChevronRight} alt="ChevronRight" className="chevron-right" /> {this.props.params.name}</span>;
     } else if (pathName.indexOf('/job/') > 0) {
-      breadcrumbs = <span>{parentLink} <img src={ChevronRight} alt="ChevronRight" className="chevron-right" />{this.props.params.jobId}</span>;
+      breadcrumbs = <span>{parentLink} <img src={ChevronRight} alt="ChevronRight" className="chevron-right" />{this.props.params.JobId}</span>;
     } else {
       breadcrumbs = lang.MAINTENANCE;
     }
     const pcsBtn = (props, visible = true) => visible ? <PcsBtn {...props} /> : '';
     const showContextBtns = this.state.contextBtns === '';
     const showActionBtns = this.state.selectedRulesActions.length > 0;
-    const devicesList = this.props.devices && this.props.devices.items ? this.props.devices.items : [];
+    const devicesList = this.props.devices && this.props.devices.Items ? this.props.devices.Items : [];
     const alarmListProps = {
       alarms: (this.props.alarmsGridData || [])
         .map(row => row[row.Rule.Id])
