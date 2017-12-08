@@ -154,7 +154,7 @@ class RuleEditor extends React.Component {
         this.props.deviceGroups.forEach(group => {
             if (group.Id === groupId) {
                 ApiService.getDevicesForGroup(group.Conditions).then((data) => {
-                    if (data && data.items) {
+                    if (data && data.Items) {
                         this.setState({ deviceCount: data.Items.length });
                         this.setState({ conditionFields: this.getConditionFields(data.Items) });;
                     }
