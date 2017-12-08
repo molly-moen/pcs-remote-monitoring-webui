@@ -17,15 +17,15 @@ class RuleOverviewFlyout extends Component {
         };
     }
 
-    onToggleStatus = () => {
-        this.setState({enabled: !this.state.enabled});
-    };
-
     onSave = () => {
         let promises = [];
         let updatedRules = [];
         this.props.rules.forEach(rule => {
-            if (rule.Enabled !== this.state.enabled) {
+            if (rule.Enabled === this.state.enabled) {
+                rule.Enabled = !this.state.enabled;
+                updatedRules.push(rule);
+                promises.push(ApiService.updateRule(rule.Id, rule));
+            } else {
                 rule.Enabled = this.state.enabled;
                 updatedRules.push(rule);
                 promises.push(ApiService.updateRule(rule.Id, rule));
@@ -64,10 +64,8 @@ class RuleOverviewFlyout extends Component {
                 <div className="clearfix"/>
                 <div className="rule-overview-header">
                     <div className="toggle-button">
-                        <div onClick={this.onToggleStatus}
-                             className={`icon ${!this.state.enabled ? 'icon-enable' : 'icon-disable'}`}/>
-                        <div
-                            className="text">{this.state.enabled ? lang.ENABLESELECTEDRULE : lang.DISABLESELECTEDRULE}</div>
+                        <div className={`icon ${this.state.enabled ? 'icon-disable': 'icon-enable'}`}/>
+                        <div className="text">{this.state.enabled ?  lang.DISABLESELECTEDRULE : lang.ENABLESELECTEDRULE}</div>
                     </div>
                 </div>
                 <div className="divider"/>
@@ -96,4 +94,3 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, null)(RuleOverviewFlyout);
-
