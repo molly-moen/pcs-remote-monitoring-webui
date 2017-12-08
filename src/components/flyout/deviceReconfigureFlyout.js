@@ -194,7 +194,7 @@ class DeviceReconfigureFlyout extends React.Component {
     const payload = {
       JobId: this.state.jobInputValue ? this.state.jobInputValue + '-' + uuid() : uuid(),
       QueryCondition: `deviceId in [${deviceIds}]`,
-      updateTwin: {
+      UpdateTwin: {
         Properties: {
           Desired: reportedProps
         }

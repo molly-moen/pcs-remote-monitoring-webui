@@ -225,20 +225,20 @@ class DeviceTagFlyout extends React.Component {
     const { devices } = this.props;
     const { newTags, deletedTagNames, commonTagValues } = this.state;
     const deviceIds = devices.map(({ Id }) => `'${Id}'`).join(',');
-    const tags = {
+    const Tags = {
       ...commonTagValues,
       ...deletedTagNames,
     };
 
     newTags.forEach(tag => {
-      tags[tag.name] = tag.value;
+      Tags[tag.name] = tag.value;
     });
     const payload = {
       JobId: this.state.jobInputValue ? this.state.jobInputValue + '-' + uuid(): uuid(),
       QueryCondition: `deviceId in [${deviceIds}]`,
       MaxExecutionTimeInSeconds: 0,
-      updateTwin: {
-        tags
+      UpdateTwin: {
+        Tags
       }
     };
     this.setState({ showSpinner: true });
