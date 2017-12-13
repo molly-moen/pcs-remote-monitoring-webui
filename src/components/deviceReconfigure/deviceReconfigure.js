@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../actions/actionTypes';
-import Reconfigure from '../../assets/icons/Reconfigure.svg';
+import Reconfigure from '../../assets/icons/ReconfigureNew.svg';
 import lang from '../../common/lang';
 import './deviceReconfigure.css';
 

@@ -13,7 +13,7 @@ import PcsBtn from '../shared/pcsBtn/pcsBtn';
 
 import TagSvg from '../../assets/icons/Tag.svg';
 import ScheduleSvg from '../../assets/icons/Schedule.svg';
-import ReconfigureSvg from '../../assets/icons/Reconfigure.svg';
+import ReconfigureSvg from '../../assets/icons/ReconfigureNew.svg';
 import DeleteSvg from '../../assets/icons/Trash.svg';
 
 import './devicesGrid.css';
