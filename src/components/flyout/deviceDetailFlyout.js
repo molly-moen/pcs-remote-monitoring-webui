@@ -8,7 +8,7 @@ import Rx from 'rxjs';
 
 import Drawer from './drawer';
 import JsonViewer from '../jsonViewer/jsonViewer';
-import DeviceIcons from '../deviceIcons/deviceIcons.js';
+import DeviceIcons from '../deviceIcons/deviceIcons';
 import lang from '../../common/lang';
 import ApiService from '../../common/apiService';
 import Timeline from '../charts/timeline';
