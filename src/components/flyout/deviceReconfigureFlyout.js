@@ -307,17 +307,17 @@ class DeviceReconfigureFlyout extends React.Component {
         </div>
         {this.commonReconfigure()}
         <SummarySection count={totalAffectedDevices} content={this.state.jobApplied ? lang.DEVICES_RECONFIGURED : lang.AFFECTED_DEVICES} />
-        {this.state.jobApplied ? null :
+        {!this.state.jobApplied &&
           <div className="btn-container">
             <PcsBtn svg={CancelX} value={lang.CANCEL} onClick={this.props.onClose} />
             {this.state.showSpinner && <Spinner size="medium" />}
             <PcsBtn
-                  className="primary"
-                  svg={Apply}
-                  value={lang.APPLY}
-                  disabled={disabledButton}
-                  onClick={this.applyDeviceConfigureJobsData}
-                />
+              className="primary"
+              svg={Apply}
+              value={lang.APPLY}
+              disabled={disabledButton}
+              onClick={this.applyDeviceConfigureJobsData}
+            />
           </div> }
         {this.state.jobApplied ? <DeepLinkSection {...deepLinkSectionProps}/> : null}
       </div>

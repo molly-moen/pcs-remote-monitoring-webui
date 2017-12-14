@@ -421,7 +421,7 @@ class DeviceTagFlyout extends React.Component {
             </div>}
 
         <SummarySection count={totalAffectedDevices} content={this.state.jobApplied ? lang.DEVICES_TAGGED : lang.AFFECTED_DEVICES} />
-        {this.state.jobApplied ? null :
+        {!this.state.jobApplied &&
           <div className="button-container">
             <PcsBtn svg={CancelX} onClick={this.props.onClose}>{lang.CANCEL}</PcsBtn>
             {this.state.showSpinner && <Spinner size="medium" />}
