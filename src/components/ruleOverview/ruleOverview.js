@@ -65,7 +65,7 @@ class RuleOverviewFlyout extends Component {
                 <div className="rule-overview-header">
                     <div className="toggle-button">
                         <div className={`icon ${this.state.enabled ? 'icon-disable': 'icon-enable'}`}/>
-                        <div className="text">{this.state.enabled ?  lang.DISABLESELECTEDRULE : lang.ENABLESELECTEDRULE}</div>
+                        <div className="text">{this.state.enabled ? lang.DISABLESELECTEDRULE : lang.ENABLESELECTEDRULE}</div>
                     </div>
                 </div>
                 <div className="divider"/>
