@@ -487,7 +487,7 @@ class DeviceDetailFlyout extends Component {
               </div>
             </div>
           </div>
-          <div className="spinner-onalarmGrid">{ this.state.showSpinner && <Spinner size="large"/>}</div>
+          <div className="spinner-onalarmGrid">{this.state.showSpinner && <Spinner size="large"/>}</div>
           {
             this.state.showAlarmsGrid &&
             <div className="device-alarm-list">
@@ -496,7 +496,7 @@ class DeviceDetailFlyout extends Component {
           }
         </div>
         <Drawer toggle={true} title={lang.TELEMETRY}>
-          <div className="spinner-onalarmGrid">{ this.state.showSpinner && <Spinner size="large"/>}</div>
+          <div className="spinner-onalarmGrid">{this.state.showSpinner && <Spinner size="large"/>}</div>
           <div>
             {telemetryRadioBtnGroup}
           </div>
