@@ -86,7 +86,8 @@ class DevicesPage extends Component {
             </div>
             <div onClick={this.refreshData} className="refresh-icon icon-sm" />
           </div>
-          <DevicesGrid {...deviceGridProps} />
+          {devices &&
+          <DevicesGrid {...deviceGridProps} pagination={(devices|| []).length > 50 ? true :  false}/>}
         </PageContent>
       </PageContainer>
     );

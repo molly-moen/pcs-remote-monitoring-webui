@@ -65,7 +65,6 @@ export const getSoftSelectId = ({ Id }) => Id;
 export const defaultDeviceGridProps = {
   enableColResize: true,
   multiSelect: true,
-  pagination: true,
   paginationPageSize: DEFAULT_DEVICE_GRID_PAGE_SIZE,
   rowSelection: 'multiple'
 };

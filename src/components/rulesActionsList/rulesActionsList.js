@@ -54,9 +54,11 @@ class RulesActionsList extends Component {
       ...this.props,
       onGridReady: this.onGridReady
     };
+    
     return (
       <div className="rules-actions-container">
-        <PcsGrid {...gridProps} />
+        {(this.props.rowData || []).length > 0 &&
+        <PcsGrid {...gridProps} pagination= {(this.props.rowData || []).length > 50 ? true : false}/>}
       </div>
     )
   }

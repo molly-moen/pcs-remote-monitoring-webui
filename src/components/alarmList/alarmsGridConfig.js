@@ -8,7 +8,7 @@ import { gridValueFormatters } from '../pcsGrid/pcsGridConfig';
 
 const { checkForEmpty } = gridValueFormatters;
 
-export const DEFAULT_ALARM_GRID_PAGE_SIZE = 8;
+export const DEFAULT_ALARM_GRID_PAGE_SIZE = 5;
 
 export const checkboxParams = {
   headerCheckboxSelection: true,
@@ -67,7 +67,6 @@ export const getSoftSelectId = ({ Id }) => Id;
 export const defaultAlarmGridProps = {
   enableColResize: true,
   multiSelect: true,
-  pagination: true,
   paginationPageSize: DEFAULT_ALARM_GRID_PAGE_SIZE,
   rowSelection: 'multiple'
 };

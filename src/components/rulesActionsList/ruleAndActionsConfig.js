@@ -9,6 +9,8 @@ import lang from "../../common/lang";
 
 export const LastTriggerDefaultWidth = 310;
 
+export const DEFAULT_RULES_GRID_PAGE_SIZE = 50;
+
 export const checkboxParams = {
   headerCheckboxSelection: true,
   headerCheckboxSelectionFilteredOnly: true,
@@ -79,6 +81,5 @@ export const defaultRulesAndActionsGridProps = {
   suppressCellSelection: true,
   suppressClickEdit: true,
   suppressRowClickSelection: true,
-  pagination: true,
-  paginationPageSize: 50
+  paginationPageSize: DEFAULT_RULES_GRID_PAGE_SIZE,
 };
