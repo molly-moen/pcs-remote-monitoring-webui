@@ -224,7 +224,7 @@ class ManageFiltersFlyout extends React.Component {
 
     return (
       <div className="editable-filters">
-        <div>
+        <div className="editable-filters-wrapper">
           <label>
             <div className="label-names">
               {lang.FILTERNAME}
@@ -368,7 +368,7 @@ class ManageFiltersFlyout extends React.Component {
                   type="button"
                   className="add-condition"
                 >
-                  <img src={Remove} alt={`${Remove}`} className="Remove-icon" />
+                  <img src={CancelX} alt={`${CancelX}`} className="cancel-icon" />
                   {lang.REMOVECONDITIONS}
                 </button>
               </div>
@@ -486,7 +486,7 @@ class ManageFiltersFlyout extends React.Component {
     const newGroupObj = deviceGroups[0];
     return (
       <div className="manage-filter-container">
-        <div onClick={() => this.setState({ showCreateFilter: true })} className="create-filter">
+        <div onClick={() => this.setState({ showCreateFilter: true })} className="create-filter groupname-icons">
           <img src={Add} alt={`${Add}`} className="add-icon" />
           {lang.CREATEFILTER}
         </div>

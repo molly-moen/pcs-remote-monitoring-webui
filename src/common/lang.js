@@ -56,7 +56,7 @@ const lang = {
   CREATE: 'Create',
   CREATED: 'Created',
   CREATEDEVICE: 'Create device',
-  CREATEFILTER: 'Create Filter',
+  CREATEFILTER: 'Create new filter',
   CRITICAL: 'Critical',
   CRITICALALARM: 'Critical Alarms',
   CURRENTDAY: 'Current day',

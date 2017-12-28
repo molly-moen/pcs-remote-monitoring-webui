@@ -1,10 +1,14 @@
+// Copyright (c) Microsoft. All rights reserved.
+
+@import '../../styles/variables/colors';
+
 .manage-filter-container {
   overflow: auto;
 
   .flyout-footer {
     display: flex;
     justify-content: flex-end;
-    margin-top: 20px;
+    margin-top: 48px;
 
     .pcs-btn {
       height: 30px;
@@ -13,6 +17,8 @@
   }
 
   .create-filter {
+    margin-top: 20px;
+    margin-bottom: 48px !important;
     padding: 10px 0px 10px 16px;
     cursor: pointer;
   }
@@ -26,11 +32,14 @@
     }
   }
 
+  .group-filter-wrapper { margin-bottom: 48px; }
+
   .groupname-icons {
-    padding: 5px 24px 5px 16px;
+    height: 40px;
+    padding: 12px 16px 12px 16px;
     font-size: 12px;
-    margin: 0px 5px 8px 5px;
-    background-color: #1b1d1f;
+    margin-bottom: 8px;
+    background-color: $gridTileDark;
 
     .edit-delete-icons {
       float: right;
@@ -56,21 +65,28 @@
 
 .editable-filters {
   font-size: 10px !important;
-  background-color: #1b1d1f;
+  background-color: $gridTileDark;
   padding: 5px 0px 15px 20px;
-  margin: -7px 3px 12px 6px;
+  margin: 8px 1px 8px 1px;
+
+  .editable-filters-wrapper {
+    border-bottom: 1.5px solid $bgBlack;
+    padding-bottom: 16px;
+    margin-right: 16px !important;
+  }
 }
 
-input { background-color: #1b1d1f; }
+input { background-color: $gridTileDark; }
 
 .label-names {
   font-size: 10px;
-  padding: 10px 0px 5px 0px;
+  padding-top: 16px;
+  padding-bottom: 8px;
 }
 
 .add-condition {
-  border: none;
-  background-color: #1b1d1f;
+  border: 1.5px solid $bgBlack;
+  background-color: $gridTileDark;
   display: inline-block;
   margin-top: 8px;
 }
@@ -80,7 +96,7 @@ input { background-color: #1b1d1f; }
 .conditions-wrapper { display: inline-block; }
 
 .cancel-button {
-  background-color: #1b1d1f;
+  background-color: $gridTileDark;
   border: none;
   height: 32px;
   padding: 5px 16px 5px 16px;
@@ -88,15 +104,8 @@ input { background-color: #1b1d1f; }
   font-size: 12px;
 
   &:hover {
-    background-color: #afb9c3;
-    color: #1b1d1f;
-  }
-
-  .cancel-icon {
-    width: 14px;
-    padding-right: 2px;
-
-    &:hover { color: #1b1d1f; }
+    background-color: $lightestGray;
+    color: $gridTileDark;
   }
 }
 
@@ -106,8 +115,15 @@ input { background-color: #1b1d1f; }
   .save-delete-cancel-buttons { float: right; }
 }
 
+.cancel-icon {
+  height: 14px;
+  padding-right: 8px;
+
+  &:hover { color: $gridTileDark; }
+}
+
 .save {
-  background-color: #1b1d1f;
+  background-color: $gridTileDark;
   border: none;
   height: 32px;
   padding: 5px 16px 5px 16px;
@@ -115,13 +131,13 @@ input { background-color: #1b1d1f; }
   font-size: 12px;
 
   &:hover {
-    background-color: #afb9c3;
-    color: #1b1d1f;
+    background-color: $lightestGray;
+    color: $gridTileDark;
   }
 }
 
 .delete-filter {
-  background-color: #1b1d1f;
+  background-color: $gridTileDark;
   border: none;
   height: 32px;
   padding: 5px 16px 5px 16px;
@@ -130,8 +146,8 @@ input { background-color: #1b1d1f; }
   padding-left: 5px;
 
   &:hover {
-    background-color: #afb9c3;
-    color: #1b1d1f;
+    background-color: $lightestGray;
+    color: $gridTileDark;
   }
 }
 
@@ -145,10 +161,10 @@ input { background-color: #1b1d1f; }
 .add-icon,
 .delete-icon {
   cursor: pointer;
-  height: 12px;
+  height: 14px;
 }
 
-.add-icon { margin-right: 5px; }
+.add-icon { margin-right: 8px; }
 
 .error-msg { color: red; }
 
@@ -162,7 +178,7 @@ input { background-color: #1b1d1f; }
 
 .conditions-wrapper {
   .Select-control {
-    background-color: #1b1d1f;
+    background-color: $gridTileDark;
     font-size: 10 !important;
     border: 1px solid #454a4e !important;
     padding: 0px 3px 0px 8px !important;
@@ -198,14 +214,6 @@ input { background-color: #1b1d1f; }
   .Select-clear { display: none; }
   }
 }
-
-.Remove-icon {
-  height: 2px;
-  width: 12px;
-  margin-right: 5px;
-}
-
-.cancel-icon { height: 12px; }
 
 .save-delete-cancel-buttons .loading-spinner {
   margin-right: 30px !important;
