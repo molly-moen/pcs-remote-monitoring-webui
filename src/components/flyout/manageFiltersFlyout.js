@@ -366,7 +366,7 @@ class ManageFiltersFlyout extends React.Component {
                     this.setEditingState(group.Id, { formChanged: true });
                   }}
                   type="button"
-                  className="add-condition"
+                  className="remove-condition"
                 >
                   <img src={CancelX} alt={`${CancelX}`} className="cancel-icon" />
                   {lang.REMOVECONDITIONS}

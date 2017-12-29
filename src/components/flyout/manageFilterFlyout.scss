@@ -84,12 +84,21 @@ input { background-color: $gridTileDark; }
   padding-bottom: 8px;
 }
 
-.add-condition {
-  border: 1.5px solid $bgBlack;
+.add-condition,
+.remove-condition {
+  border: none;
+  border-top: 1.5px solid $bgBlack !important;
   background-color: $gridTileDark;
   display: inline-block;
   margin-top: 8px;
+  display: flex;
+  justify-content: start;
+  height: 40px;
+  width: 421px;
+  margin-left: -10px;
 }
+
+.add-condition { border-bottom: 1.5px solid $bgBlack !important; }
 
 .Select-input { height : 25px !important; }
 
@@ -111,6 +120,8 @@ input { background-color: $gridTileDark; }
 
 .buttons-group {
   padding-bottom: 25px;
+  padding-top: 25px;
+  padding-bottom: 32px;
 
   .save-delete-cancel-buttons { float: right; }
 }
