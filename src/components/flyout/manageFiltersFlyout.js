@@ -7,7 +7,6 @@ import Trash from '../../assets/icons/Trash.svg';
 import Add from '../../assets/icons/Add.svg';
 import Apply from '../../assets/icons/Apply.svg';
 import CancelX from '../../assets/icons/CancelX.svg';
-import Remove from '../../assets/icons/Remove.svg';
 import Select from 'react-select';
 import Config from '../../common/config';
 import PcsBtn from '../shared/pcsBtn/pcsBtn';

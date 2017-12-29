@@ -109,8 +109,9 @@ input { background-color: $gridTileDark; }
   border: none;
   height: 32px;
   padding: 5px 16px 5px 16px;
-  margin-left: 5px;
+  margin-left: 48px;
   font-size: 12px;
+  margin-right: 16px;
 
   &:hover {
     background-color: $lightestGray;
@@ -119,9 +120,8 @@ input { background-color: $gridTileDark; }
 }
 
 .buttons-group {
-  padding-bottom: 25px;
   padding-top: 25px;
-  padding-bottom: 32px;
+  margin-bottom: 32px;
 
   .save-delete-cancel-buttons { float: right; }
 }
