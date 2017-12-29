@@ -12,6 +12,7 @@ import ManageFilterBtn from '../../shared/contextBtns/manageFiltersBtn';
 import * as actions from '../../../actions';
 import lang from '../../../common/lang';
 import PcsBtn from '../../shared/pcsBtn/pcsBtn';
+import moment from 'moment';
 
 import AddSvg from '../../../assets/icons/Add.svg';
 import EditSvg from '../../../assets/icons/Edit.svg';
@@ -236,7 +237,7 @@ class RulesAndActionsPage extends Component {
           <div className="timerange-selection">
             <span className="last-refreshed-text">{`${lang.LAST_REFRESHED} | `}</span>
             <div className="last-refreshed-time">
-              {this.state.lastRefreshed.toLocaleString()}
+              {moment(this.state.lastRefreshed).format("MM/DD/YY, h:mm:ss a")}
             </div>
             <div onClick={this.refreshData} className="refresh-icon icon-sm" />
           </div>

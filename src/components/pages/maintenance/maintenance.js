@@ -27,6 +27,7 @@ import ChangestatusSvg from '../../../assets/icons/Change_status.svg';
 import CloseAlarmSvg from '../../../assets/icons/CloseAlarm.svg';
 import AckAlarmSvg from '../../../assets/icons/AcknowledgeAlarm.svg';
 import ChevronRight from '../../../assets/icons/ChevronRight.svg';
+import moment from 'moment';
 
 import './maintenance.css';
 
@@ -374,7 +375,9 @@ class MaintenancePage extends Component {
         <ContextFilters disableDeviceFilter={(this.props.params || {}).id !== undefined}>
           <div className="timerange-selection">
             <span className="last-refreshed-text"> {`${lang.LAST_REFRESHED} | `} </span>
-            <div className="last-refreshed-time">{this.state.lastRefreshed.toLocaleString()}</div>
+            <div className="last-refreshed-time">
+              {moment(this.state.lastRefreshed).format("MM/DD/YY, h:mm:ss a")}
+            </div>
             <div onClick={this.refreshData} className="refresh-icon icon-sm" />
             <div className="time-icon icon-sm" />
             <Select

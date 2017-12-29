@@ -17,6 +17,7 @@ import * as actions from '../../../actions';
 import DeviceMap from '../../deviceMap/deviceMap.js';
 import lang from '../../../common/lang';
 import ManageFilterBtn from '../../shared/contextBtns/manageFiltersBtn';
+import moment from 'moment';
 
 import './dashboard.css';
 
@@ -142,7 +143,7 @@ class DashboardPage extends Component {
         <ContextFilters>
           <div className="timerange-selection dashboard">
             <div className="last-refreshed-text"> {`${lang.LAST_REFRESHED} | `} </div>
-            <div className="last-refreshed-time">{this.state.lastRefreshed.toLocaleString()}</div>
+            <div className="last-refreshed-time">{moment(this.state.lastRefreshed).format("MM/DD/YY, h:mm:ss a")}</div>
             <div onClick={this.refreshData} className="refresh-icon icon-sm" />
             <div className="time-icon icon-sm" />
             <Select {...selectProps} />
