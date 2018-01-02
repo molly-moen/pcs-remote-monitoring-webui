@@ -163,7 +163,7 @@ class DeviceScheduleFlyout extends React.Component {
                         value={this.state.firmwareURIValue}
                       />
                     </div>}
-                    <SummarySection count={devices.length} content={this.state.jobApplied ? lang.DEVICE_SCHEDULED: lang.AFFECTED_DEVICES} />
+                    <SummarySection count={devices.length} content={this.state.jobApplied ? lang.DEVICES_SCHEDULED: lang.AFFECTED_DEVICES} />
                 </div>}
               {!this.state.jobApplied &&
                 <div className="btn-group">
