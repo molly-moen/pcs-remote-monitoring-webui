@@ -7,7 +7,7 @@ import LastTriggerCellRenderer from "./lastTriggerCellRenderer";
 import DeviceSourceCellRenderer from "./deviceSourceCellRenderer";
 import lang from "../../common/lang";
 
-export const LastTriggerDefaultWidth = 310;
+export const LAST_TRIGGER_DEFAULT_WIDTH = 310;
 
 export const DEFAULT_RULES_GRID_PAGE_SIZE = 50;
 
@@ -70,7 +70,7 @@ export const rulesAndActionsColumnDefs = {
   lastTrigger: {
     headerName: lang.LASTTRIGGER,
     cellRendererFramework: LastTriggerCellRenderer,
-    width: LastTriggerDefaultWidth
+    width: LAST_TRIGGER_DEFAULT_WIDTH
   }
 };
 

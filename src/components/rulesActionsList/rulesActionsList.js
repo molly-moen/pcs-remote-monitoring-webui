@@ -11,6 +11,7 @@ import {
   rulesAndActionsColumnDefs,
   defaultRulesAndActionsGridProps
 } from './ruleAndActionsConfig';
+import Config from '../../common/config';
 
 import "./rulesActionsList.css";
 
@@ -54,11 +55,11 @@ class RulesActionsList extends Component {
       ...this.props,
       onGridReady: this.onGridReady
     };
-    
+
     return (
       <div className="rules-actions-container">
         {(this.props.rowData || []).length > 0 &&
-        <PcsGrid {...gridProps} pagination= {(this.props.rowData || []).length > 50 ? true : false}/>}
+        <PcsGrid {...gridProps} pagination= {(this.props.rowData || []).length > Config.DEVICES_RULESGRID_ROWS ? true : false}/>}
       </div>
     )
   }

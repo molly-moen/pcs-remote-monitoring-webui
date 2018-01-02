@@ -134,7 +134,7 @@ class AlarmList extends Component {
         title={lang.ALARMSTATUS}>
         <div className="grid-container">
           {this.state.rowData &&
-          <AlarmsGrid {...alarmsGridProps} pagination = {this.state.rowData.length > 8 ? true: false}/>}
+          <AlarmsGrid {...alarmsGridProps} pagination = {this.state.rowData.length > Config.ALARMGRID_ROWS ? true: false}/>}
         </div>
       </DashboardPanel>
     );
