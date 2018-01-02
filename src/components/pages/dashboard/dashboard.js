@@ -143,7 +143,7 @@ class DashboardPage extends Component {
         <ContextFilters>
           <div className="timerange-selection dashboard">
             <div className="last-refreshed-text"> {`${lang.LAST_REFRESHED} | `} </div>
-            <div className="last-refreshed-time">{moment(this.state.lastRefreshed).format("MM/DD/YY, h:mm:ss a")}</div>
+            <div className="last-refreshed-time">{moment(this.state.lastRefreshed).format("h:mm:ss M/D/YY")}</div>
             <div onClick={this.refreshData} className="refresh-icon icon-sm" />
             <div className="time-icon icon-sm" />
             <Select {...selectProps} />
