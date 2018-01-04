@@ -347,7 +347,6 @@ class MaintenancePage extends Component {
       breadcrumbs = <span>{parentLink} <img src={ChevronRight} alt="ChevronRight" className="chevron-right" />{this.props.params.jobId}</span>;
     } else {
       breadcrumbs = lang.MAINTENANCE;
-      this.setState({ contextBtns: true });
     }
     const pcsBtn = (props, visible = true) => visible ? <PcsBtn {...props} /> : '';
     const showContextBtns = this.state.contextBtns === '';
