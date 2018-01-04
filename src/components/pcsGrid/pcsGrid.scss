@@ -20,19 +20,17 @@ $checkboxPadding: 8px;
   font-family: $fontSelawik;
 
   ::-webkit-scrollbar {
-      width: 6px;
-      height: 4px;
-      background: #242628;
+    width: 6px;
+    height: 4px;
+    background: #242628;
 
-      &-thumb {
-          background-color: #242628;
-          padding-top: 16px;
-      }
+    &-thumb {
+      background-color: #242628;
+      padding-top: 16px;
+    }
   }
 
-  ::-webkit-scrollbar-corner {
-      background: #242628;
-  }
+  ::-webkit-scrollbar-corner { background: #242628; }
 
   > .pcs-grid-loading-container {
     display: flex;
