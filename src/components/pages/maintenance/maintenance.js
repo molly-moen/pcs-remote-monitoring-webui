@@ -335,7 +335,7 @@ class MaintenancePage extends Component {
     let breadcrumbs;
     const pathName = this.props.location.pathname;
     const alarmsGridData = this.props.alarmsGridData;
-    const parentLink = <Link to={'/maintenance'}>{lang.MAINTENANCE}</Link>;
+    const parentLink = <Link to={'/maintenance'} onClick={() => this.setState({ contextBtns: true })}>{lang.MAINTENANCE}</Link>;
     if (pathName.indexOf('/rule/') > 0 && (alarmsGridData || []).length > 0 ) {
       alarmsGridData.forEach(rule => {
       if (rule.id === this.props.params.id){
@@ -347,6 +347,7 @@ class MaintenancePage extends Component {
       breadcrumbs = <span>{parentLink} <img src={ChevronRight} alt="ChevronRight" className="chevron-right" />{this.props.params.jobId}</span>;
     } else {
       breadcrumbs = lang.MAINTENANCE;
+      this.setState({ contextBtns: true });
     }
     const pcsBtn = (props, visible = true) => visible ? <PcsBtn {...props} /> : '';
     const showContextBtns = this.state.contextBtns === '';
