@@ -371,7 +371,7 @@ class MaintenancePage extends Component {
     return (
       <PageContainer>
         <TopNav breadcrumbs={breadcrumbs} projectName={lang.AZUREPROJECTNAME} />
-        <ContextFilters disableDeviceFilter={(this.props.params || {}).id !== undefined}>
+        <ContextFilters disableDeviceFilter={((this.props.params || {}).id || (this.props.params || {}).jobId) !== undefined }>
           <div className="timerange-selection">
             <span className="last-refreshed-text"> {`${lang.LAST_REFRESHED} | `} </span>
             <div className="last-refreshed-time">{this.state.lastRefreshed.toLocaleString()}</div>
