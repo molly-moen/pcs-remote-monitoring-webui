@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import EditPencil from '../../assets/icons/EditPencil.svg';
 import Trash from '../../assets/icons/Trash.svg';
 import Add from '../../assets/icons/Add.svg';
 import Apply from '../../assets/icons/Apply.svg';
@@ -485,10 +484,11 @@ class ManageFiltersFlyout extends React.Component {
     const newGroupObj = deviceGroups[0];
     return (
       <div className="manage-filter-container">
-        <div onClick={() => this.setState({ showCreateFilter: true })} className="create-filter groupname-icons">
-          <img src={Add} alt={`${Add}`} className="add-icon" />
-          {lang.CREATEFILTER}
-        </div>
+        {showCreateFilter === false ?
+          <div onClick={() => this.setState({ showCreateFilter: true })} className="create-filter groupname-icons">
+            <img src={Add} alt={`${Add}`} className="add-icon" />
+            {lang.CREATEFILTER}
+          </div> : null }
         {showCreateFilter
           ? this.getFilterComponent(true, editingState[0] && editingState[0].formChanged, newGroupObj)
           : null}
