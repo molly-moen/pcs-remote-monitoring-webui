@@ -496,9 +496,6 @@ class ManageFiltersFlyout extends React.Component {
           <span className="filters-text">
             {lang.FILTERS}
           </span>
-          <span className="actions">
-            {lang.ACTIONS}
-          </span>
         </div>
         <div>
           {deviceGroups.map((group, idx) => {
@@ -508,15 +505,12 @@ class ManageFiltersFlyout extends React.Component {
             }
             return (
               <div key={group.Id}>
-                <div className="groupname-icons">
+                <div className="groupname-icons" onClick={() => this.setEditingState(group.Id, { showEdit: true })}>
                   {group.DisplayName}
                   <span
                     onClick={() => this.setEditingState(group.Id, { showEdit: true })}
                     className="edit-delete-icons"
                   >
-                    <span onClick={() => this.setEditingState(group.Id, { showEdit: true })}>
-                      <img src={EditPencil} alt={`${EditPencil}`} className="edit-icon" />
-                    </span>
                     <span>
                       <img src={Trash} alt={`${Trash}`} className="delete-icon" />
                     </span>
