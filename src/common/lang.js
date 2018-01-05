@@ -173,6 +173,7 @@ const lang = {
   MULTIPLE: 'Multiple',
   NAME: 'Name',
   NEWDEVICEID: 'Device ID',
+  NEWFILTERNAME: 'New filter name',
   NEWGROUP: '(new group)',
   NEWRULE: 'New rule',
   NEWTENANT: 'New Tenant',

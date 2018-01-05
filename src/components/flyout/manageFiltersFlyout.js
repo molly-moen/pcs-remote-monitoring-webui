@@ -224,9 +224,12 @@ class ManageFiltersFlyout extends React.Component {
       <div className="editable-filters">
         <div className="editable-filters-wrapper">
           <label>
-            <div className="label-names">
-              {lang.FILTERNAME}
-            </div>
+          {this.props.editingState
+            ? <div className="label-names">{lang.FILTERNAME}</div>
+            : <div className="new-filter-container">
+                <img src={Add} alt={`${Add}`} className="add-icon" />
+                <span className="label-names">{lang.NEWFILTERNAME}</span>
+              </div>}
             <input
               onChange={evt => {
                 group.DisplayName = evt.target.value || '';
