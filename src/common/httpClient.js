@@ -3,8 +3,14 @@
 import auth from "./auth";
 
 function get(url, options) {
-  return ajax(url).then(response => {
-    return getJson(url, response);
+  options = options || {};
+  return ajax(url, options).then(response => {
+    var contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      return getJson(url, response);
+    } else {
+      return response;
+    }
   });
 }
 
@@ -19,10 +25,21 @@ function post(url, data, options) {
 
 function put(url, data, options) {
   options = options || {};
-  setJsonPayload(options, data);
+  if(data && options.headers && options.headers.contentType) {
+    setBinaryPayload(options, data);
+  } else if(data) {
+    setJsonPayload(options, data);
+  } else {
+    options.body = '';
+  }
   options.method = 'PUT';
   return ajax(url, options).then(response => {
-    return getJson(url, response);
+    var contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      return getJson(url, response);
+    } else {
+      return response;
+    }
   });
 }
 
@@ -101,6 +118,10 @@ function setJsonPayload(options, data) {
     'Content-Type': 'application/json'
   };
   options.body = JSON.stringify(data);
+}
+
+function setBinaryPayload(options, data) {
+  options.body = data;
 }
 
 export default { get, post, put, delete: _delete, ajax, patch };

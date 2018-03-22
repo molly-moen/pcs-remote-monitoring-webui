@@ -9,12 +9,12 @@
     .section-header {
       color: #fff;
       font-size: 16px;
-      padding-bottom: 16px;
+      padding-bottom: 12px;
     }
 
     .section-description { 
       padding-bottom: 24px; 
-      font-size: 14px;
+      font-size: 12px;
 
       a { 
         color: inherit; 
@@ -25,7 +25,7 @@
     }
 
     .section-input-group { 
-      padding-bottom: 48px;
+      padding-bottom: 32px;
 
       label {
         padding-left: 10px;
@@ -34,6 +34,20 @@
       }
     }
 
+    .show-line-breaks {
+      white-space: pre-wrap;
+      tab-size: 16px;
+    }
+
+    .section-subtitle {
+      font-size:14px;
+      margin-bottom:12px;
+    }
+
+    .platform-section-description { 
+      padding-bottom: 12px; 
+      font-size: 12px;
+    }
   }
 
   .btn-container {
@@ -42,4 +56,5 @@
     height: 30px;
     margin-top: 48px;
   }
+  
 }

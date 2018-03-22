@@ -8,8 +8,11 @@ import DeviceSimulationService from '../../services/deviceSimulationService';
 import lang from '../../common/lang';
 import Config from '../../common/config';
 import Spinner from '../spinner/spinner';
-
 import CloseIconSvg from '../../assets/icons/X.svg';
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import * as actions from '../../actions';
+import PlatformSettings from './platformSettings';
 
 import './settingFlyout.css';
 
@@ -32,7 +35,9 @@ class SettingFlyout extends React.Component {
     this.state = {
       currSimulationState: undefined,
       desiredSimulationState: undefined,
-      loading: false
+      loading: false,
+      logoFile: undefined,
+      applicationName: undefined
     };
 
     this.eTag = new BehaviorSubject(undefined);
@@ -65,23 +70,53 @@ class SettingFlyout extends React.Component {
     this.setState({ [name]: value });
   };
 
+  onNameChange = (name) => {
+    this.setState({
+      applicationName: name
+    });
+  };
+  
+  onUpload = (file) => {
+    this.setState({
+      logoFile: file
+    });
+  };
+
   apply = () => {
-    Observable
-      .of(this.state.desiredSimulationState)
-      .do(_ => this.setState({ loading: true}))
-      .zip(this.eTagStream, (Enabled, Etag) => ({ Etag, Enabled }))
-      .flatMap(({ Etag, Enabled }) => DeviceSimulationService.toggleSimulation(Etag, Enabled))
-      .takeUntil(this.unmount)
-      .subscribe(
-        () => this.props.onClose(),
-        err => console.error(err)
-      );
+    const { logoFile, applicationName } = this.state;
+    if(logoFile || applicationName) {
+      var headers = {};
+      if(applicationName) {
+        headers.name = applicationName
+      }
+      if(logoFile) {
+        headers.contentType = logoFile.type;
+      } else {
+        headers['Content-Type'] = "text/plain";
+      }
+      this.props.actions.setLogo(logoFile, headers);
+    } 
+    if(this.state.desiredSimulationState !== this.state.currSimulationState) {
+      Observable
+       .of(this.state.desiredSimulationState)
+       .do(_ => this.setState({ loading: true}))
+       .zip(this.eTagStream, (Enabled, Etag) => ({ Etag, Enabled }))
+       .flatMap(({ Etag, Enabled }) => DeviceSimulationService.toggleSimulation(Etag, Enabled))
+       .takeUntil(this.unmount)
+       .subscribe(
+         () => this.props.onClose(),
+         err => console.error(err)
+       );
+     } else {
+       this.props.onClose();
+     }
   };
 
   render() {
-    const { currSimulationState, desiredSimulationState, loading } = this.state;
+    const { currSimulationState, desiredSimulationState, loading, logoFile, applicationName } = this.state;
     const stillInitializing = currSimulationState === undefined;
-    const hasChanged = !stillInitializing && currSimulationState !== desiredSimulationState;
+    const hasChanged = !stillInitializing && (currSimulationState !== desiredSimulationState 
+      || logoFile !== undefined || applicationName !== undefined);
 
     const simulationLabel = hasChanged ? desiredSimulationLabel[desiredSimulationState] : currSimulationLabel[currSimulationState];
 
@@ -102,6 +137,7 @@ class SettingFlyout extends React.Component {
             <label>{ stillInitializing ? lang.LOADING : simulationLabel }</label>
           </div>
         </div>
+        <PlatformSettings onNameChange={this.onNameChange} onUpload={this.onUpload} />
         <div className="btn-container">
           <PcsBtn svg={CloseIconSvg} onClick={this.props.onClose}>{hasChanged ? lang.CANCEL : lang.CLOSE }</PcsBtn>
           { !loading && hasChanged && <PcsBtn onClick={this.apply}>{ lang.APPLY }</PcsBtn> }
@@ -112,4 +148,10 @@ class SettingFlyout extends React.Component {
   }
 }
 
-export default SettingFlyout;
+const mapDispatchToProps = dispatch => {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  };
+};
+
+export default connect(undefined, mapDispatchToProps)(SettingFlyout);

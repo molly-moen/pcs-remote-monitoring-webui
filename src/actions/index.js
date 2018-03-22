@@ -35,3 +35,6 @@ export * from './ruleActions';
 
 // indicator
 export * from './indicatorActions';
+
+// application
+export * from './applicationActions';

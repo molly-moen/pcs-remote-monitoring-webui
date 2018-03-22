@@ -13,6 +13,7 @@ import ruleReducer from './ruleReducer';
 import maintenanceReducer from './maintenanceReducer';
 import deviceListReducer from './deviceListReducer';
 import indicatorReducer from './indicatorReducer';
+import applicationReducer from './applicationReducer';
 
 const rootReducer = combineReducers({
   flyoutReducer,
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
   kpiReducer,
   maintenanceReducer,
   indicatorReducer,
-  ruleReducer
+  ruleReducer,
+  applicationReducer
 });
 
 export default rootReducer;

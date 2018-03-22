@@ -89,4 +89,15 @@
 
     .Select-clear { display: none; }
   }
+
+  .file-upload {
+    .upload-btn {
+      background-color: $lightestGray;
+      color: black;
+    }
+
+    .input-file {
+      display: none;
+    }
+  }
 }

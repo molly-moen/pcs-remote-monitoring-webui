@@ -73,5 +73,9 @@ export default {
     twinUpdateJobs: [],
     propertyUpdateJobs: []
   },
-  rules: {}
+  rules: {},
+  application: {
+    logo: undefined,
+    name: undefined
+  }
 };

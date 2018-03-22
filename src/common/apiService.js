@@ -245,6 +245,41 @@ class ApiService {
   static updateAlarmsStatus(payload) {
     return Http.patch(`${Config.telemetryApiUrl}alarms/${encodeURIComponent(payload.id)}`, payload);
   }
+
+  static getLogo() {
+    var options = {};
+    return Http.get(`${Config.configApiUrl}solution-settings/logo`, options)
+    .then((response) => {
+      return ApiService.prepareLogoResponse(response);
+    });
+  }
+
+  static setLogo(logo, header) {
+    var options = {};
+    options.headers = header;
+    return Http.put(`${Config.configApiUrl}solution-settings/logo`, logo, options)
+    .then((response) => {
+      return ApiService.prepareLogoResponse(response);
+    });
+  }
+
+  static prepareLogoResponse(response) {
+    var returnObj = {};
+    var isDefault = response.headers.get("IsDefault");
+    if(isDefault.toLowerCase() === "false") {
+      var appName = response.headers.get("Name");
+      if(appName) {
+        returnObj['name'] = appName;
+      }
+      return response.blob().then((blob) => {
+        if(blob && blob.size > 0) {
+          returnObj['logo'] = URL.createObjectURL(blob);
+        }
+        return returnObj;
+     });
+    }
+    return returnObj;
+  }
 }
 
 export default ApiService;

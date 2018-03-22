@@ -4,8 +4,11 @@ import React from "react";
 import { Radio } from "react-bootstrap";
 import Select from 'react-select';
 import lang from "../../common/lang";
+import PcsBtn from '../shared/pcsBtn/pcsBtn';
 
 import "./editInput.css";
+
+import UploadSvg from '../../assets/icons/Upload.svg'
 
 const TextInput = ({ ...props }) => {
     return (
@@ -45,6 +48,23 @@ const RadioInput = ({ options, name, value, ...props }) => {
     );
 }
 
+const FileInput = ({label, acceptTypes, className, ...props }) => {
+    let fileInput = null;
+
+    function fileInputClick() {
+        fileInput.click();
+    }
+
+    return (
+        <span className={className + " file-upload"}>
+            <PcsBtn className="upload-btn" svg={UploadSvg} onClick={fileInputClick}>
+                {lang.UPLOAD}
+            </PcsBtn>
+            <input className="input-file" ref={(input) => { fileInput = input; }} type="file" accept={acceptTypes} {...props}  />
+        </span>
+    );
+}
+
 class EditInput extends React.Component {
     onValueChange = (e) => {
         this.props.onChange(e.target.value);
@@ -52,6 +72,10 @@ class EditInput extends React.Component {
 
     onSelectValueChange = (value) => {
         this.props.onChange(value);
+    }
+
+    onFileValueChange = (e) => {
+        this.props.onChange(e.target.files[0]);
     }
 
     getPropertyFromOptions(options, value, label) {
@@ -78,6 +102,8 @@ class EditInput extends React.Component {
                     return <SelectInput options={this.props.options} className={this.props.className} placeholder={this.props.placeholder} value={this.props.value} onChange={this.onSelectValueChange} />
                 case "radio":
                     return <RadioInput name="rd" options={this.props.options} className={this.props.className} value={this.props.value} onChange={this.onValueChange} />
+                case "file":
+                    return <FileInput label={this.props.label} accept={this.props.accept} className={this.props.className} value={this.props.value} onChange={this.onFileValueChange} />
                 default:
                     return null
             }
