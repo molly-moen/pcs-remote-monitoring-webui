@@ -6,6 +6,14 @@ import { Svg } from 'components/shared';
 
 import { svgs } from 'utilities';
 
+import _ from 'lodash';
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import {
+  epics as appEpics,
+  getLogo,
+  getName
+} from 'store/reducers/appReducer';
 import './navigation.css';
 
 /** A window size less than this will automatically collapse the left nav */
@@ -29,7 +37,7 @@ const TabLink = (props) => (
 );
 
 /** The navigation component for the left navigation */
-class Navigation extends Component {
+export class Navigation extends Component {
 
   constructor(props) {
     super(props);
@@ -41,6 +49,21 @@ class Navigation extends Component {
 
     // Collapse the nav if the window width is too small
     window.addEventListener('resize', this.collapseNav);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { logo, name } = nextProps;
+    // if (!_.isEqual(application, this.props.application)) {
+    //   this.setState({
+    //     logo: application.logo,
+    //     name: application.name
+    //   });
+    // }
+    // if (this.state.stillInitializing) {
+    //   this.setState({
+    //     stillInitializing: false
+    //   });
+    // }
   }
 
   collapseNav = () => {
@@ -61,11 +84,16 @@ class Navigation extends Component {
 
   render() {
     const isExpanded = !this.state.collapsed;
+    const { name, logo } = this.props;
+
     return (
       <nav className={`app-nav ${isExpanded && 'expanded'}`}>
         <div className="nav-item company">
-          <NavIcon path={svgs.contoso} />
-          <div className="nav-item-text">{this.props.t('companyName')}</div>
+          {/* <NavIcon path={svgs.contoso} /> */}
+          <div className = "nav-item-icon">
+            <img src={logo} alt="Logo" />
+          </div>
+          <div className="nav-item-text">{name}</div>
         </div>
         <button className="nav-item hamburger" onClick={this.toggleExpanded} aria-label="Hamburger">
           <NavIcon path={svgs.hamburger} />
@@ -75,5 +103,6 @@ class Navigation extends Component {
     );
   }
 }
+
 
 export default Navigation;

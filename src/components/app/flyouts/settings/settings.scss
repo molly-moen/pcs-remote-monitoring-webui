@@ -24,4 +24,34 @@
 
     &:hover { text-decoration: none; }
   }
+
+  .flyout-section-content {
+    @include rem-font-size(12px);
+  }
+
+  .simulation-toggle {
+    margin-top: 18px;
+    //margin-bottom: 24px;
+    @include rem-font-size(14px);
+    .simulation-toggle-button {
+      margin-right:10px;
+    }
+  }
+
+  .btn-container {
+    display: flex;
+    justify-content: flex-end;
+    height: 30px;
+    margin-top: 48px;
+    @include rem-font-size(14px);
+
+    svg {
+      height: 10px;
+    }
+  }
+
+  @include themify($themes) {
+
+    .close-button .btn-icon svg { stroke: themed('colorFlyoutText'); }
+  }
 }

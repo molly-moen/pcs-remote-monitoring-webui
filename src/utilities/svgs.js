@@ -13,8 +13,12 @@ import DeviceElevatorIconPath from 'assets/icons/deviceElevator.svg';
 import DeviceEngineIconPath from 'assets/icons/deviceEngine.svg';
 import DevicePrototypingIconPath from 'assets/icons/devicePrototyping.svg';
 import DeviceTruckIconPath from 'assets/icons/deviceTruck.svg';
+import DisableIconPath from 'assets/icons/disable.svg';
 import DisabledIconPath from 'assets/icons/disabled.svg';
+import DisableToggleIconPath from 'assets/icons/disableToggle.svg';
+import EditIconPath from 'assets/icons/edit.svg';
 import EllipsisIconPath from 'assets/icons/ellipsis.svg';
+import EnableToggleIconPath from 'assets/icons/enableToggle.svg';
 import ErrorIconPath from 'assets/icons/errorAsterisk.svg';
 import HamburgerIconPath from 'assets/icons/hamburger.svg';
 import InfoBubbleIconPath from 'assets/icons/infoBubble.svg';
@@ -34,6 +38,7 @@ import TabDevicesIconPath from 'assets/icons/tabDevices.svg';
 import TabMaintenanceIconPath from 'assets/icons/tabMaintenance.svg';
 import TabRulesIconPath from 'assets/icons/tabRules.svg';
 import TrashIconPath from 'assets/icons/trash.svg';
+import UploadIconPath from 'assets/icons/upload.svg';
 import WarningIconPath from 'assets/icons/warning.svg';
 import XIconPath from 'assets/icons/x.svg';
 
@@ -60,8 +65,12 @@ export const svgs = {
   colon: ColonIconPath,
   contoso: ContosoIconPath,
   critical: CriticalIconPath,
+  disable: DisableIconPath,
   disabled: DisabledIconPath,
+  disableToggle: DisableToggleIconPath,
+  edit: EditIconPath,
   ellipsis: EllipsisIconPath,
+  enableToggle: EnableToggleIconPath,
   error: ErrorIconPath,
   hamburger: HamburgerIconPath,
   info: InfoIconPath,
@@ -77,6 +86,7 @@ export const svgs = {
   settings: SettingsIconPath,
   simulatedDevice: SimulatedDeviceIconPath,
   trash: TrashIconPath,
+  upload: UploadIconPath,
   warning: WarningIconPath,
   x: XIconPath
 };

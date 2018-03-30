@@ -6,7 +6,8 @@ const Config = {
   serviceUrls: {
     config: `${baseUrl}/config/v1/`,
     iotHubManager: `${baseUrl}/iothubmanager/v1/`,
-    telemetry: `${baseUrl}/telemetry/v1/`
+    telemetry: `${baseUrl}/telemetry/v1/`,
+    deviceSimulation: `${baseUrl}/devicesimulation/v1/`,
   },
   // Constants
   defaultAjaxTimeout: 10000, // 10s

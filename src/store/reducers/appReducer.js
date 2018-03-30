@@ -18,6 +18,7 @@ import {
   getPending,
   getError
 } from 'store/utilities';
+import { svgs } from 'utilities';
 
 // ========================= Epics - START
 const handleError = fromAction => error =>
@@ -29,7 +30,8 @@ export const epics = createEpicScenario({
     type: 'APP_INITIALIZE',
     epic: () => [
       epics.actions.fetchDeviceGroups(),
-      redux.actions.updateActiveDeviceGroup()
+      redux.actions.updateActiveDeviceGroup(),
+      epics.actions.fetchLogo()
     ]
   },
 
@@ -51,6 +53,22 @@ export const epics = createEpicScenario({
         .map(({ payload }) => payload) // payload === pathname
         .distinctUntilChanged()
         .map(createAction('EPIC_APP_ROUTE_CHANGE'))
+  },
+
+  fetchLogo: {
+    type: 'FETCH_LOGO',
+    epic: fromAction =>
+      ConfigService.getLogo()
+        .map(toActionCreator(redux.actions.getLogo, fromAction))
+        .catch(handleError(fromAction))
+  },
+
+  setLogo: {
+    type: 'UPDATE_LOGO',
+    epic: fromAction =>
+      ConfigService.setLogo(fromAction.payload.logo, fromAction.payload.headers)
+        .map(toActionCreator(redux.actions.setLogo, fromAction))
+        .catch(handleError(fromAction))
   }
 
 });
@@ -67,7 +85,10 @@ const initialState = {
   deviceGroups: {},
   activeDeviceGroupId: undefined,
   theme: 'dark',
-  version: '0.0.1' // TODO: Version should be requested from the service
+  version: '0.0.1', // TODO: Version should be requested from the service
+  logo: undefined,
+  name: undefined
+
 };
 
 const updateDeviceGroupsReducer = (state, { payload, fromAction }) => {
@@ -86,6 +107,13 @@ const updateThemeReducer = (state, { payload }) => {
   return update(state, { theme: { $set: payload } });
 };
 
+const logoReducer = (state, { payload }) => {
+  return update(state, {
+    logo: { $set: payload.logo ? payload.logo : svgs.contoso },
+    name: { $set: payload.name ? payload.name : 'Contoso' }
+  })
+};
+
 /* Action types that cause a pending flag */
 const fetchableTypes = [
   epics.actionTypes.fetchDeviceGroups
@@ -97,6 +125,8 @@ export const redux = createReducerScenario({
   changeTheme: { type: 'APP_CHANGE_THEME', reducer: updateThemeReducer },
   registerError: { type: 'APP_REDUCER_ERROR', reducer: errorReducer },
   isFetching: { multiType: fetchableTypes, reducer: pendingReducer },
+  setLogo: { type: 'SET_LOGO', reducer: logoReducer },
+  getLogo: { type: 'GET_LOGO', reducer: logoReducer }
 });
 
 export const reducer = { app: redux.getReducer(initialState) };
@@ -124,4 +154,6 @@ export const getActiveDeviceGroupConditions = createSelector(
   getActiveDeviceGroup,
   activeDeviceGroup => (activeDeviceGroup || {}).conditions
 );
+export const getLogo = state => getAppReducer(state).logo;
+export const getName = state => getAppReducer(state).name;
 // ========================= Selectors - END
