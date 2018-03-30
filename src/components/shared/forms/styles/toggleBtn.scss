@@ -1,0 +1,34 @@
+// Copyright (c) Microsoft. All rights reserved.
+
+@import 'src/styles/themes';
+@import 'src/styles/mixins';
+.pcs-toggle {
+  display: inline-block;
+  svg {
+    height: 15px;
+    cursor: pointer;
+    &.disabled { cursor: auto; }
+  }
+
+  @include themify($themes) {
+    .cls-1 {
+        stroke: themed('colorToggleBackground');
+      }
+
+    .cls-2 {
+      fill: themed('colorContentText');
+      stroke: themed('colorContentText');
+    }
+  }
+}
+
+.disable-toggle {
+  @include themify($themes) {
+    fill: themed('colorFlyoutBackground');
+  }
+}
+.enable-toggle {
+  @include themify($themes) {
+    fill: themed('colorToggleBackground');
+  }
+}

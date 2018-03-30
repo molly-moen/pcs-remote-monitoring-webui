@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import { Duration } from './duration';
 import { Select } from './select';
+import { FileInput } from './fileInput';
 import { ErrorMsg } from './errorMsg';
 import { joinClasses, isFunc, Link } from 'utilities';
 
@@ -44,6 +45,8 @@ export class FormControl extends Component {
         return <Duration {...controlProps} />;
       case 'select':
         return <Select {...controlProps} />;
+      case 'file':
+        return <FileInput {...controlProps} />;
       default:
         return null; // Unknown form control
     }
@@ -84,7 +87,8 @@ FormControl.propTypes = {
     'number',
     'textarea',
     'duration',
-    'select'
+    'select',
+    'file'
   ]).isRequired,
   errorState: PropTypes.bool,
   formGroupId: PropTypes.string,

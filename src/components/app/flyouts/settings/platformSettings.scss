@@ -1,0 +1,62 @@
+// Copyright (c) Microsoft. All rights reserved.
+@import 'src/styles/themes';
+@import 'src/styles/mixins';
+
+.upload-btn-container {
+  display: flex;
+  justify-content: flex-start;
+  height: 24px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+
+  .file-upload-feedback {
+    padding-left: 16px;
+    padding-right: 12px;
+  }
+
+  .checkmark-img {
+    height: 14px;
+  }
+
+  .file-name-span {
+    font-size: 14px;
+  }
+}
+
+.show-line-breaks {
+  white-space: pre-wrap;
+  tab-size: 16px;
+}
+
+.name-input {
+  width: 50%;
+}
+
+.replace-logo {
+  @include rem-font-size(14px);
+}
+
+.current-logo-container {
+  display: inline-block;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  @include rem-font-size(16px);
+
+
+  .name-container {
+    margin-bottom: 24px;
+  }
+
+  .current-logo {
+    display: inline-block;
+    margin-right: 12px;
+    height: 24px;
+    width: 24px;
+  }
+
+  .edit-name-button {
+    float: right;
+    margin-left: 233px;
+
+  }
+}
