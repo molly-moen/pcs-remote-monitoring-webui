@@ -2,6 +2,7 @@
 
 import React, { Component } from 'react';
 import { Observable, Subject } from 'rxjs';
+import moment from 'moment';
 
 import Config from 'app.config';
 import { TelemetryService } from 'services';
@@ -12,12 +13,13 @@ import {
   AlarmsPanel,
   TelemetryPanel,
   KpisPanel,
-  MapPanel
+  MapPanel,
+  transformTelemetryResponse
 } from './panels';
+import { ContextMenu, PageContent, RefreshBar } from 'components/shared';
 
 import './dashboard.css';
 
-const maxDatums = 100; // Max telemetry messages for the telemetry graph
 const maxTopAlarms = 5; // TODO: Move to config
 
 const chartColors = [
@@ -34,33 +36,38 @@ const chartColors = [
   '#FFEE91'
 ];
 
+const initialState = {
+  chartColors,
+
+  // Telemetry data
+  telemetry: {},
+  telemetryIsPending: true,
+  telemetryError: null,
+
+  // Kpis data
+  currentActiveAlarms: [],
+  topAlarms: [],
+  alarmsPerDeviceId: {},
+  criticalAlarmsChange: 0,
+  kpisIsPending: true,
+  kpisError: null,
+
+  // Map data
+  openWarningCount: undefined,
+  openCriticalCount: undefined,
+
+  lastRefreshed: undefined
+};
+
 export class Dashboard extends Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {
-      chartColors,
-
-      // Telemetry data
-      telemetry: {},
-      telemetryIsPending: true,
-      telemetryError: null,
-
-      // Kpis data
-      currentActiveAlarms: [],
-      topAlarms: [],
-      alarmsPerDeviceId: {},
-      criticalAlarmsChange: 0,
-      kpisIsPending: true,
-      kpisError: null,
-
-      // Map data
-      openWarningCount: undefined,
-      openCriticalCount: undefined
-    };
+    this.state = initialState;
 
     this.subscriptions = [];
+    this.dashboardRefresh$ = new Subject(); // Restarts all streams
     this.telemetryRefresh$ = new Subject();
     this.panelsRefresh$ = new Subject();
   }
@@ -70,48 +77,17 @@ export class Dashboard extends Component {
     this.props.fetchRules();
 
     // Telemetry stream - START
+    const onPendingStart = () => this.setState({ telemetryIsPending: true });
+
     const telemetry$ = TelemetryService.getTelemetryByDeviceIdP15M()
       .merge(
-        this.telemetryRefresh$
-          .delay(Config.telemetryRefreshInterval)
-          .do(_ => this.setState({ telemetryIsPending: true }))
+        this.telemetryRefresh$ // Previous request complete
+          .delay(Config.telemetryRefreshInterval) // Wait to refresh
+          .do(onPendingStart)
           .flatMap(_ => TelemetryService.getTelemetryByDeviceIdP1M())
       )
-      .flatMap(items =>
-        Observable.from(items)
-          .flatMap(({ data, deviceId, time }) =>
-            Observable.from(Object.keys(data))
-              .filter(metric => metric.indexOf('Unit') < 0)
-              .map(metric => ({ metric, deviceId, time, data: data[metric] }))
-          )
-          .reduce((acc, { metric, deviceId, time, data }) => ({
-            ...acc,
-            [metric]: {
-              ...(acc[metric] ? acc[metric] : {}),
-              [deviceId]: {
-                ...(acc[metric] && acc[metric][deviceId] ? acc[metric][deviceId] : {}),
-                '': {
-                  ...(acc[metric] && acc[metric][deviceId] && acc[metric][deviceId][''] ? acc[metric][deviceId][''] : {}),
-                  [time]: { val: data }
-                }
-              }
-            }
-          }), this.state.telemetry)
-      )
-      .map(telemetry => {
-        Object.keys(telemetry).forEach(metric => {
-          Object.keys(telemetry[metric]).forEach(deviceId => {
-            const datums = Object.keys(telemetry[metric][deviceId]['']);
-            if (datums.length > maxDatums) {
-              telemetry[metric][deviceId][''] = datums.sort()
-                .slice(datums.length - maxDatums, datums.length)
-                .reduce((acc, time) => ({ ...acc, [time]: telemetry[metric][deviceId][''][time]}), {});
-            }
-          })
-        });
-        return telemetry;
-      }) // Remove overflowing items
-      .map(telemetry => ({ telemetry, telemetryIsPending: false }));
+      .flatMap(transformTelemetryResponse(() => this.state.telemetry))
+      .map(telemetry => ({ telemetry, telemetryIsPending: false })); // Stream emits new state
       // Telemetry stream - END
 
       // KPI stream - START
@@ -211,23 +187,43 @@ export class Dashboard extends Component {
       // KPI stream - END
 
       this.subscriptions.push(
-        telemetry$.subscribe(
-          telemetryState => this.setState(telemetryState, () => this.telemetryRefresh$.next('r')),
-          telemetryError => this.setState({ telemetryError, telemetryIsPending: false })
-        )
+        this.dashboardRefresh$
+          .subscribe(() => this.setState(initialState))
       );
 
       this.subscriptions.push(
-        kpis$.subscribe(
-          kpiState => this.setState(kpiState, () => this.panelsRefresh$.next('r')),
-          kpisError => this.setState({ kpisError, kpisIsPending: false })
-        )
+        this.dashboardRefresh$
+          .switchMap(() => telemetry$)
+          .subscribe(
+            telemetryState => this.setState(
+              { ...telemetryState, lastRefreshed: moment() },
+              () => this.telemetryRefresh$.next('r')
+            ),
+            telemetryError => this.setState({ telemetryError, telemetryIsPending: false })
+          )
       );
+
+      this.subscriptions.push(
+        this.dashboardRefresh$
+          .switchMap(() => kpis$)
+          .subscribe(
+            kpiState => this.setState(
+              { ...kpiState, lastRefreshed: moment() },
+              () => this.panelsRefresh$.next('r')
+            ),
+            kpisError => this.setState({ kpisError, kpisIsPending: false })
+          )
+      );
+
+      // Start polling all panels
+      this.dashboardRefresh$.next('r');
   }
 
   componentWillUnmount() {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
+
+  refreshDashboard = () => this.dashboardRefresh$.next('r');
 
   render () {
     const {
@@ -254,7 +250,9 @@ export class Dashboard extends Component {
       kpisError,
 
       openWarningCount,
-      openCriticalCount
+      openCriticalCount,
+
+      lastRefreshed
     } = this.state;
 
     // Count the number of online and offline devices
@@ -289,8 +287,15 @@ export class Dashboard extends Component {
       };
     }, {});
 
-    return (
-      <div className="dashboard-container">
+    return [
+      <ContextMenu key="context-menu">
+        <RefreshBar
+          refresh={this.refreshDashboard}
+          time={lastRefreshed}
+          isPending={kpisIsPending || devicesIsPending}
+          t={t} />
+      </ContextMenu>,
+      <PageContent className="dashboard-container" key="page-content">
         <Grid>
           <Cell className="col-1 devices-overview-cell">
             <OverviewPanel
@@ -305,6 +310,7 @@ export class Dashboard extends Component {
           <Cell className="col-5">
             <MapPanel
               isPending={devicesIsPending}
+              error={devicesError || kpisError}
               t={t} />
           </Cell>
           <Cell className="col-3">
@@ -333,7 +339,7 @@ export class Dashboard extends Component {
               t={t} />
           </Cell>
         </Grid>
-      </div>
-    );
+      </PageContent>
+    ];
   }
 }
