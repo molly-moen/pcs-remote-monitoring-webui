@@ -7,6 +7,7 @@ import {
   getTheme,
   getVersion,
   getLogo,
+  getLogoIsDefault,
   getName
 } from 'store/reducers/appReducer';
 import { Settings } from './settings';
@@ -16,7 +17,8 @@ const mapStateToProps = state => ({
   theme: getTheme(state),
   version: getVersion(state),
   logo: getLogo(state),
-  name: getName(state)
+  name: getName(state),
+  logoIsDefault: getLogoIsDefault(state)
 });
 
 const mapDispatchToProps = dispatch => ({

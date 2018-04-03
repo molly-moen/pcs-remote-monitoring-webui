@@ -37,6 +37,7 @@ export class ConfigService {
     var returnObj = {};
     var xhr = response.xhr;
     var isDefault = xhr.getResponseHeader("IsDefault");
+    returnObj['logoIsSvg'] = true;
     if(isDefault.toLowerCase() === "false") {
       var appName = xhr.getResponseHeader("Name");
       if(appName) {
@@ -45,6 +46,10 @@ export class ConfigService {
       var blob = response.response;
       if(blob && blob.size > 0) {
         returnObj['logo'] = URL.createObjectURL(blob);
+        var responseType = blob.type;
+        if(!responseType.includes("svg")) {
+          returnObj['logoIsSvg'] = false;
+        }
       }
       return returnObj;
     }

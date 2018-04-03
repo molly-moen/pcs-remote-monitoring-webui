@@ -2,20 +2,22 @@
 
 @import 'src/styles/themes';
 @import 'src/styles/mixins';
-.pcs-toggle {
-  display: inline-block;
-  svg {
-    height: 15px;
-    cursor: pointer;
-    &.disabled { cursor: auto; }
+.toggle-btn-div {
+  .pcs-toggle {
+    display: inline-block;
+    svg {
+      height: 15px;
+      cursor: pointer;
+      &.disabled { cursor: auto; }
+    }
   }
 
   @include themify($themes) {
-    .cls-1 {
+    .cls-1  {
         stroke: themed('colorToggleBackground');
       }
 
-    .cls-2 {
+     .cls-2 {
       fill: themed('colorContentText');
       stroke: themed('colorContentText');
     }

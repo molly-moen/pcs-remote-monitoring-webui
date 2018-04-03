@@ -39,7 +39,11 @@ export class ToggleBtn extends React.Component  {
     } else {
       imgProps.className += ' disabled';
     }
-    return (<Svg {...imgProps} alt="" />);
+    return (
+      <div className="toggle-btn-div">
+        <Svg {...imgProps} alt="" />
+      </div>
+  );
   }
 
 }

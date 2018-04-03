@@ -20,12 +20,12 @@ export const FileInput = ({ label, acceptTypes, className, ...props }) => {
 
   const { t } = props;
   return (
-    <span className={joinClasses(className, "file-upload")}>
+    <div className={joinClasses(className, "file-upload")}>
       <Btn className="upload-btn" svg={svgs.upload} onClick={fileInputClick}>
         {t('fileInput.upload')}
       </Btn>
       <input className="input-file" ref={(input) => { fileInput = input; }} type="file" accept={acceptTypes} {...props} />
-    </span>
+    </div>
   );
 
 }

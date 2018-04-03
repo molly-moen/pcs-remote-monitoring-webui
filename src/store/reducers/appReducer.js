@@ -69,8 +69,15 @@ export const epics = createEpicScenario({
       ConfigService.setLogo(fromAction.payload.logo, fromAction.payload.headers)
         .map(toActionCreator(redux.actions.setLogo, fromAction))
         .catch(handleError(fromAction))
-  }
+  },
 
+  fetchReleaseInformation : {
+    type: 'FETCH_RELEASE_INFO',
+    epic: fromAction =>
+      GitHubService.getReleaseInformation()
+        .map(toActionCreator(redux.actions.getReleaseInformation, fromAction))
+        .catch(handleError(fromAction))
+  }
 });
 // ========================= Epics - END
 
@@ -85,10 +92,11 @@ const initialState = {
   deviceGroups: {},
   activeDeviceGroupId: undefined,
   theme: 'dark',
-  version: '0.0.1', // TODO: Version should be requested from the service
+  version: undefined, // TODO: Version should be requested from the service
+  releaseNotesLink: undefined,
   logo: undefined,
-  name: undefined
-
+  name: undefined,
+  logoIsDefault: true
 };
 
 const updateDeviceGroupsReducer = (state, { payload, fromAction }) => {
@@ -110,7 +118,15 @@ const updateThemeReducer = (state, { payload }) => {
 const logoReducer = (state, { payload }) => {
   return update(state, {
     logo: { $set: payload.logo ? payload.logo : svgs.contoso },
-    name: { $set: payload.name ? payload.name : 'Contoso' }
+    name: { $set: payload.name ? payload.name : 'Contoso' },
+    logoIsDefault: { $set: payload.logo ? false : true }
+  })
+};
+
+const versionReducer = (state, {payload}) => {
+  return update(state, {
+    version: { $set: payload.version },
+    releaseNotesLink: { $set: payload.releaseNotesLink}
   })
 };
 
@@ -126,7 +142,8 @@ export const redux = createReducerScenario({
   registerError: { type: 'APP_REDUCER_ERROR', reducer: errorReducer },
   isFetching: { multiType: fetchableTypes, reducer: pendingReducer },
   setLogo: { type: 'SET_LOGO', reducer: logoReducer },
-  getLogo: { type: 'GET_LOGO', reducer: logoReducer }
+  getLogo: { type: 'GET_LOGO', reducer: logoReducer },
+  getVersion: {type: 'GET_VERSION', reducer: versionReducer}
 });
 
 export const reducer = { app: redux.getReducer(initialState) };
@@ -156,4 +173,7 @@ export const getActiveDeviceGroupConditions = createSelector(
 );
 export const getLogo = state => getAppReducer(state).logo;
 export const getName = state => getAppReducer(state).name;
+export const getLogoIsDefault = state => getAppReducer(state).logoIsDefault;
+export const getVersionReducer = state => getAppReducer(state).version;
+export const getReleaseNotesReducer = state => getAppReducer(state).releaseNotesLink;
 // ========================= Selectors - END
