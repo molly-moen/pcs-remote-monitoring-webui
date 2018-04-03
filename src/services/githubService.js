@@ -3,12 +3,16 @@
 import Config from 'app.config';
 import { HttpClient } from './httpClient';
 
+import { toGitHubModel } from './models';
+
 
 const ENDPOINT = Config.serviceUrls.githubReleases;
 
-export const GitHubService {
+export class GitHubService {
+
+  /** Get the current release version and release notes link. */
   static getReleaseInfo() {
-    return HttpClient.get(ENDPOINT)
+    return HttpClient.get(ENDPOINT, {}, false)
     .map(toGitHubModel);
   }
 }

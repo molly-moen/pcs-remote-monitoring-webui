@@ -8,7 +8,8 @@ import {
   getVersion,
   getLogo,
   getLogoIsDefault,
-  getName
+  getName,
+  getReleaseNotes
 } from 'store/reducers/appReducer';
 import { Settings } from './settings';
 import { epics as appEpics } from 'store/reducers/appReducer';
@@ -18,7 +19,8 @@ const mapStateToProps = state => ({
   version: getVersion(state),
   logo: getLogo(state),
   name: getName(state),
-  logoIsDefault: getLogoIsDefault(state)
+  logoIsDefault: getLogoIsDefault(state),
+  releaseNotes: getReleaseNotes(state)
 });
 
 const mapDispatchToProps = dispatch => ({
