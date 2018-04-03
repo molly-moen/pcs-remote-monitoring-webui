@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft. All rights reserved.
 
+import CancelXIconPath from 'assets/icons/cancelX.svg';
 import CaratIconPath from 'assets/icons/carat.svg';
 import CheckmarkIconPath from 'assets/icons/checkmark.svg';
 import ChevronIconPath from 'assets/icons/chevron.svg';
@@ -39,6 +40,7 @@ import TabMaintenanceIconPath from 'assets/icons/tabMaintenance.svg';
 import TabRulesIconPath from 'assets/icons/tabRules.svg';
 import TrashPath from 'assets/icons/trash.svg';
 import UploadIconPath from 'assets/icons/upload.svg';
+import TrashIconPath from 'assets/icons/trash.svg';
 import WarningIconPath from 'assets/icons/warning.svg';
 import XIconPath from 'assets/icons/x.svg';
 
@@ -58,6 +60,7 @@ export const svgs = {
     prototyping: DevicePrototypingIconPath,
     truck: DeviceTruckIconPath
   },
+  cancelX: CancelXIconPath,
   carat: CaratIconPath,
   checkmark: CheckmarkIconPath,
   chevron: ChevronIconPath,
@@ -87,6 +90,7 @@ export const svgs = {
   simulatedDevice: SimulatedDeviceIconPath,
   trash: TrashPath,
   upload: UploadIconPath,
+  trash: TrashIconPath,
   warning: WarningIconPath,
   x: XIconPath
 };
