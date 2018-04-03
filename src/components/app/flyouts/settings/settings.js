@@ -111,7 +111,8 @@ export class Settings extends Component {
     const stillInitializing = currSimulationState === undefined;
     const hasChanged = !stillInitializing && (currSimulationState !== desiredSimulationState
       || logoFile !== undefined || applicationName !== undefined);
-    const simulationLabel = hasChanged ? this.desiredSimulationLabel[desiredSimulationState] : this.currSimulationLabel[currSimulationState];
+    const hasSimulationChanged = !stillInitializing && (currSimulationState !== desiredSimulationState)
+    const simulationLabel = hasSimulationChanged ? this.desiredSimulationLabel[desiredSimulationState] : this.currSimulationLabel[currSimulationState];
 
     return (
       <Flyout.Container>
