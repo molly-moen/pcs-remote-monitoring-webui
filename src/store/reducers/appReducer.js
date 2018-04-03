@@ -96,7 +96,7 @@ const initialState = {
   deviceGroups: {},
   activeDeviceGroupId: undefined,
   theme: 'dark',
-  version: undefined, // TODO: Version should be requested from the service
+  version: undefined,
   releaseNotesUrl: undefined,
   logo: undefined,
   name: undefined,

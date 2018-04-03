@@ -65,19 +65,23 @@ class PlatformSettings extends React.Component {
           </div>
           <div className="replace-logo">{t('platformSettings.replaceLogo')}</div>
           <div className="upload-btn-container">
-            <FileInput className="upload-button" classForLabel="description" isEdit={true} onChange={this.onUpload} accept=".jpg, .jpeg, .png, .svg" label={t('platformSettings.upload')} t={t}></FileInput>
-            <div className="file-upload-feedback"> {isValidFile ?
-              <Svg className="checkmark" path={svgs.checkmark} alt={t('platformSettings.checkmark')} />
-              :
-              fileName && <Svg className="invalid-file-x" path={svgs.x} alt={t('platformSettings.error')} />
-            } </div>
+            <FileInput className="upload-button" classForLabel="description" isEdit={true} onChange={this.onUpload}
+              accept=".jpg, .jpeg, .png, .svg" label={t('platformSettings.upload')} t={t} />
+            <div className="file-upload-feedback">
+              {isValidFile ?
+                <Svg className="checkmark" path={svgs.checkmark} alt={t('platformSettings.checkmark')} />
+                :
+                fileName && <Svg className="invalid-file-x" path={svgs.x} alt={t('platformSettings.error')} />
+              }
+            </div>
             <div className={fileNameClass}>{fileName}</div>
           </div>
           {!isValidFile && fileName &&
             <div className="upload-error-message">
               <Svg className="upload-error-asterisk" path={svgs.error} alt={t('platformSettings.error')} />
               {t('platformSettings.uploadError')}
-            </div>}
+            </div>
+          }
           <Section.Content className="platform-section-description show-line-breaks">{t('platformSettings.logoDescription')}</Section.Content>
         </div>
         <Section.Content className="name-input-container">
