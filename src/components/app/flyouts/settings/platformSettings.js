@@ -4,8 +4,6 @@ import React from 'react';
 
 import { Btn, FormControl, Indicator, Svg, FileInput } from 'components/shared';
 import _ from 'lodash';
-import { connect } from 'react-redux';
-import { bindActionCreators } from "redux";
 import Flyout from 'components/shared/flyout';
 
 import './platformSettings.css';
@@ -27,9 +25,6 @@ class PlatformSettings extends React.Component {
       validating: false,
       isValidFile: false
     }
-
-    const { t } = this.props;
-    //this.props.actions.getLogo();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -53,11 +48,54 @@ class PlatformSettings extends React.Component {
     );
   };
 
-  render() {
+  renderUploadContainer = () => {
     const fileName = this.state.newLogoName
     const { t } = this.props;
-    const { logoIsDefault, validating, isValidFile } = this.state;
+    const { logoIsDefault, isValidFile } = this.state;
+    const fileNameClass = isValidFile ? 'file-name-valid' : 'file-name-invalid';
+    return (
+      <div className="upload-logo-name-container">
+        <div className="upload-logo-container">
+          <div className="image-preview">
+            {logoIsDefault ?
+              this.renderSvgLogo(this.state.currentLogo)
+              :
+              <img className="logo-img" src={this.state.previewLogo} alt={t('platformSettings.previewLogo')} />
+            }
+          </div>
+          <div className="replace-logo">{t('platformSettings.replaceLogo')}</div>
+          <div className="upload-btn-container">
+            <FileInput className="upload-button" classForLabel="description" isEdit={true} onChange={this.onUpload}
+              accept=".jpg, .jpeg, .png, .svg" label={t('platformSettings.upload')} t={t} />
+            <div className="file-upload-feedback">
+              {isValidFile ?
+                <Svg className="checkmark" path={svgs.checkmark} alt={t('platformSettings.checkmark')} />
+                :
+                fileName && <Svg className="invalid-file-x" path={svgs.x} alt={t('platformSettings.error')} />
+              }
+            </div>
+            <div className={fileNameClass}>{fileName}</div>
+          </div>
+          {!isValidFile && fileName &&
+            <div className="upload-error-message">
+              <Svg className="upload-error-asterisk" path={svgs.error} alt={t('platformSettings.error')} />
+              {t('platformSettings.uploadError')}
+            </div>
+          }
+          <Section.Content className="platform-section-description show-line-breaks">{t('platformSettings.logoDescription')}</Section.Content>
+        </div>
+        <Section.Content className="name-input-container">
+          <div className="section-subtitle">{t('platformSettings.applicationName')}</div>
+          <FormControl type="text" className="name-input long" classForLabel="description"
+            isEdit={true} placeholder={this.state.currentApplicationName} onChange={this.onNameChange} />
+        </Section.Content>
+      </div>
+    );
+  }
 
+  render() {
+    const { t } = this.props;
+    const { logoIsDefault, validating } = this.state;
     return (
       <Section.Container collapsable={true} className="setting-section">
         <Section.Header>{t('platformSettings.nameAndLogo')}</Section.Header>
@@ -72,38 +110,7 @@ class PlatformSettings extends React.Component {
                   <Indicator size='small' />
                 </div>
                 :
-                <div className="upload-logo-name-container">
-                  <div className="upload-logo-container">
-                    <div className="image-preview">
-                      {logoIsDefault ?
-                        this.renderSvgLogo(this.state.currentLogo)
-                        :
-                        <img className="preview-logo" src={this.state.previewLogo} alt={t('platformSettings.previewLogo')} />
-                      }
-                    </div>
-                    <div className="replace-logo">{t('platformSettings.replaceLogo')}</div>
-                    <div className="upload-btn-container">
-                      <FileInput className="upload-button" classForLabel="description" isEdit={true} onChange={this.onUpload} accept=".jpg, .jpeg, .png, .svg" label={t('platformSettings.upload')} t={t}></FileInput>
-                      <div className="file-upload-feedback"> {isValidFile ?
-                        <Svg className="checkmark-img" path={svgs.checkmark} alt={t('platformSettings.checkmark')} />
-                        :
-                        fileName && <Svg className="invalid-file-x" path={svgs.x} alt={t('platformSettings.error')} />
-                      } </div>
-                      <div className="file-name">{fileName}</div>
-                    </div>
-                      {!isValidFile && fileName &&
-                        <div className="upload-error-message">
-                          <Svg className="upload-error-asterisk" path={svgs.error} alt={t('platformSettings.error')} />
-                          {t('platformSettings.uploadError')}
-                        </div>}
-                    <Section.Content className="platform-section-description show-line-breaks">{t('platformSettings.logoDescription')}</Section.Content>
-                  </div>
-                  <Section.Content className="name-input-container">
-                    <div className="section-subtitle">{t('platformSettings.applicationName')}</div>
-                    <FormControl type="text" className="name-input long" classForLabel="description"
-                      isEdit={true} placeholder={this.state.currentApplicationName} onChange={this.onNameChange} />
-                  </Section.Content>
-                </div>
+                this.renderUploadContainer()
               :
               <div>
                 <div className="current-logo-container">
@@ -117,7 +124,7 @@ class PlatformSettings extends React.Component {
                     <div className="name-container">{this.state.currentApplicationName}</div>
                   </div>
                   <div className="edit-button-div">
-                    <Btn svg={svgs.edit} onClick={this.enableEdit} className="edit-name-button">{t('platformSettings.edit')}</Btn>
+                    <Btn svg={svgs.edit} onClick={this.enableEdit} className="edit-button">{t('platformSettings.edit')}</Btn>
                   </div>
                 </div>
               </div>
@@ -135,7 +142,7 @@ class PlatformSettings extends React.Component {
   }
 
   onNameChange = (e) => {
-    var { name, value } = e.target;
+    var { value } = e.target;
     if (value.length === 0) {
       value = undefined;
     }
@@ -159,29 +166,24 @@ class PlatformSettings extends React.Component {
     } else {
       this.setState({
         previewLogo: this.state.currentLogo,
-        newLogoName: undefined,
+        newLogoName: file !== undefined ? file.name : undefined,
         logoIsDefault: this.props.logoIsDefault,
         validating: false,
         isValidFile: false
       });
-      if (file !== undefined) {
-        this.setState({
-          newLogoName: file.name
-        });
-        file = undefined;
-      }
+      file = undefined;
     }
     this.props.onUpload(file);
   };
 
+  /** Verify if given file is of type .png, .jpeg, .jpg, or .svg */
   isValidLogoFile(file) {
-    var fileName = file.name;
-    var nameParts = fileName.split('.');
+    var nameParts = file.name.split('.');
     var length = nameParts.length;
     var lastSection = nameParts[length - 1];
     var validExtensions = ['png', 'jpeg', 'jpg', 'svg'];
     for (var i = 0; i < validExtensions.length; i++) {
-      if (lastSection == validExtensions[i]) {
+      if (lastSection === validExtensions[i]) {
         return true;
       }
     }
@@ -189,17 +191,4 @@ class PlatformSettings extends React.Component {
   }
 }
 
-// const mapStateToProps = state => {
-//   return {
-//     application: state.applicationReducer.application
-//   };
-// };
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     actions: bindActionCreators(actions, dispatch)
-//   };
-// };
 export default (PlatformSettings);
-
-//export default connect(mapStateToProps, mapDispatchToProps)(PlatformSettings);

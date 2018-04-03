@@ -14,23 +14,24 @@
 
   @include themify($themes) {
     .cls-1  {
-        stroke: themed('colorToggleBackground');
+        stroke: themed('colorEnableToggleBackground');
       }
 
-     .cls-2 {
-      fill: themed('colorContentText');
-      stroke: themed('colorContentText');
+     .enable-toggle .cls-2, .disable-toggle .cls-2 {
+      fill: themed('colorToggle');
+      stroke: themed('colorToggle');
     }
-  }
-}
 
-.disable-toggle {
-  @include themify($themes) {
-    fill: themed('colorFlyoutBackground');
-  }
-}
-.enable-toggle {
-  @include themify($themes) {
-    fill: themed('colorToggleBackground');
+    .disable-toggle, .disabled {
+      fill: themed('colorDisableToggleBackground');
+    }
+
+    .enable-toggle {
+      fill: themed('colorEnableToggleBackground');
+    }
+
+    .disabled {
+      stroke: themed('colorDisabledLine');
+    }
   }
 }

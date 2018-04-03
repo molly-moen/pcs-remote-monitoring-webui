@@ -2,7 +2,7 @@
 
 import 'rxjs';
 import { Observable } from 'rxjs';
-import { ConfigService } from 'services';
+import { ConfigService, GitHubService } from 'services';
 import { schema, normalize } from 'normalizr';
 import { createSelector } from 'reselect';
 import update from 'immutability-helper';
@@ -31,7 +31,8 @@ export const epics = createEpicScenario({
     epic: () => [
       epics.actions.fetchDeviceGroups(),
       redux.actions.updateActiveDeviceGroup(),
-      epics.actions.fetchLogo()
+      epics.actions.fetchLogo(),
+      epics.actions.fetchReleaseInformation()
     ]
   },
 
@@ -55,6 +56,7 @@ export const epics = createEpicScenario({
         .map(createAction('EPIC_APP_ROUTE_CHANGE'))
   },
 
+  /** Get the logo and company name from the config service */
   fetchLogo: {
     type: 'FETCH_LOGO',
     epic: fromAction =>
@@ -63,6 +65,7 @@ export const epics = createEpicScenario({
         .catch(handleError(fromAction))
   },
 
+  /** Set the logo and/or company name in the config service */
   setLogo: {
     type: 'UPDATE_LOGO',
     epic: fromAction =>
@@ -71,10 +74,11 @@ export const epics = createEpicScenario({
         .catch(handleError(fromAction))
   },
 
-  fetchReleaseInformation : {
+  /** Get the current release version and release notes link from GitHub */
+  fetchReleaseInformation: {
     type: 'FETCH_RELEASE_INFO',
     epic: fromAction =>
-      GitHubService.getReleaseInformation()
+      GitHubService.getReleaseInfo()
         .map(toActionCreator(redux.actions.getReleaseInformation, fromAction))
         .catch(handleError(fromAction))
   }
@@ -92,8 +96,8 @@ const initialState = {
   deviceGroups: {},
   activeDeviceGroupId: undefined,
   theme: 'dark',
-  version: undefined, // TODO: Version should be requested from the service
-  releaseNotesLink: undefined,
+  version: undefined,
+  releaseNotesUrl: undefined,
   logo: undefined,
   name: undefined,
   logoIsDefault: true
@@ -123,10 +127,10 @@ const logoReducer = (state, { payload }) => {
   })
 };
 
-const versionReducer = (state, {payload}) => {
+const releaseReducer = (state, { payload }) => {
   return update(state, {
     version: { $set: payload.version },
-    releaseNotesLink: { $set: payload.releaseNotesLink}
+    releaseNotesUrl: { $set: payload.releaseNotesUrl }
   })
 };
 
@@ -143,7 +147,7 @@ export const redux = createReducerScenario({
   isFetching: { multiType: fetchableTypes, reducer: pendingReducer },
   setLogo: { type: 'SET_LOGO', reducer: logoReducer },
   getLogo: { type: 'GET_LOGO', reducer: logoReducer },
-  getVersion: {type: 'GET_VERSION', reducer: versionReducer}
+  getReleaseInformation: { type: 'GET_VERSION', reducer: releaseReducer }
 });
 
 export const reducer = { app: redux.getReducer(initialState) };
@@ -174,6 +178,5 @@ export const getActiveDeviceGroupConditions = createSelector(
 export const getLogo = state => getAppReducer(state).logo;
 export const getName = state => getAppReducer(state).name;
 export const getLogoIsDefault = state => getAppReducer(state).logoIsDefault;
-export const getVersionReducer = state => getAppReducer(state).version;
-export const getReleaseNotesReducer = state => getAppReducer(state).releaseNotesLink;
+export const getReleaseNotes = state => getAppReducer(state).releaseNotesUrl;
 // ========================= Selectors - END

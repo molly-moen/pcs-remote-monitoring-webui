@@ -8,3 +8,4 @@ export * from './iotHubManagerService';
 export * from './telemetryService';
 export * from './configService';
 export * from './deviceSimulationService';
+export * from './gitHubService';

@@ -6,14 +6,6 @@ import { Svg } from 'components/shared';
 
 import { svgs } from 'utilities';
 
-import _ from 'lodash';
-import { connect } from 'react-redux';
-import { bindActionCreators } from "redux";
-import {
-  epics as appEpics,
-  getLogo,
-  getName
-} from 'store/reducers/appReducer';
 import './navigation.css';
 
 /** A window size less than this will automatically collapse the left nav */
@@ -44,43 +36,12 @@ export class Navigation extends Component {
 
     this.state = {
       collapsed: false,
-      lastWidth: window.innerWidth,
-      logoPath: undefined,
-      stillInitializing: true
+      lastWidth: window.innerWidth
     };
 
     // Collapse the nav if the window width is too small
     window.addEventListener('resize', this.collapseNav);
   }
-
-  componentWillReceiveProps(nextProps) {
-    const { logo, name } = nextProps;
-    // if(!logoIsSvg) {
-    //   this.setState({
-    //     logoPath: URL.createObjectURL(logo)
-    //   });
-    // } else {
-    //   var fileReader = new FileReader();
-    //   fileReader.addEventListener("loadend", function() {
-    //     var text = fileReader.result;
-    //     this.setState({
-    //       logoPath: text,
-    //       stillInitializing: false
-    //     });
-    //   });
-    //   fileReader.readAsText(logo);
-    }
-    // if (!_.isEqual(application, this.props.application)) {
-    //   this.setState({
-    //     logo: application.logo,
-    //     name: application.name
-    //   });
-    // }
-    // if (this.state.stillInitializing) {
-    //   this.setState({
-    //     stillInitializing: false
-    //   });
-    // }
 
   collapseNav = () => {
     if (
@@ -104,11 +65,10 @@ export class Navigation extends Component {
     return (
       <nav className={`app-nav ${isExpanded && 'expanded'}`}>
         <div className="nav-item company">
-          {/* <NavIcon path={svgs.contoso} /> */}
-          { logoIsDefault ?
+          {logoIsDefault ?
             <NavIcon path={logo} />
             :
-            <div className = "nav-item-icon">
+            <div className="nav-item-icon">
               <img src={logo} alt="Logo" />
             </div>
           }
@@ -117,7 +77,7 @@ export class Navigation extends Component {
         <button className="nav-item hamburger" onClick={this.toggleExpanded} aria-label="Hamburger">
           <NavIcon path={svgs.hamburger} />
         </button>
-        { this.props.tabs.map((tabProps, i) => <TabLink {...tabProps} t={this.props.t} key={i} />) }
+        {this.props.tabs.map((tabProps, i) => <TabLink {...tabProps} t={this.props.t} key={i} />)}
       </nav>
     );
   }
