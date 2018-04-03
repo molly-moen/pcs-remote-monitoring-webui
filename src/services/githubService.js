@@ -6,7 +6,7 @@ import { HttpClient } from './httpClient';
 import { toGitHubModel } from './models';
 
 
-const ENDPOINT = Config.serviceUrls.githubReleases;
+const ENDPOINT = Config.serviceUrls.gitHubReleases;
 
 export class GitHubService {
 

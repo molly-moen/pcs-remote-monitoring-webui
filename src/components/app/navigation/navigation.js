@@ -36,9 +36,7 @@ export class Navigation extends Component {
 
     this.state = {
       collapsed: false,
-      lastWidth: window.innerWidth,
-      logoPath: undefined,
-      stillInitializing: true
+      lastWidth: window.innerWidth
     };
 
     // Collapse the nav if the window width is too small

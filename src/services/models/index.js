@@ -6,4 +6,4 @@ export * from './ajaxModels';
 export * from './iotHubManagerModels';
 export * from './telemetryModels';
 export * from './configModels';
-export * from './githubModels';
+export * from './gitHubModels';

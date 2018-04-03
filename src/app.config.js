@@ -8,7 +8,7 @@ const Config = {
     iotHubManager: `${baseUrl}/iothubmanager/v1/`,
     telemetry: `${baseUrl}/telemetry/v1/`,
     deviceSimulation: `${baseUrl}/devicesimulation/v1/`,
-    githubReleases: 'https://api.github.com/repos/Azure/azure-iot-pcs-remote-monitoring-dotnet/releases'
+    gitHubReleases: 'https://api.github.com/repos/Azure/azure-iot-pcs-remote-monitoring-dotnet/releases'
   },
   // Constants
   defaultAjaxTimeout: 10000, // 10s
