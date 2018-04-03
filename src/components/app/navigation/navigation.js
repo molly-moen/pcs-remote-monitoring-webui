@@ -44,7 +44,9 @@ export class Navigation extends Component {
 
     this.state = {
       collapsed: false,
-      lastWidth: window.innerWidth
+      lastWidth: window.innerWidth,
+      logoPath: undefined,
+      stillInitializing: true
     };
 
     // Collapse the nav if the window width is too small
@@ -53,6 +55,21 @@ export class Navigation extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { logo, name } = nextProps;
+    // if(!logoIsSvg) {
+    //   this.setState({
+    //     logoPath: URL.createObjectURL(logo)
+    //   });
+    // } else {
+    //   var fileReader = new FileReader();
+    //   fileReader.addEventListener("loadend", function() {
+    //     var text = fileReader.result;
+    //     this.setState({
+    //       logoPath: text,
+    //       stillInitializing: false
+    //     });
+    //   });
+    //   fileReader.readAsText(logo);
+    }
     // if (!_.isEqual(application, this.props.application)) {
     //   this.setState({
     //     logo: application.logo,
@@ -64,7 +81,6 @@ export class Navigation extends Component {
     //     stillInitializing: false
     //   });
     // }
-  }
 
   collapseNav = () => {
     if (
@@ -84,15 +100,18 @@ export class Navigation extends Component {
 
   render() {
     const isExpanded = !this.state.collapsed;
-    const { name, logo } = this.props;
-
+    const { name, logo, logoIsDefault } = this.props;
     return (
       <nav className={`app-nav ${isExpanded && 'expanded'}`}>
         <div className="nav-item company">
           {/* <NavIcon path={svgs.contoso} /> */}
-          <div className = "nav-item-icon">
-            <img src={logo} alt="Logo" />
-          </div>
+          { logoIsDefault ?
+            <NavIcon path={logo} />
+            :
+            <div className = "nav-item-icon">
+              <img src={logo} alt="Logo" />
+            </div>
+          }
           <div className="nav-item-text">{name}</div>
         </div>
         <button className="nav-item hamburger" onClick={this.toggleExpanded} aria-label="Hamburger">

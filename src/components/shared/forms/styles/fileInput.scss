@@ -1,20 +1,29 @@
-
-  // Copyright (c) Microsoft. All rights reserved.
+// Copyright (c) Microsoft. All rights reserved.
 @import 'src/styles/themes';
 @import 'src/styles/mixins';
-
-
   .file-upload {
+    display: inline-block;
     .upload-btn {
+      @include rem-fallback(padding, 0px, 8px);
+      font-family: $fontSelawikBold;
+      svg {
+        @include rem-fallback(width, 11px);
+      }
+    }
 
+    @include themify($themes) {
+      .upload-btn {
+        background-color: themed('colorLightestFirst');
+        color: themed('colorLowestFirst');
 
-     @include themify($themes) {
-       background-color: themed('colorMidFirst');
-     }
-      color: black;
+        svg {
+          fill: themed('colorLowestFirst');
+        }
+      }
     }
 
     .input-file {
       display: none;
     }
+
   }

@@ -6,12 +6,14 @@ import {
   redux as appRedux,
   getLogo,
   getName,
+  getLogoIsDefault,
 } from 'store/reducers/appReducer';
 import { Navigation } from './navigation';
 
 const mapStateToProps = state => ({
   logo: getLogo(state),
-  name: getName(state)
+  name: getName(state),
+  logoIsDefault: getLogoIsDefault(state)
 });
 
 const NavigationContainer = translate()(connect(mapStateToProps)(Navigation));

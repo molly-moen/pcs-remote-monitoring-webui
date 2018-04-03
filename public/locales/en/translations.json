@@ -166,6 +166,8 @@
     "applicationName": "Application Name",
     "currentLogo": "Current Logo",
     "edit": "Edit",
-    "checkmark": "Checkmark"
+    "checkmark": "Checkmark",
+    "uploadError": "Unable to upload file, please check the file type and try again",
+    "error": "Error"
   }
 }

@@ -2,6 +2,7 @@
 
 import CancelXIconPath from 'assets/icons/cancelX.svg';
 import CaratIconPath from 'assets/icons/carat.svg';
+import CheckmarkIconPath from 'assets/icons/checkmark.svg';
 import ChevronIconPath from 'assets/icons/chevron.svg';
 import ChevronRightIconPath from 'assets/icons/chevronRight.svg';
 import ColonIconPath from 'assets/icons/colon.svg';
@@ -60,6 +61,7 @@ export const svgs = {
   },
   cancelX: CancelXIconPath,
   carat: CaratIconPath,
+  checkmark: CheckmarkIconPath,
   chevron: ChevronIconPath,
   chevronRight: ChevronRightIconPath,
   colon: ColonIconPath,

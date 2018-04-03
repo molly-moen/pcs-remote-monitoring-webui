@@ -1,62 +1,124 @@
 // Copyright (c) Microsoft. All rights reserved.
 @import 'src/styles/themes';
 @import 'src/styles/mixins';
+.setting-section {
+  .upload-logo-name-container {
+    .upload-logo-container {
+      .image-preview {
+        @include square-px-rem(24px);
+        @include rem-fallback(margin-bottom, 8px);
+        .logo-svg  {
+          justify-content: flex-start;
+        }
+      }
 
-.upload-btn-container {
-  display: flex;
-  justify-content: flex-start;
-  height: 24px;
-  margin-top: 12px;
-  margin-bottom: 12px;
+      .section-subtitle {
+        @include rem-font-size(16px);
+      }
 
-  .file-upload-feedback {
-    padding-left: 16px;
-    padding-right: 12px;
+      .replace-logo {
+        font-family: $fontSelawikLight;
+        @include rem-font-size(14px);
+      }
+    }
+
+    .name-input-container {
+      @include rem-font-size(14px);
+      .section-subtitle{
+        @include rem-fallback(margin-bottom, 16px);
+      }
+      .name-input {
+        width: 50%;
+      }
+    }
+    .upload-btn-container {
+      display: flex;
+      justify-content: flex-start;
+      @include rem-fallback(margin-bottom, 12px);
+      @include rem-fallback(margin-top, 12px);
+
+      .file-upload-feedback {
+        @include rem-fallback(padding-left, 16px);
+        @include rem-fallback(padding-right, 12px);
+
+        .checkmark-img svg, .invalid-file-x svg{
+          @include rem-fallback(margin-top, 6px);
+          @include rem-fallback(height, 14px);
+        }
+      }
+
+      .file-name {
+        @include rem-fallback(margin-top, 4px);
+        @include rem-font-size(14px);
+      }
+    }
+    .show-line-breaks {
+      white-space: pre-wrap;
+      @include rem-fallback(tab-size, 16px);
+    }
+
+    .upload-error-message {
+      display: flex;
+      @include rem-fallback(margin-top, 4px);
+      @include rem-fallback(margin-bottom, 16px);
+      @include rem-font-size(14px);
+      .upload-error-asterisk svg {
+        @include rem-fallback(height, 11px);
+        @include rem-fallback(margin-right, 4px);
+      }
+    }
   }
 
-  .checkmark-img {
-    height: 14px;
+  .current-logo-container {
+    display: flex;
+    justify-content: space-between;
+    @include rem-fallback(margin-bottom, 12px);
+    @include rem-fallback(margin-top, 12px);
+    @include rem-font-size(16px);
+
+    .name-container {
+      @include rem-fallback(margin-bottom, 24px);
+    }
+    .current-logo-name {
+      display: flex;
+      justify-content: flex-start;
+    }
+    .current-logo {
+      @include rem-fallback(margin-right, 12px);
+      @include square-px-rem(24px);
+    }
+
+    .edit-name-button {
+      .btn-icon {
+        @include square-px-rem(16px);
+      }
+
+      .btn-text {
+        @include rem-font-size(16px);
+      }
+    }
   }
 
-  .file-name-span {
-    font-size: 14px;
-  }
-}
-
-.show-line-breaks {
-  white-space: pre-wrap;
-  tab-size: 16px;
-}
-
-.name-input {
-  width: 50%;
-}
-
-.replace-logo {
-  @include rem-font-size(14px);
-}
-
-.current-logo-container {
-  display: inline-block;
-  margin-top: 12px;
-  margin-bottom: 12px;
-  @include rem-font-size(16px);
-
-
-  .name-container {
-    margin-bottom: 24px;
+  .logo-svg svg {
+    @include square-px-rem(24px);
   }
 
-  .current-logo {
-    display: inline-block;
-    margin-right: 12px;
-    height: 24px;
-    width: 24px;
+  @include themify($themes) {
+    .logo-svg { fill: themed('colorHighest'); }
+    .name-container { color: themed('colorHighest'); }
+
+    .upload-logo-container .replace-logo { color: themed('colorContentText') }
+
+    .edit-name-button .btn-icon svg { fill: themed('colorLightestFirst'); }
+    .file-name-span { color: themed('colorHighest'); }
+
+    .invalid-file-x {
+      fill: themed('colorError');
+      stroke: themed('colorError');
+    }
+    .upload-error-asterisk {
+      fill: themed('colorError');
+    }
   }
 
-  .edit-name-button {
-    float: right;
-    margin-left: 233px;
-
-  }
 }

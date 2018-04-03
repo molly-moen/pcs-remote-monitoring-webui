@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { Btn, FormControl, Indicator } from 'components/shared';
+import { Btn, FormControl, Indicator, Svg, FileInput } from 'components/shared';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
@@ -21,7 +21,11 @@ class PlatformSettings extends React.Component {
       currentApplicationName: this.props.name,
       stillInitializing: false,
       edit: false,
-      previewLogo: this.props.logo
+      previewLogo: this.props.logo,
+      newLogoName: undefined,
+      logoIsDefault: this.props.logoIsDefault,
+      validating: false,
+      isValidFile: false
     }
 
     const { t } = this.props;
@@ -43,9 +47,17 @@ class PlatformSettings extends React.Component {
     }
   }
 
+  renderSvgLogo = (logo) => {
+    return (
+      <Svg path={logo} className="logo-svg" />
+    );
+  };
+
   render() {
-    const fileName = this.state.logoFile ? this.state.logoFile.name : ''
+    const fileName = this.state.newLogoName
     const { t } = this.props;
+    const { logoIsDefault, validating, isValidFile } = this.state;
+
     return (
       <Section.Container collapsable={true} className="setting-section">
         <Section.Header>{t('platformSettings.nameAndLogo')}</Section.Header>
@@ -55,33 +67,58 @@ class PlatformSettings extends React.Component {
           :
           <Section.Content>
             {this.state.edit ?
-              <div>
-                <div className="upload-logo-container">
-                  <div className="image-preview">
-                    <img className="preview-logo" src={this.state.previewLogo} alt={t('platformSettings.previewLogo')} />
-                  </div>
-                  <div className="replace-logo">{t('platformSettings.replaceLogo')}</div>
-                  <div className="upload-btn-container">
-                    <FormControl type="file" className="upload-btn" classForLabel="description" isEdit={true} onChange={this.onUpload} accept=".jpg, .jpeg, .png, .svg" label={t('platformSettings.upload')} t={t}></FormControl>
-                    <span className="file-upload-feedback"> {this.state.logoFile && <img className="checkmark-img" src={svgs.CheckmarkSvg} alt={t('platformSettings.checkmark')} />} </span>
-                    <span className="file-name-span">{fileName}</span>
-                  </div>
-                  <div className="platform-section-description show-line-breaks">{t('platformSettings.logoDescription')}</div>
+              validating ?
+                <div className="upload-logo-name-container">
+                  <Indicator size='small' />
                 </div>
-                <div className="name-container">
-                  <div className="section-subtitle">{t('platformSettings.applicationName')}</div>
-                  <FormControl type="text" className="name-input" classForLabel="description"
-                    isEdit={true} placeholder={this.state.currentApplicationName} onChange={this.onNameChange} />
+                :
+                <div className="upload-logo-name-container">
+                  <div className="upload-logo-container">
+                    <div className="image-preview">
+                      {logoIsDefault ?
+                        this.renderSvgLogo(this.state.currentLogo)
+                        :
+                        <img className="preview-logo" src={this.state.previewLogo} alt={t('platformSettings.previewLogo')} />
+                      }
+                    </div>
+                    <div className="replace-logo">{t('platformSettings.replaceLogo')}</div>
+                    <div className="upload-btn-container">
+                      <FileInput className="upload-button" classForLabel="description" isEdit={true} onChange={this.onUpload} accept=".jpg, .jpeg, .png, .svg" label={t('platformSettings.upload')} t={t}></FileInput>
+                      <div className="file-upload-feedback"> {isValidFile ?
+                        <Svg className="checkmark-img" path={svgs.checkmark} alt={t('platformSettings.checkmark')} />
+                        :
+                        fileName && <Svg className="invalid-file-x" path={svgs.x} alt={t('platformSettings.error')} />
+                      } </div>
+                      <div className="file-name">{fileName}</div>
+                    </div>
+                      {!isValidFile && fileName &&
+                        <div className="upload-error-message">
+                          <Svg className="upload-error-asterisk" path={svgs.error} alt={t('platformSettings.error')} />
+                          {t('platformSettings.uploadError')}
+                        </div>}
+                    <Section.Content className="platform-section-description show-line-breaks">{t('platformSettings.logoDescription')}</Section.Content>
+                  </div>
+                  <Section.Content className="name-input-container">
+                    <div className="section-subtitle">{t('platformSettings.applicationName')}</div>
+                    <FormControl type="text" className="name-input long" classForLabel="description"
+                      isEdit={true} placeholder={this.state.currentApplicationName} onChange={this.onNameChange} />
+                  </Section.Content>
                 </div>
-              </div>
               :
               <div>
                 <div className="current-logo-container">
-                  <span className="current-image-span">
-                    <img className="current-logo" src={this.state.currentLogo} alt={t('platformSettings.currentLogo')} />
-                  </span>
-                  <span className="name-container">{this.state.currentApplicationName}</span>
-                  <Btn svg={svgs.edit} onClick={this.enableEdit} className="edit-name-button">{t('platformSettings.edit')}</Btn>
+                  <div className="current-logo-name">
+                    <div className="current-logo">
+                      {logoIsDefault ?
+                        this.renderSvgLogo(this.state.currentLogo)
+                        : <img className="current-logo" src={this.state.currentLogo} alt={t('platformSettings.currentLogo')} />
+                      }
+                    </div>
+                    <div className="name-container">{this.state.currentApplicationName}</div>
+                  </div>
+                  <div className="edit-button-div">
+                    <Btn svg={svgs.edit} onClick={this.enableEdit} className="edit-name-button">{t('platformSettings.edit')}</Btn>
+                  </div>
                 </div>
               </div>
             }
@@ -98,7 +135,7 @@ class PlatformSettings extends React.Component {
   }
 
   onNameChange = (e) => {
-    var {name, value} = e.target;
+    var { name, value } = e.target;
     if (value.length === 0) {
       value = undefined;
     }
@@ -106,18 +143,50 @@ class PlatformSettings extends React.Component {
   };
 
   onUpload = (e) => {
-    var file = e.target.files[0]
-    if (file == undefined) {
+    var file = e.target.files[0];
+    this.setState({
+      validating: true,
+      validFile: false
+    });
+    if (file !== undefined && this.isValidLogoFile(file)) {
       this.setState({
-        previewLogo: this.state.currentLogo
+        newLogoName: file.name,
+        previewLogo: URL.createObjectURL(file),
+        logoIsDefault: false,
+        validating: false,
+        isValidFile: true
       });
     } else {
       this.setState({
-        previewLogo:URL.createObjectURL(file)
+        previewLogo: this.state.currentLogo,
+        newLogoName: undefined,
+        logoIsDefault: this.props.logoIsDefault,
+        validating: false,
+        isValidFile: false
       });
+      if (file !== undefined) {
+        this.setState({
+          newLogoName: file.name
+        });
+        file = undefined;
+      }
     }
     this.props.onUpload(file);
   };
+
+  isValidLogoFile(file) {
+    var fileName = file.name;
+    var nameParts = fileName.split('.');
+    var length = nameParts.length;
+    var lastSection = nameParts[length - 1];
+    var validExtensions = ['png', 'jpeg', 'jpg', 'svg'];
+    for (var i = 0; i < validExtensions.length; i++) {
+      if (lastSection == validExtensions[i]) {
+        return true;
+      }
+    }
+    return false;
+  }
 }
 
 // const mapStateToProps = state => {

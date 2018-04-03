@@ -106,7 +106,7 @@ export class Settings extends Component {
   };
 
   render() {
-    const { t, onClose, theme, changeTheme, version, name, logo } = this.props;
+    const { t, onClose, theme, changeTheme, version, name, logo, logoIsDefault } = this.props;
     const nextTheme = theme === 'dark' ? 'light': 'dark';
     const { currSimulationState, desiredSimulationState, loading, logoFile, applicationName } = this.state;
     const stillInitializing = currSimulationState === undefined;
@@ -136,9 +136,9 @@ export class Settings extends Component {
                   value={desiredSimulationState}
                   disabled={stillInitializing}
                   onChange={this.onChange} />
-                <label className="simulation-toggle-label">
+                <div className="simulation-toggle-label">
                   { stillInitializing ? t('settingsFlyout.loading') : simulationLabel }
-                </label>
+                </div>
               </div>
             </Section.Content>
           </Section.Container>
@@ -152,7 +152,7 @@ export class Settings extends Component {
               </button>
             </Section.Content>
           </Section.Container>
-          <PlatformSettings t = {t} name = {name} logo = {logo} onUpload={this.onUpload} onNameChange={this.onNameChange}/>
+          <PlatformSettings onUpload={this.onUpload} onNameChange={this.onNameChange} {...this.props}/>
           <div className="btn-container">
           { !loading && hasChanged && <Btn onClick={this.apply} className="apply-button">{ t('settingsFlyout.apply') }</Btn> }
           <Btn svg={svgs.x} onClick={onClose} className="close-button">{hasChanged ? t('settingsFlyout.cancel') : t('settingsFlyout.close') }</Btn>
