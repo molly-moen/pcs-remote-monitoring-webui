@@ -1,13 +1,16 @@
 // Copyright (c) Microsoft. All rights reserved.
 @import 'src/styles/themes';
 @import 'src/styles/mixins';
+
 .setting-section {
   .upload-logo-name-container {
     .upload-logo-container {
       .image-preview {
         @include square-px-rem(24px);
         @include rem-fallback(margin-bottom, 8px);
-        .logo-svg  {
+
+        .logo-svg, .logo-img  {
+          @include square-px-rem(24px);
           justify-content: flex-start;
         }
       }
@@ -24,13 +27,17 @@
 
     .name-input-container {
       @include rem-font-size(14px);
-      .section-subtitle{
+
+      .section-subtitle {
+        font-family: $fontSelawikLight;
         @include rem-fallback(margin-bottom, 16px);
       }
+
       .name-input {
         width: 50%;
       }
     }
+
     .upload-btn-container {
       display: flex;
       justify-content: flex-start;
@@ -41,17 +48,19 @@
         @include rem-fallback(padding-left, 16px);
         @include rem-fallback(padding-right, 12px);
 
-        .checkmark-img svg, .invalid-file-x svg{
+        .checkmark svg, .invalid-file-x svg {
           @include rem-fallback(margin-top, 6px);
           @include rem-fallback(height, 14px);
         }
       }
 
-      .file-name {
+      .file-name-valid, .file-name-invalid {
+        font-family: $fontSelawikLight;
         @include rem-fallback(margin-top, 4px);
         @include rem-font-size(14px);
       }
     }
+
     .show-line-breaks {
       white-space: pre-wrap;
       @include rem-fallback(tab-size, 16px);
@@ -62,6 +71,8 @@
       @include rem-fallback(margin-top, 4px);
       @include rem-fallback(margin-bottom, 16px);
       @include rem-font-size(14px);
+      font-family: $fontSelawikLight;
+
       .upload-error-asterisk svg {
         @include rem-fallback(height, 11px);
         @include rem-fallback(margin-right, 4px);
@@ -79,16 +90,18 @@
     .name-container {
       @include rem-fallback(margin-bottom, 24px);
     }
+
     .current-logo-name {
       display: flex;
       justify-content: flex-start;
     }
+
     .current-logo {
       @include rem-fallback(margin-right, 12px);
       @include square-px-rem(24px);
     }
 
-    .edit-name-button {
+    .edit-button {
       .btn-icon {
         @include square-px-rem(16px);
       }
@@ -104,21 +117,19 @@
   }
 
   @include themify($themes) {
-    .logo-svg { fill: themed('colorHighest'); }
-    .name-container { color: themed('colorHighest'); }
+    .logo-svg, .checkmark svg { fill: themed('colorHighest'); }
 
-    .upload-logo-container .replace-logo { color: themed('colorContentText') }
+    .upload-logo-container .replace-logo, .upload-error-message { color: themed('colorContentText') }
 
     .edit-name-button .btn-icon svg { fill: themed('colorLightestFirst'); }
-    .file-name-span { color: themed('colorHighest'); }
+    .file-name-valid, .name-container { color: themed('colorHighest'); }
 
     .invalid-file-x {
       fill: themed('colorError');
       stroke: themed('colorError');
     }
-    .upload-error-asterisk {
-      fill: themed('colorError');
-    }
+
+    .upload-error-asterisk { fill: themed('colorError'); }
   }
 
 }

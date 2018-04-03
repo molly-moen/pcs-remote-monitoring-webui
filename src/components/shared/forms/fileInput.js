@@ -2,7 +2,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactSelect from 'react-select';
 
 import { Btn } from 'components/shared';
 import { joinClasses, svgs } from 'utilities';
@@ -17,7 +16,6 @@ export const FileInput = ({ label, acceptTypes, className, ...props }) => {
     fileInput.click();
   }
 
-
   const { t } = props;
   return (
     <div className={joinClasses(className, "file-upload")}>
@@ -27,7 +25,6 @@ export const FileInput = ({ label, acceptTypes, className, ...props }) => {
       <input className="input-file" ref={(input) => { fileInput = input; }} type="file" accept={acceptTypes} {...props} />
     </div>
   );
-
 }
 
 FileInput.propTypes = { className: PropTypes.string };

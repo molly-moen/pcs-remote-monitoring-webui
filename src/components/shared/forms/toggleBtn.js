@@ -1,14 +1,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 
 import React from 'react';
-import ReactSVG from 'react-svg';
 import { isFunc } from 'utilities';
 import { Svg } from 'components/shared';
 import { svgs } from 'utilities';
-
-import ToggleOnSvg from '../../../assets/icons/enableToggle.svg';
-import ToggleOffSvg from '../../../assets/icons/disableToggle.svg';
-import ToggleDisabledSvg from '../../../assets/icons/disable.svg';
 
 import './styles/toggleBtn.css';
 
