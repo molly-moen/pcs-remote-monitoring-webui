@@ -158,7 +158,6 @@ export class Settings extends Component {
             {loading && <Indicator size='small' />}
           </div>
         </Flyout.Content>
-
       </Flyout.Container>
     );
   }

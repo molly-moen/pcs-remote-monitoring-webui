@@ -61,17 +61,15 @@ export class Navigation extends Component {
 
   render() {
     const isExpanded = !this.state.collapsed;
-    const { name, logo, logoIsDefault } = this.props;
+    const { name, logo, isDefaultLogo } = this.props;
     return (
       <nav className={`app-nav ${isExpanded && 'expanded'}`}>
         <div className="nav-item company">
-          {logoIsDefault ?
-            <NavIcon path={logo} />
-            :
-            <div className="nav-item-icon">
-              <img src={logo} alt="Logo" />
-            </div>
-          }
+          {isDefaultLogo
+            ? <NavIcon path={logo} />
+            : <div className="nav-item-icon">
+                <img src={logo} alt="Logo" />
+              </div> }
           <div className="nav-item-text">{name}</div>
         </div>
         <button className="nav-item hamburger" onClick={this.toggleExpanded} aria-label="Hamburger">

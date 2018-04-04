@@ -18,11 +18,11 @@ class ApplicationSettings extends React.Component {
     this.state = {
       currentLogo: this.props.logo,
       currentApplicationName: this.props.name,
-      stillInitializing: false,
+      initializing: false,
       edit: false,
       previewLogo: this.props.logo,
       newLogoName: undefined,
-      logoIsDefault: this.props.logoIsDefault,
+      isDefaultLogo: this.props.isDefaultLogo,
       validating: false,
       isValidFile: false
     }
@@ -36,9 +36,9 @@ class ApplicationSettings extends React.Component {
         currentApplicationName: application.name
       });
     }
-    if (this.state.stillInitializing) {
+    if (this.state.initializing) {
       this.setState({
-        stillInitializing: false
+        initializing: false
       });
     }
   }
@@ -52,28 +52,24 @@ class ApplicationSettings extends React.Component {
   renderUploadContainer = () => {
     const fileName = this.state.newLogoName
     const { t } = this.props;
-    const { logoIsDefault, isValidFile } = this.state;
+    const { isDefaultLogo, isValidFile } = this.state;
     const fileNameClass = isValidFile ? 'file-name-valid' : 'file-name-invalid';
     return (
       <div className="upload-logo-name-container">
         <div className="upload-logo-container">
           <div className="image-preview">
-            {logoIsDefault ?
-              this.renderSvgLogo(this.state.currentLogo)
-              :
-              <img className="logo-img" src={this.state.previewLogo} alt={t('applicationSettings.previewLogo')} />
-            }
+            {isDefaultLogo
+              ? this.renderSvgLogo(this.state.currentLogo)
+              : <img className="logo-img" src={this.state.previewLogo} alt={t('applicationSettings.previewLogo')} />}
           </div>
           <div className="replace-logo">{t('applicationSettings.replaceLogo')}</div>
           <div className="upload-btn-container">
             <FileInput className="upload-button" classForLabel="description" isEdit={true} onChange={this.onUpload}
               accept={AcceptedFileTypes} label={t('applicationSettings.upload')} t={t} />
             <div className="file-upload-feedback">
-              {isValidFile ?
-                <Svg className="checkmark" path={svgs.checkmark} alt={t('applicationSettings.checkmark')} />
-                :
-                fileName && <Svg className="invalid-file-x" path={svgs.x} alt={t('applicationSettings.error')} />
-              }
+              {isValidFile
+                ? <Svg className="checkmark" path={svgs.checkmark} alt={t('applicationSettings.checkmark')} />
+                : fileName && <Svg className="invalid-file-x" path={svgs.x} alt={t('applicationSettings.error')} />}
             </div>
             <div className={fileNameClass}>{fileName}</div>
           </div>
@@ -96,29 +92,26 @@ class ApplicationSettings extends React.Component {
 
   render() {
     const { t } = this.props;
-    const { logoIsDefault, validating } = this.state;
+    const { isDefaultLogo, validating } = this.state;
     return (
       <Section.Container collapsable={true} className="setting-section">
         <Section.Header>{t('applicationSettings.nameAndLogo')}</Section.Header>
         <Section.Content>{t('applicationSettings.nameLogoDescription')}</Section.Content>
-        {this.state.stillInitializing ?
-          <Indicator size='medium' />
-          :
-          <Section.Content>
-            {this.state.edit ?
-              validating ?
-                <div className="upload-logo-name-container">
+        {this.state.initializing
+          ? <Indicator size='medium' />
+          : <Section.Content>
+            {this.state.edit
+              ? validating
+                ? <div className="upload-logo-name-container">
                   <Indicator size='small' />
                 </div>
-                :
-                this.renderUploadContainer()
-              :
-              <div>
+                : this.renderUploadContainer()
+              : <div>
                 <div className="current-logo-container">
                   <div className="current-logo-name">
                     <div className="current-logo">
-                      {logoIsDefault ?
-                        this.renderSvgLogo(this.state.currentLogo)
+                      {isDefaultLogo
+                        ? this.renderSvgLogo(this.state.currentLogo)
                         : <img className="current-logo" src={this.state.currentLogo} alt={t('applicationSettings.currentLogo')} />
                       }
                     </div>
@@ -156,11 +149,11 @@ class ApplicationSettings extends React.Component {
       validating: true,
       validFile: false
     });
-    if (file !== undefined && this.isValidLogoFile(file)) {
+    if (this.isValidLogoFile(file)) {
       this.setState({
         newLogoName: file.name,
         previewLogo: URL.createObjectURL(file),
-        logoIsDefault: false,
+        isDefaultLogo: false,
         validating: false,
         isValidFile: true
       });
@@ -168,7 +161,7 @@ class ApplicationSettings extends React.Component {
       this.setState({
         previewLogo: this.state.currentLogo,
         newLogoName: file !== undefined ? file.name : undefined,
-        logoIsDefault: this.props.logoIsDefault,
+        isDefaultLogo: this.props.isDefaultLogo,
         validating: false,
         isValidFile: false
       });
@@ -179,6 +172,9 @@ class ApplicationSettings extends React.Component {
 
   /** Verify if given file is of type .png, .jpeg, .jpg, or .svg */
   isValidLogoFile(file) {
+    if (!file) {
+      return false;
+    }
     var nameParts = file.name.split('.');
     var length = nameParts.length;
     var lastSection = nameParts[length - 1];

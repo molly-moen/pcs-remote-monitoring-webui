@@ -5,14 +5,14 @@ import { translate } from 'react-i18next';
 import {
   getLogo,
   getName,
-  getLogoIsDefault,
+  isDefaultLogo,
 } from 'store/reducers/appReducer';
 import { Navigation } from './navigation';
 
 const mapStateToProps = state => ({
   logo: getLogo(state),
   name: getName(state),
-  logoIsDefault: getLogoIsDefault(state)
+  isDefaultLogo: isDefaultLogo(state)
 });
 
 const NavigationContainer = translate()(connect(mapStateToProps)(Navigation));

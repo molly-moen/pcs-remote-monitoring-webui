@@ -7,7 +7,7 @@ import {
   getTheme,
   getVersion,
   getLogo,
-  getLogoIsDefault,
+  isDefaultLogo,
   getName,
   getReleaseNotes
 } from 'store/reducers/appReducer';
@@ -19,7 +19,7 @@ const mapStateToProps = state => ({
   version: getVersion(state),
   logo: getLogo(state),
   name: getName(state),
-  logoIsDefault: getLogoIsDefault(state),
+  isDefaultLogo: isDefaultLogo(state),
   releaseNotes: getReleaseNotes(state)
 });
 
