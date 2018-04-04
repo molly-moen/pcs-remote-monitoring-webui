@@ -18,7 +18,8 @@ const Config = {
   paginationPageSize: 50,
   clickDebounceTime: 180, // ms
   dashboardRefreshInterval: 15000, // 15 seconds
-  telemetryRefreshInterval: 1000 // 1 seconds
+  telemetryRefreshInterval: 1000, // 1 seconds
+  simulationId: '1'
 };
 
 export default Config;

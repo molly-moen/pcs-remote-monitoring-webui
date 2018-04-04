@@ -158,7 +158,7 @@
   "fileInput" : {
     "upload": "Upload"
   },
-  "platformSettings": {
+  "applicationSettings": {
     "nameAndLogo": "Name and Logo",
     "nameLogoDescription": "Edit logo and name in the site header.",
     "replaceLogo": "Replace logo image",

@@ -8,7 +8,7 @@ import { DeviceSimulationService } from 'services';
 
 import { svgs } from 'utilities';
 import './settings.css';
-import PlatformSettings from 'components/app/flyouts/settings/platformSettings';
+import ApplicationSettings from 'components/app/flyouts/settings/applicationSettings';
 
 const Section = Flyout.Section;
 
@@ -151,7 +151,7 @@ export class Settings extends Component {
               </button>
             </Section.Content>
           </Section.Container>
-          <PlatformSettings onUpload={this.onUpload} onNameChange={this.onNameChange} {...this.props} />
+          <ApplicationSettings onUpload={this.onUpload} onNameChange={this.onNameChange} {...this.props} />
           <div className="btn-container">
             {!loading && hasChanged && <Btn onClick={this.apply} className="apply-button">{t('settingsFlyout.apply')}</Btn>}
             <Btn svg={svgs.x} onClick={onClose} className="close-button">{hasChanged ? t('settingsFlyout.cancel') : t('settingsFlyout.close')}</Btn>

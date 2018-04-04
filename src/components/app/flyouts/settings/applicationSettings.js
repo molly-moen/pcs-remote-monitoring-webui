@@ -6,11 +6,12 @@ import { Btn, FormControl, Indicator, Svg, FileInput } from 'components/shared';
 import _ from 'lodash';
 import Flyout from 'components/shared/flyout';
 
-import './platformSettings.css';
+import './applicationSettings.css';
 import { svgs } from 'utilities';
 const Section = Flyout.Section;
+const AcceptedFileTypes = '.jpg, .jpeg, .png, .svg';
 
-class PlatformSettings extends React.Component {
+class ApplicationSettings extends React.Component {
 
   constructor(props) {
     super(props);
@@ -60,32 +61,32 @@ class PlatformSettings extends React.Component {
             {logoIsDefault ?
               this.renderSvgLogo(this.state.currentLogo)
               :
-              <img className="logo-img" src={this.state.previewLogo} alt={t('platformSettings.previewLogo')} />
+              <img className="logo-img" src={this.state.previewLogo} alt={t('applicationSettings.previewLogo')} />
             }
           </div>
-          <div className="replace-logo">{t('platformSettings.replaceLogo')}</div>
+          <div className="replace-logo">{t('applicationSettings.replaceLogo')}</div>
           <div className="upload-btn-container">
             <FileInput className="upload-button" classForLabel="description" isEdit={true} onChange={this.onUpload}
-              accept=".jpg, .jpeg, .png, .svg" label={t('platformSettings.upload')} t={t} />
+              accept={AcceptedFileTypes} label={t('applicationSettings.upload')} t={t} />
             <div className="file-upload-feedback">
               {isValidFile ?
-                <Svg className="checkmark" path={svgs.checkmark} alt={t('platformSettings.checkmark')} />
+                <Svg className="checkmark" path={svgs.checkmark} alt={t('applicationSettings.checkmark')} />
                 :
-                fileName && <Svg className="invalid-file-x" path={svgs.x} alt={t('platformSettings.error')} />
+                fileName && <Svg className="invalid-file-x" path={svgs.x} alt={t('applicationSettings.error')} />
               }
             </div>
             <div className={fileNameClass}>{fileName}</div>
           </div>
           {!isValidFile && fileName &&
             <div className="upload-error-message">
-              <Svg className="upload-error-asterisk" path={svgs.error} alt={t('platformSettings.error')} />
-              {t('platformSettings.uploadError')}
+              <Svg className="upload-error-asterisk" path={svgs.error} alt={t('applicationSettings.error')} />
+              {t('applicationSettings.uploadError')}
             </div>
           }
-          <Section.Content className="platform-section-description show-line-breaks">{t('platformSettings.logoDescription')}</Section.Content>
+          <Section.Content className="platform-section-description show-line-breaks">{t('applicationSettings.logoDescription')}</Section.Content>
         </div>
         <Section.Content className="name-input-container">
-          <div className="section-subtitle">{t('platformSettings.applicationName')}</div>
+          <div className="section-subtitle">{t('applicationSettings.applicationName')}</div>
           <FormControl type="text" className="name-input long" classForLabel="description"
             isEdit={true} placeholder={this.state.currentApplicationName} onChange={this.onNameChange} />
         </Section.Content>
@@ -98,8 +99,8 @@ class PlatformSettings extends React.Component {
     const { logoIsDefault, validating } = this.state;
     return (
       <Section.Container collapsable={true} className="setting-section">
-        <Section.Header>{t('platformSettings.nameAndLogo')}</Section.Header>
-        <Section.Content>{t('platformSettings.nameLogoDescription')}</Section.Content>
+        <Section.Header>{t('applicationSettings.nameAndLogo')}</Section.Header>
+        <Section.Content>{t('applicationSettings.nameLogoDescription')}</Section.Content>
         {this.state.stillInitializing ?
           <Indicator size='medium' />
           :
@@ -118,13 +119,13 @@ class PlatformSettings extends React.Component {
                     <div className="current-logo">
                       {logoIsDefault ?
                         this.renderSvgLogo(this.state.currentLogo)
-                        : <img className="current-logo" src={this.state.currentLogo} alt={t('platformSettings.currentLogo')} />
+                        : <img className="current-logo" src={this.state.currentLogo} alt={t('applicationSettings.currentLogo')} />
                       }
                     </div>
                     <div className="name-container">{this.state.currentApplicationName}</div>
                   </div>
                   <div className="edit-button-div">
-                    <Btn svg={svgs.edit} onClick={this.enableEdit} className="edit-button">{t('platformSettings.edit')}</Btn>
+                    <Btn svg={svgs.edit} onClick={this.enableEdit} className="edit-button">{t('applicationSettings.edit')}</Btn>
                   </div>
                 </div>
               </div>
@@ -191,4 +192,4 @@ class PlatformSettings extends React.Component {
   }
 }
 
-export default (PlatformSettings);
+export default (ApplicationSettings);
