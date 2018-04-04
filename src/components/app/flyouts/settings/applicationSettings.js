@@ -112,8 +112,7 @@ class ApplicationSettings extends React.Component {
                     <div className="current-logo">
                       {isDefaultLogo
                         ? this.renderSvgLogo(this.state.currentLogo)
-                        : <img className="current-logo" src={this.state.currentLogo} alt={t('applicationSettings.currentLogo')} />
-                      }
+                        : <img className="current-logo" src={this.state.currentLogo} alt={t('applicationSettings.currentLogo')} />}
                     </div>
                     <div className="name-container">{this.state.currentApplicationName}</div>
                   </div>

@@ -45,7 +45,6 @@ export class ConfigService {
       var blob = responseWrapper.response;
       if(blob && blob.size > 0) {
         returnObj['logo'] = URL.createObjectURL(blob);
-        var responseType = blob.type;
       }
     }
     return returnObj;

@@ -8,6 +8,7 @@ const Config = {
     iotHubManager: `${baseUrl}/iothubmanager/v1/`,
     telemetry: `${baseUrl}/telemetry/v1/`,
     deviceSimulation: `${baseUrl}/devicesimulation/v1/`,
+    //TODO: Determine if should query java or dotnet
     gitHubReleases: 'https://api.github.com/repos/Azure/azure-iot-pcs-remote-monitoring-dotnet/releases'
   },
   // Constants

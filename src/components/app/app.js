@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 
-import { SettingsContainer } from './flyouts';
+import { SettingsContainer } from './flyouts/settings';
 
 // App Components
 import Header from './header/header';
