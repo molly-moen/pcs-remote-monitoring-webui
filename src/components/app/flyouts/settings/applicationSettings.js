@@ -114,7 +114,7 @@ class ApplicationSettings extends Component {
   enableEdit = () =>  this.setState({ edit: true });
 
   onUpload = (e) => {
-    var file = e.target.files[0];
+    let file = e.target.files[0];
     this.setState({
       validating: true,
       validFile: false

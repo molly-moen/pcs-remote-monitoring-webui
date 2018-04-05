@@ -17,7 +17,7 @@ export class HttpClient {
    * @param {string} url The url path to the make the request to
    */
   static get(url, options = {}, withAuth = true, getJson = true) {
-    if(getJson) {
+    if (getJson) {
       return HttpClient.ajax(url, { ...options, method: 'GET' }, withAuth);
     } else {
       return HttpClient.ajaxNonJson(url, { ...options, method: 'GET' }, withAuth);
@@ -92,15 +92,15 @@ export class HttpClient {
   * @param {boolean} withAuth Allows a backdoor to not avoid wrapping auth headers
   * @return an Observable of the AjaxReponse
   */
- static ajaxNonJson(url, options = {}, withAuth = true) {
-   const { retryWaitTime, maxRetryAttempts } = Config;
-   const request = HttpClient.createAjaxRequest({ ...options, url }, withAuth, false);
-   return Observable.ajax(request)
-     // Classify errors as retryable or not
-     .catch(ajaxError => Observable.throw(classifyError(ajaxError)))
-     // Retry any retryable errors
-     .retryWhen(retryHandler(maxRetryAttempts, retryWaitTime));
- }
+  static ajaxNonJson(url, options = {}, withAuth = true) {
+    const { retryWaitTime, maxRetryAttempts } = Config;
+    const request = HttpClient.createAjaxRequest({ ...options, url }, withAuth, false);
+    return Observable.ajax(request)
+      // Classify errors as retryable or not
+      .catch(ajaxError => Observable.throw(classifyError(ajaxError)))
+      // Retry any retryable errors
+      .retryWhen(retryHandler(maxRetryAttempts, retryWaitTime));
+  }
 
   /**
    * A helper method that adds "application/json" headers
@@ -143,7 +143,7 @@ export class HttpClient {
 export const retryHandler = (retryAttempts, retryDelay) =>
   error$ =>
     error$.zip(Observable.range(0, retryAttempts + 1)) // Plus 1 to not count initial call
-      .flatMap(([ error, attempt ]) =>
+      .flatMap(([error, attempt]) =>
         (!isRetryable(error) || attempt === retryAttempts)
           ? Observable.throw(error)
           : Observable.of(error)

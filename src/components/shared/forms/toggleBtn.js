@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft. All rights reserved.
 
-import React from 'react';
+import React, { Component } from 'react';
 
 import { Svg } from 'components/shared';
 import { isFunc, svgs, joinClasses } from 'utilities';
 
 import './styles/toggleBtn.css';
 
-export class ToggleBtn extends React.Component  {
+export class ToggleBtn extends Component  {
 
   onChange = () => {
     const { onChange, name, value } = this.props;
