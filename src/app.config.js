@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft. All rights reserved.
 const baseUrl = process.env.REACT_APP_BASE_SERVICE_URL || '';
+const validExtensions = ['.png', '.jpeg', '.jpg', '.svg'];
 
 const Config = {
   // TEMP: Base service urls
@@ -20,7 +21,13 @@ const Config = {
   clickDebounceTime: 180, // ms
   dashboardRefreshInterval: 15000, // 15 seconds
   telemetryRefreshInterval: 1000, // 1 seconds
-  simulationId: '1'
+  simulationId: '1',
+  validExtensions: validExtensions.join(),
+  isValidExtension: (file) => {
+    if (!file) return false;
+    const fileExt = file.name.split('.').pop();
+    return validExtensions.indexOf('.' + fileExt) > -1;
+  }
 };
 
 export default Config;

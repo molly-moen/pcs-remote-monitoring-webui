@@ -58,25 +58,25 @@ export const epics = createEpicScenario({
 
   /** Get the logo and company name from the config service */
   fetchLogo: {
-    type: 'FETCH_LOGO',
+    type: 'APP_FETCH_LOGO',
     epic: fromAction =>
       ConfigService.getLogo()
-        .map(toActionCreator(redux.actions.getLogo, fromAction))
+        .map(toActionCreator(redux.actions.updateLogo, fromAction))
         .catch(handleError(fromAction))
   },
 
   /** Set the logo and/or company name in the config service */
-  setLogo: {
-    type: 'UPDATE_LOGO',
+  updateLogo: {
+    type: 'APP_UPDATE_LOGO',
     epic: fromAction =>
       ConfigService.setLogo(fromAction.payload.logo, fromAction.payload.headers)
-        .map(toActionCreator(redux.actions.setLogo, fromAction))
+        .map(toActionCreator(redux.actions.updateLogo, fromAction))
         .catch(handleError(fromAction))
   },
 
   /** Get the current release version and release notes link from GitHub */
   fetchReleaseInformation: {
-    type: 'FETCH_RELEASE_INFO',
+    type: 'APP_FETCH_RELEASE_INFO',
     epic: fromAction =>
       GitHubService.getReleaseInfo()
         .map(toActionCreator(redux.actions.getReleaseInformation, fromAction))
@@ -119,20 +119,16 @@ const updateThemeReducer = (state, { payload }) => {
   return update(state, { theme: { $set: payload } });
 };
 
-const logoReducer = (state, { payload }) => {
-  return update(state, {
+const logoReducer = (state, { payload }) => update(state, {
     logo: { $set: payload.logo ? payload.logo : svgs.contoso },
     name: { $set: payload.name ? payload.name : 'Contoso' },
     isDefaultLogo: { $set: payload.logo ? false : true }
-  })
-};
+  });
 
-const releaseReducer = (state, { payload }) => {
-  return update(state, {
+const releaseReducer = (state, { payload }) => update(state, {
     version: { $set: payload.version },
     releaseNotesUrl: { $set: payload.releaseNotesUrl }
-  })
-};
+  });
 
 /* Action types that cause a pending flag */
 const fetchableTypes = [
@@ -145,9 +141,8 @@ export const redux = createReducerScenario({
   changeTheme: { type: 'APP_CHANGE_THEME', reducer: updateThemeReducer },
   registerError: { type: 'APP_REDUCER_ERROR', reducer: errorReducer },
   isFetching: { multiType: fetchableTypes, reducer: pendingReducer },
-  setLogo: { type: 'SET_LOGO', reducer: logoReducer },
-  getLogo: { type: 'GET_LOGO', reducer: logoReducer },
-  getReleaseInformation: { type: 'GET_VERSION', reducer: releaseReducer }
+  updateLogo: { type: 'APP_UPDATE_LOGO', reducer: logoReducer },
+  getReleaseInformation: { type: 'APP_GET_VERSION', reducer: releaseReducer }
 });
 
 export const reducer = { app: redux.getReducer(initialState) };

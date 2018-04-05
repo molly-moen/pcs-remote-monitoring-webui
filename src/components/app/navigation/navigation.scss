@@ -33,7 +33,8 @@ $companySvgSize: 23px;
     .nav-item-icon {
       @include square-px-rem($navItemHeight);
 
-      img, svg {
+      img,
+      svg {
         @include square-px-rem($svgSize);
         margin: 10px;
       }

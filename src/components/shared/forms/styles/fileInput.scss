@@ -3,15 +3,14 @@
 @import 'src/styles/mixins';
   .file-upload {
     display: inline-block;
+
     .upload-btn {
+      font-family: $fontSelawikBold;
       @include rem-fallback(padding, 0px, 8px);
       @include rem-fallback(width, 93px);
       @include rem-fallback(min-width, 93px);
-      font-family: $fontSelawikBold;
 
-      svg {
-        @include rem-fallback(width, 11px);
-      }
+      svg { @include rem-fallback(width, 11px); }
     }
 
     @include themify($themes) {
@@ -25,8 +24,6 @@
       }
     }
 
-    .input-file {
-      display: none;
-    }
+    .input-file { display: none; }
 
   }

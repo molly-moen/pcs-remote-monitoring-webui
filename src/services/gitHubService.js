@@ -5,7 +5,6 @@ import { HttpClient } from './httpClient';
 
 import { toGitHubModel } from './models';
 
-
 const ENDPOINT = Config.serviceUrls.gitHubReleases;
 
 export class GitHubService {
@@ -13,6 +12,6 @@ export class GitHubService {
   /** Get the current release version and release notes link. */
   static getReleaseInfo() {
     return HttpClient.get(ENDPOINT, {}, false)
-    .map(toGitHubModel);
+      .map(toGitHubModel);
   }
 }

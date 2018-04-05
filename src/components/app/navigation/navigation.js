@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Svg } from 'components/shared';
+import { Svg, Indicator } from 'components/shared';
 
 import { svgs } from 'utilities';
 
@@ -65,11 +65,14 @@ export class Navigation extends Component {
     return (
       <nav className={`app-nav ${isExpanded && 'expanded'}`}>
         <div className="nav-item company">
-          {isDefaultLogo
+        { logo
+          ? isDefaultLogo
             ? <NavIcon path={logo} />
             : <div className="nav-item-icon">
                 <img src={logo} alt="Logo" />
-              </div> }
+              </div>
+          : <Indicator size="medium" />
+        }
           <div className="nav-item-text">{name}</div>
         </div>
         <button className="nav-item hamburger" onClick={this.toggleExpanded} aria-label="Hamburger">

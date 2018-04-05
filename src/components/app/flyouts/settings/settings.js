@@ -1,33 +1,31 @@
 // Copyright (c) Microsoft. All rights reserved.
 
-import React, { Component } from 'react';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import React from 'react';
+
 import Flyout from 'components/shared/flyout';
 import { Btn, Indicator, ToggleBtn } from 'components/shared';
-import { DeviceSimulationService } from 'services';
-
-import { svgs } from 'utilities';
-import './settings.css';
+import { svgs, LinkedComponent } from 'utilities';
 import ApplicationSettings from 'components/app/flyouts/settings/applicationSettings';
+
+import './settings.css';
 
 const Section = Flyout.Section;
 
-export class Settings extends Component {
+export class Settings extends LinkedComponent {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      currSimulationState: undefined,
-      desiredSimulationState: undefined,
+      desiredSimulationState: this.props.isSimulationEnabled,
       logoFile: undefined,
-      applicationName: undefined,
+      applicationName: '',
       loading: false
     };
 
-    this.eTag = new BehaviorSubject(undefined);
-    this.unmount = new Subject();
-    this.eTagStream = this.eTag.filter(_ => _);
+    // this.eTag = new BehaviorSubject(undefined);
+    // this.unmount = new Subject();
+    // this.eTagStream = this.eTag.filter(_ => _);
     const { t } = this.props;
 
     // Helper objects for choosing the correct label for the simulation service toggle input
@@ -39,26 +37,19 @@ export class Settings extends Component {
       true: t('settingsFlyout.flowing'),
       false: t('settingsFlyout.stopped')
     };
+
+    this.applicationName = this.linkTo('applicationName')
+      .map(value => value.length === 0 ? undefined : value);
+
+    this.props.getSimulationStatus();
   }
 
-  componentDidMount() {
-    DeviceSimulationService.getSimulatedDevices()
-      .takeUntil(this.unmount)
-      .subscribe(
-        ({ etag, enabled }) => {
-          this.setState({
-            currSimulationState: enabled,
-            desiredSimulationState: enabled
-          });
-          this.eTag.next(etag);
-        },
-        err => this.eTag.error(err)
-      );
-  }
-
-  componentWillUnmount() {
-    this.unmount.next(undefined);
-    this.unmount.unsubscribe();
+  componentWillReceiveProps({ isSimulationEnabled }) {
+    if(this.state.desiredSimulationState === undefined && isSimulationEnabled !== undefined) {
+      this.setState({
+        desiredSimulationState : isSimulationEnabled
+      });
+    }
   }
 
   onChange = ({ target }) => {
@@ -67,7 +58,7 @@ export class Settings extends Component {
   };
 
   apply = () => {
-    const { logoFile, applicationName } = this.state;
+    const { logoFile, applicationName, desiredSimulationState } = this.state;
     if (logoFile || applicationName) {
       var headers = {};
       if (applicationName) {
@@ -78,18 +69,13 @@ export class Settings extends Component {
       } else {
         headers['Content-Type'] = "text/plain";
       }
-      this.props.setLogo(logoFile, headers);
+      this.props.updateLogo(logoFile, headers);
     }
-    Observable
-      .of(this.state.desiredSimulationState)
-      .do(_ => this.setState({ loading: true }))
-      .zip(this.eTagStream, (Enabled, Etag) => ({ Etag, Enabled }))
-      .flatMap(({ Etag, Enabled }) => DeviceSimulationService.toggleSimulation(Etag, Enabled))
-      .takeUntil(this.unmount)
-      .subscribe(
-        () => this.props.onClose(),
-        err => console.error(err)
-      );
+    if(desiredSimulationState !== this.props.isSimulationEnabled) {
+      const etag = this.props.simulationEtag;
+      this.props.toggleSimulationStatus(etag, desiredSimulationState);
+    }
+    this.props.onClose();
   };
 
   onUpload = (file) => {
@@ -98,21 +84,15 @@ export class Settings extends Component {
     });
   };
 
-  onNameChange = (name) => {
-    this.setState({
-      applicationName: name
-    });
-  };
-
   render() {
-    const { t, onClose, theme, changeTheme, version, releaseNotes } = this.props;
+    const { t, onClose, theme, changeTheme, version, releaseNotesUrl, isSimulationEnabled } = this.props;
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
-    const { currSimulationState, desiredSimulationState, loading, logoFile, applicationName } = this.state;
-    const stillInitializing = currSimulationState === undefined;
-    const hasChanged = !stillInitializing && (currSimulationState !== desiredSimulationState
-      || logoFile !== undefined || applicationName !== undefined);
-    const hasSimulationChanged = !stillInitializing && (currSimulationState !== desiredSimulationState)
-    const simulationLabel = hasSimulationChanged ? this.desiredSimulationLabel[desiredSimulationState] : this.currSimulationLabel[currSimulationState];
+    const { desiredSimulationState, loading, logoFile, applicationName } = this.state;
+    const stillInitializing = desiredSimulationState === undefined;
+    const hasChanged = !stillInitializing && (isSimulationEnabled !== desiredSimulationState
+      || logoFile !== undefined || applicationName !== '');
+    const hasSimulationChanged = !stillInitializing && (isSimulationEnabled !== desiredSimulationState)
+    const simulationLabel = hasSimulationChanged ? this.desiredSimulationLabel[desiredSimulationState] : this.currSimulationLabel[isSimulationEnabled];
 
     return (
       <Flyout.Container>
@@ -123,9 +103,11 @@ export class Settings extends Component {
         <Flyout.Content className="settings-workflow-container">
           <Section.Container collapsable={false} className="app-version">
             <Section.Header>{t('settingsFlyout.version', { version })}</Section.Header>
-            <Section.Content className="release-notes"><a href={releaseNotes} target="_blank">{t('settingsFlyout.viewRelNotes')}</a></Section.Content>
+            <Section.Content className="release-notes">
+              <a href={releaseNotesUrl} target="_blank">{t('settingsFlyout.viewRelNotes')}</a>
+            </Section.Content>
           </Section.Container>
-          <Section.Container collapsable={true} className="simulation-toggle-container">
+          <Section.Container className="simulation-toggle-container">
             <Section.Header>{t('settingsFlyout.simulationData')} </Section.Header>
             <Section.Content className="simulation-description">
               {t('settingsFlyout.simulationDescription')}
@@ -151,9 +133,12 @@ export class Settings extends Component {
               </button>
             </Section.Content>
           </Section.Container>
-          <ApplicationSettings onUpload={this.onUpload} onNameChange={this.onNameChange} {...this.props} />
+          <ApplicationSettings onUpload={this.onUpload} applicationNameLink={this.applicationName} {...this.props} />
           <div className="btn-container">
-            {!loading && hasChanged && <Btn onClick={this.apply} className="apply-button">{t('settingsFlyout.apply')}</Btn>}
+            {
+              !loading && hasChanged &&
+              <Btn onClick={this.apply} className="apply-button">{t('settingsFlyout.apply')}</Btn>
+            }
             <Btn svg={svgs.x} onClick={onClose} className="close-button">{hasChanged ? t('settingsFlyout.cancel') : t('settingsFlyout.close')}</Btn>
             {loading && <Indicator size='small' />}
           </div>

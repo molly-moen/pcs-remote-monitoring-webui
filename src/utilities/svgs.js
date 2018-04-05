@@ -14,7 +14,6 @@ import DeviceElevatorIconPath from 'assets/icons/deviceElevator.svg';
 import DeviceEngineIconPath from 'assets/icons/deviceEngine.svg';
 import DevicePrototypingIconPath from 'assets/icons/devicePrototyping.svg';
 import DeviceTruckIconPath from 'assets/icons/deviceTruck.svg';
-import DisableIconPath from 'assets/icons/disable.svg';
 import DisabledIconPath from 'assets/icons/disabled.svg';
 import DisableToggleIconPath from 'assets/icons/disableToggle.svg';
 import EditIconPath from 'assets/icons/edit.svg';
@@ -25,6 +24,7 @@ import HamburgerIconPath from 'assets/icons/hamburger.svg';
 import InfoBubbleIconPath from 'assets/icons/infoBubble.svg';
 import InfoIconPath from 'assets/icons/info.svg';
 import LinkToPath from 'assets/icons/linkTo.svg';
+import LoadingToggleIconPath from 'assets/icons/loadingToggle.svg';
 import PhysicalDeviceIconPath from 'assets/icons/physicalDevice.svg';
 import PlusIconPath from 'assets/icons/plus.svg';
 import RadioSelectedIconPath from 'assets/icons/radioSelected.svg';
@@ -67,7 +67,6 @@ export const svgs = {
   colon: ColonIconPath,
   contoso: ContosoIconPath,
   critical: CriticalIconPath,
-  disable: DisableIconPath,
   disabled: DisabledIconPath,
   disableToggle: DisableToggleIconPath,
   edit: EditIconPath,
@@ -78,6 +77,7 @@ export const svgs = {
   info: InfoIconPath,
   infoBubble: InfoBubbleIconPath,
   linkTo: LinkToPath,
+  loadingToggle: LoadingToggleIconPath,
   physicalDevice: PhysicalDeviceIconPath,
   plus: PlusIconPath,
   radioSelected: RadioSelectedIconPath,

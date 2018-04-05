@@ -6,32 +6,27 @@
   .pcs-toggle {
     display: inline-block;
     svg {
-      height: 15px;
       cursor: pointer;
+      @include rem-fallback(height, 15px);
       &.disabled { cursor: auto; }
     }
   }
 
   @include themify($themes) {
-    .cls-1  {
-        stroke: themed('colorEnableToggleBackground');
-      }
+    .cls-1 { stroke: themed('colorEnableToggleBackground'); }
 
-     .enable-toggle .cls-2, .disable-toggle .cls-2 {
+    .enable-toggle .cls-2, .disable-toggle .cls-2 {
       fill: themed('colorToggle');
       stroke: themed('colorToggle');
     }
 
-    .disable-toggle, .disabled {
+    .disable-toggle,
+    .disabled {
       fill: themed('colorDisableToggleBackground');
     }
 
-    .enable-toggle {
-      fill: themed('colorEnableToggleBackground');
-    }
+    .enable-toggle { fill: themed('colorEnableToggleBackground'); }
 
-    .disabled {
-      stroke: themed('colorDisabledLine');
-    }
+    .disabled { stroke: themed('colorDisabledLine'); }
   }
 }

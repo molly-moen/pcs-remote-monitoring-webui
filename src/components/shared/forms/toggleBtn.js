@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft. All rights reserved.
 
 import React from 'react';
-import { isFunc } from 'utilities';
+
 import { Svg } from 'components/shared';
-import { svgs } from 'utilities';
+import { isFunc, svgs, joinClasses } from 'utilities';
 
 import './styles/toggleBtn.css';
 
@@ -22,21 +22,21 @@ export class ToggleBtn extends React.Component  {
   render() {
     const { value, disabled, className } = this.props;
 
-    const imgProps = {
-      path: svgs.disable,
-      className: `pcs-toggle ${className || ''}`
+    const svgProps = {
+      path: svgs.loadingToggle,
+      className: joinClasses('pcs-toggle', className ? className : '')
     };
 
     if (!disabled) {
-      imgProps.path = value ? svgs.enableToggle : svgs.disableToggle;
-      imgProps.onClick = this.onChange;
-      imgProps.className += value ? ' enable-toggle' : ' disable-toggle';
+      svgProps.path = value ? svgs.enableToggle : svgs.disableToggle;
+      svgProps.onClick = this.onChange;
+      svgProps.className = joinClasses(svgProps.className, value ? ' enable-toggle' : ' disable-toggle');
     } else {
-      imgProps.className += ' disabled';
+      svgProps.className = joinClasses(svgProps.className, ' disabled');
     }
     return (
       <div className="toggle-btn-div">
-        <Svg {...imgProps} alt="" />
+        <Svg {...svgProps} alt="" />
       </div>
   );
   }

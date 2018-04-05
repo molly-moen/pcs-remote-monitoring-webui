@@ -9,15 +9,14 @@
         @include square-px-rem(24px);
         @include rem-fallback(margin-bottom, 8px);
 
-        .logo-svg, .logo-img  {
-          @include square-px-rem(24px);
+        .logo-svg,
+        .logo-img  {
           justify-content: flex-start;
+          @include square-px-rem(24px);
         }
       }
 
-      .section-subtitle {
-        @include rem-font-size(16px);
-      }
+      .section-subtitle { @include rem-font-size(16px); }
 
       .replace-logo {
         font-family: $fontSelawikLight;
@@ -33,14 +32,11 @@
         @include rem-fallback(margin-bottom, 16px);
       }
 
-      .name-input {
-        width: 50%;
-      }
+      .name-input { width: 50%; }
     }
 
     .upload-btn-container {
       display: flex;
-      justify-content: flex-start;
       @include rem-fallback(margin-bottom, 12px);
       @include rem-fallback(margin-top, 12px);
 
@@ -48,13 +44,15 @@
         @include rem-fallback(padding-left, 16px);
         @include rem-fallback(padding-right, 12px);
 
-        .checkmark svg, .invalid-file-x svg {
+        .checkmark svg,
+        .invalid-file-x svg {
           @include rem-fallback(margin-top, 6px);
-          @include rem-fallback(height, 14px);
+          @include square-px-rem(14px);
         }
       }
 
-      .file-name-valid, .file-name-invalid {
+      .file-name-valid,
+      .file-name-invalid {
         font-family: $fontSelawikLight;
         @include rem-fallback(margin-top, 4px);
         @include rem-font-size(14px);
@@ -68,13 +66,13 @@
 
     .upload-error-message {
       display: flex;
+      font-family: $fontSelawikLight;
       @include rem-fallback(margin-top, 4px);
       @include rem-fallback(margin-bottom, 16px);
       @include rem-font-size(14px);
-      font-family: $fontSelawikLight;
 
       .upload-error-asterisk svg {
-        @include rem-fallback(height, 11px);
+        @include square-px-rem(11px);
         @include rem-fallback(margin-right, 4px);
       }
     }
@@ -87,9 +85,7 @@
     @include rem-fallback(margin-top, 12px);
     @include rem-font-size(16px);
 
-    .name-container {
-      @include rem-fallback(margin-bottom, 24px);
-    }
+    .name-container { @include rem-fallback(margin-bottom, 24px); }
 
     .current-logo-name {
       display: flex;
@@ -102,27 +98,31 @@
     }
 
     .edit-button {
-      .btn-icon {
-        @include square-px-rem(16px);
-      }
+      .btn-icon { @include square-px-rem(16px); }
 
-      .btn-text {
-        @include rem-font-size(16px);
-      }
+      .btn-text { @include rem-font-size(16px); }
     }
   }
 
-  .logo-svg svg {
-    @include square-px-rem(24px);
-  }
+  .logo-svg svg { @include square-px-rem(24px); }
 
   @include themify($themes) {
-    .logo-svg, .checkmark svg { fill: themed('colorHighest'); }
+    .logo-svg,
+    .checkmark svg {
+      fill: themed('colorHighest');
+    }
 
-    .upload-logo-container .replace-logo, .upload-error-message { color: themed('colorContentText') }
+    .upload-logo-container .replace-logo,
+    .upload-error-message {
+      color: themed('colorContentText')
+    }
 
     .edit-name-button .btn-icon svg { fill: themed('colorLightestFirst'); }
-    .file-name-valid, .name-container { color: themed('colorHighest'); }
+
+    .file-name-valid,
+    .name-container {
+      color: themed('colorHighest');
+    }
 
     .invalid-file-x {
       fill: themed('colorError');
