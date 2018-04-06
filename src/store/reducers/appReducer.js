@@ -100,7 +100,8 @@ const initialState = {
   releaseNotesUrl: undefined,
   logo: undefined,
   name: undefined,
-  isDefaultLogo: true
+  isDefaultLogo: true,
+  azureMapsKey: ''
 };
 
 const updateDeviceGroupsReducer = (state, { payload, fromAction }) => {
@@ -111,13 +112,13 @@ const updateDeviceGroupsReducer = (state, { payload, fromAction }) => {
   });
 };
 
-const updateActiveDeviceGroupsReducer = (state, { payload }) => {
-  return update(state, { activeDeviceGroupId: { $set: payload } });
-};
+const updateActiveDeviceGroupsReducer = (state, { payload }) => update(state,
+  { activeDeviceGroupId: { $set: payload } }
+);
 
-const updateThemeReducer = (state, { payload }) => {
-  return update(state, { theme: { $set: payload } });
-};
+const updateThemeReducer = (state, { payload }) => update(state,
+  { theme: { $set: payload } }
+);
 
 const logoReducer = (state, { payload }) => update(state, {
     logo: { $set: payload.logo ? payload.logo : svgs.contoso },
@@ -154,6 +155,7 @@ export const getVersion = state => getAppReducer(state).version;
 export const getTheme = state => getAppReducer(state).theme;
 export const getDeviceGroupEntities = state => getAppReducer(state).deviceGroups;
 export const getActiveDeviceGroupId = state => getAppReducer(state).activeDeviceGroupId;
+export const getAzureMapsKey = state => getAppReducer(state).azureMapsKey;
 export const getDeviceGroupsError = state =>
   getError(getAppReducer(state), epics.actionTypes.fetchDeviceGroups);
 export const getDeviceGroupsPendingStatus = state =>

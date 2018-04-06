@@ -53,7 +53,11 @@
         "currentWindow": "Currently",
         "previousWindow": "Previously"
       },
-      "map": { "header": "Device locations" },
+      "map": {
+        "header": "Device locations",
+        "runtimeError": "An error occurred while rendering the map",
+        "notConfiguredError": "Azure maps is not correctly configured"
+      },
       "overview": {
         "header": "Device statistics",
         "allDevices": "All devices",
@@ -169,5 +173,67 @@
     "checkmark": "Checkmark",
     "uploadError": "Unable to upload file, please check the file type and try again",
     "error": "Error"
+  },
+  "maintenance": {
+    "acknowledged": "ack",
+    "alarmOccurrences": "Alarm Occurrences",
+    "alarmedDeviceTelemetry": "Alarmed device's telemetry",
+    "alarmedDevices": "Alarmed devices",
+    "all": "All",
+    "closed": "closed",
+    "critical": "Critical",
+    "devices": "Devices",
+    "failedJobs": "Failed jobs",
+    "jobs": "Jobs",
+    "lastEvent": "Last Event",
+    "noData": "No data",
+    "noOccSelected": "No occurences selected",
+    "notifications": "Notifications",
+    "open": "open",
+    "openAlarms": "Open Alarms",
+    "relatedInfo": "Related information",
+    "ruleDetail": "Rule Detail",
+    "ruleDetailsDesc": "Manage alarm occurences associated to this rule in the section below, and use the associated information to troubleshoot each occurence.",
+    "severity": "Severity",
+    "succeeded": "Succeeded",
+    "telemetry": "Telemetry",
+    "title": "Maintenance",
+    "total": "Total",
+    "warning": "Warning",
+    "alertGrid": {
+      "totalCount": "Total Count",
+      "open": "Open",
+      "acknowledged": "Ack",
+      "closed": "Closed",
+      "lastOccurrence": "Last Occurrence"
+    },
+    "jobGrid": {
+      "jobName": "Job Name",
+      "status": "Status",
+      "operation": "Operation",
+      "noDevices": "No. of Devices",
+      "succeeded": "Succeeded",
+      "failed": "Failed",
+      "startTime": "Start Time",
+      "endTime": "End Time"
+    },
+    "jobStatusGrid": {
+      "deviceIdAffected": "Device ID Affected",
+      "lastReturnMsg": "Last Return Message"
+    },
+    "alarmOccGrid": {
+      "occurrence": "Occurrence",
+      "triggerDevice": "Trigger Device",
+      "time": "Time"
+    },
+    "jobStatus": {
+      "enqueued": "Enqueued",
+      "running": "Running",
+      "completed": "Completed",
+      "failed": "Failed",
+      "cancelled": "Cancelled",
+      "scheduled": "Scheduled",
+      "queued": "Queued"
+    }
   }
 }
