@@ -30,7 +30,7 @@ export class ConfigService {
       'Content-Type': undefined
     }
     return HttpClient.get(`${ENDPOINT}solution-settings/logo`, options)
-    .map((response) =>  prepareLogoResponse(response));
+      .map(prepareLogoResponse);
   }
 
   static setLogo(logo, header) {
@@ -45,6 +45,6 @@ export class ConfigService {
 
     options.headers['Accept'] = undefined;
     return HttpClient.put(`${ENDPOINT}solution-settings/logo`, logo, options)
-    .map((response) => prepareLogoResponse(response));
+      .map(prepareLogoResponse);
   }
 }

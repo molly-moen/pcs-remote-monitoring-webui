@@ -69,7 +69,7 @@ class ApplicationSettings extends Component {
         <FormGroup className="name-input-container">
           <FormLabel className="section-subtitle">{t('applicationSettings.applicationName')}</FormLabel>
           <FormControl type="text" className="name-input long"
-            placeholder={currentApplicationName} link={applicationNameLink} />
+            placeholder={t(currentApplicationName)} link={applicationNameLink} />
         </FormGroup>
       </div>
     );
@@ -100,7 +100,7 @@ class ApplicationSettings extends Component {
                             : <img className="current-logo" src={currentLogo} alt={t('applicationSettings.currentLogo')} />
                         }
                       </div>
-                      <div className="name-container">{currentApplicationName}</div>
+                      <div className="name-container">{t(currentApplicationName)}</div>
                     </div>
                     <div className="edit-button-div">
                       <Btn svg={svgs.edit} onClick={this.enableEdit} className="edit-button">{t('applicationSettings.edit')}</Btn>
