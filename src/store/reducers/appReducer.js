@@ -120,10 +120,11 @@ const updateThemeReducer = (state, { payload }) => update(state,
   { theme: { $set: payload } }
 );
 
-const logoReducer = (state, { payload }) => update(state, {
+const logoReducer = (state, { payload, fromAction }) => update(state, {
     logo: { $set: payload.logo ? payload.logo : svgs.contoso },
     name: { $set: payload.name ? payload.name : 'Contoso' },
-    isDefaultLogo: { $set: payload.logo ? false : true }
+    isDefaultLogo: { $set: payload.logo ? false : true },
+    ...setPending(fromAction.type, false)
   });
 
 const releaseReducer = (state, { payload }) => update(state, {
@@ -176,4 +177,8 @@ export const getLogo = state => getAppReducer(state).logo;
 export const getName = state => getAppReducer(state).name;
 export const isDefaultLogo = state => getAppReducer(state).isDefaultLogo;
 export const getReleaseNotes = state => getAppReducer(state).releaseNotesUrl;
+export const setLogoError = state =>
+  getError(getAppReducer(state), epics.actionTypes.updateLogo);
+export const setLogoPendingStatus = state =>
+  getPending(getAppReducer(state), epics.actionTypes.updateLogo);
 // ========================= Selectors - END

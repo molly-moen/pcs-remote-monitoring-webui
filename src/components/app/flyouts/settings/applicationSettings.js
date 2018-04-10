@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 
 import { Btn, FormGroup, FormLabel, FormControl, Indicator, Svg, FileInput } from 'components/shared';
-import { svgs } from 'utilities';
+import { svgs, isValidExtension } from 'utilities';
 import Flyout from 'components/shared/flyout';
 import Config from 'app.config';
 
@@ -94,9 +94,11 @@ class ApplicationSettings extends Component {
                   <div className="current-logo-container">
                     <div className="current-logo-name">
                       <div className="current-logo">
-                        {isDefaultLogo
-                          ? this.renderSvgLogo(currentLogo)
-                          : <img className="current-logo" src={currentLogo} alt={t('applicationSettings.currentLogo')} />}
+                        {
+                          isDefaultLogo
+                            ? this.renderSvgLogo(currentLogo)
+                            : <img className="current-logo" src={currentLogo} alt={t('applicationSettings.currentLogo')} />
+                        }
                       </div>
                       <div className="name-container">{currentApplicationName}</div>
                     </div>
@@ -119,7 +121,7 @@ class ApplicationSettings extends Component {
       validating: true,
       validFile: false
     });
-    if (Config.isValidExtension(file)) {
+    if (isValidExtension(file)) {
       this.setState({
         newLogoName: file.name,
         previewLogo: URL.createObjectURL(file),
