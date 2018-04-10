@@ -24,21 +24,19 @@ export const epics = createEpicScenario({
   /** Loads the simulation status */
   fetchSimulationStatus: {
     type: 'SIMULATION_STATUS_FETCH',
-    epic: (fromAction) => {
-      return DeviceSimulationService.getSimulatedDevices()
+    epic: (fromAction) =>
+      DeviceSimulationService.getSimulatedDevices()
         .map(toActionCreator(redux.actions.getSimulationStatus, fromAction))
         .catch(handleError(fromAction))
-    }
   },
 
   /** Toggles the simulation status */
   toggleSimulationStatus: {
     type: 'SIMULATION_TOGGLE_STATUS',
-    epic: (fromAction) => {
-      return DeviceSimulationService.toggleSimulation(fromAction.payload.etag, fromAction.payload.enabled)
+    epic: (fromAction) =>
+      DeviceSimulationService.toggleSimulation(fromAction.payload.etag, fromAction.payload.enabled)
         .map(toActionCreator(redux.actions.getSimulationStatus, fromAction))
         .catch(handleError(fromAction))
-    }
   }
 });
 // ========================= Epics - END
