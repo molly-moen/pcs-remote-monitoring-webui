@@ -45,9 +45,39 @@
     "setLogoError": "Error updating logo",
     "simulationLoadError": "Error loading simulation status"
   },
+  "rulesFlyout": {
+    "newRule": "New rule",
+    "ruleName": "Rule name",
+    "namePlaceholder": "Enter rule name",
+    "description": "Description",
+    "descriptionPlaceholder": "Enter rule description",
+    "deviceGroup": "Device group",
+    "deviceGroupPlaceholder": "Select device group",
+    "conditions": "Conditions",
+    "addCondition": "Add condition",
+    "condition": {
+      "condition": "Condition",
+      "field": "Field",
+      "fieldPlaceholder": "Select field",
+      "calculation": "Calculation",
+      "calculationPlaceholder": "select",
+      "timePeriod": "Time Period",
+      "operator": "Operator",
+      "operatorPlaceholder": ">=",
+      "value": "Value",
+      "valuePlaceholder": "Enter value"
+    },
+    "severityLevel": "Severity level",
+    "ruleStatus": "Rule status",
+    "devicesAffected": "devices affected by this rule",
+    "apply": "Apply",
+    "cancel": "Cancel"
+  },
   "dashboard": {
     "panels": {
-      "alarms": { "header": "System alarms" },
+      "alarms": {
+        "header": "System alarms"
+      },
       "kpis": {
         "header": "System KPIs",
         "topRule": "Top rules triggered",
@@ -70,7 +100,9 @@
         "connected": "Connected",
         "notConnected": "Offline"
       },
-      "telemetry": { "header": "Telemetry" }
+      "telemetry": {
+        "header": "Telemetry"
+      }
     }
   },
   "refreshBar": {
@@ -97,6 +129,7 @@
       "details": {
         "title": "Device Details",
         "noDevice": "Oops, we were not able to find the device.",
+        "close": "Close",
         "connected": "Connected",
         "notConnected": "Disconnected",
         "simulated": "Simulated",
@@ -115,7 +148,9 @@
           "description": "Selected properties on device",
           "keyHeader": "Property",
           "valueHeader": "Value",
-          "noneExist": "No properties found for this device."
+          "noneExist": "No properties found for this device.",
+          "copy": "Copy",
+          "copyAllProperties": "Copy a list of all properties for the device"
         },
         "tags": {
           "title": "Tags",
@@ -216,7 +251,7 @@
       "explore": "Explore"
     }
   },
-  "fileInput" : {
+  "fileInput": {
     "upload": "Upload"
   },
   "applicationSettings": {
