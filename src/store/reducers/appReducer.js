@@ -136,11 +136,11 @@ const updateThemeReducer = (state, { payload }) => update(state,
 );
 
 const logoReducer = (state, { payload, fromAction }) => update(state, {
-    logo: { $set: payload.logo ? payload.logo : svgs.contoso },
-    name: { $set: payload.name ? payload.name : 'companyName' },
-    isDefaultLogo: { $set: payload.logo ? false : true },
-    ...setPending(fromAction.type, false)
-  });
+  logo: { $set: payload.logo ? payload.logo : svgs.contoso },
+  name: { $set: payload.name ? payload.name : 'companyName' },
+  isDefaultLogo: { $set: payload.logo ? false : true },
+  ...setPending(fromAction.type, false)
+});
 
 const releaseReducer = (state, { payload }) => update(state, {
   version: { $set: payload.version },
@@ -204,8 +204,8 @@ export const setLogoError = state =>
   getError(getAppReducer(state), epics.actionTypes.updateLogo);
 export const setLogoPendingStatus = state =>
   getPending(getAppReducer(state), epics.actionTypes.updateLogo);
-  export const getLogoError = state =>
-    getError(getAppReducer(state), epics.actionTypes.fetchLogo);
-  export const getLogoPendingStatus = state =>
-    getPending(getAppReducer(state), epics.actionTypes.fetchLogo);
+export const getLogoError = state =>
+  getError(getAppReducer(state), epics.actionTypes.fetchLogo);
+export const getLogoPendingStatus = state =>
+  getPending(getAppReducer(state), epics.actionTypes.fetchLogo);
 // ========================= Selectors - END
