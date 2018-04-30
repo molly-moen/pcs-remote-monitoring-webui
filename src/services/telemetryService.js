@@ -4,12 +4,13 @@ import { stringify } from 'query-string';
 import Config from 'app.config';
 import { HttpClient } from './httpClient';
 import {
-  toActiveAlarmsModel,
-  toAlarmsForRuleModel,
-  toAlarmsModel,
-  toRulesModel,
+  toActiveAlertsModel,
+  toAlertForRuleModel,
+  toAlertsForRuleModel,
+  toAlertsModel,
+  toMessagesModel,
   toRuleModel,
-  toMessagesModel
+  toRulesModel
 } from './models';
 
 const ENDPOINT = Config.serviceUrls.telemetry;
@@ -36,21 +37,27 @@ export class TelemetryService {
   }
 
   /** Returns a list of alarms (all statuses) */
-  static getAlarms(params = {}) {
+  static getAlerts(params = {}) {
     return HttpClient.get(`${ENDPOINT}alarms?${stringify(params)}`)
-      .map(toAlarmsModel)
+      .map(toAlertsModel)
   }
 
   /** Returns a list of active alarms (open or ack) */
-  static getActiveAlarms(params = {}) {
+  static getActiveAlerts(params = {}) {
     return HttpClient.get(`${ENDPOINT}alarmsbyrule?${stringify(params)}`)
-      .map(toActiveAlarmsModel);
+      .map(toActiveAlertsModel);
   }
 
   /** Returns a list of alarms created from a given rule */
-  static getAlarmsForRule(id, params = {}) {
+  static getAlertsForRule(id, params = {}) {
     return HttpClient.get(`${ENDPOINT}alarmsbyrule/${id}?${stringify(params)}`)
-      .map(toAlarmsForRuleModel);
+      .map(toAlertsForRuleModel);
+  }
+
+  /** Returns a list of alarms created from a given rule */
+  static updateAlertStatus(id, Status) {
+    return HttpClient.patch(`${ENDPOINT}alarms/${encodeURIComponent(id)}`, { Status })
+      .map(toAlertForRuleModel);
   }
 
   /** Returns a telemetry events */

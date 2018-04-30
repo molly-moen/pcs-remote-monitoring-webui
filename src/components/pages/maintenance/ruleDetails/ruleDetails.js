@@ -1,17 +1,18 @@
 // Copyright (c) Microsoft. All rights reserved.
 
 import React, { Component } from 'react';
-import { Subject } from 'rxjs';
+import { Trans } from 'react-i18next';
+import { Observable, Subject } from 'rxjs';
 
 import Config from 'app.config';
 import { RulesGrid } from 'components/pages/rules/rulesGrid';
-import { AjaxError, PageContent, ContextMenu, RefreshBar } from 'components/shared';
-import { joinClasses, renderUndefined } from 'utilities';
+import { AjaxError, Btn, PageContent, ContextMenu, RefreshBar } from 'components/shared';
+import { svgs, joinClasses, renderUndefined } from 'utilities';
 import { DevicesGrid } from 'components/pages/devices/devicesGrid';
 import { TelemetryChart, transformTelemetryResponse, chartColorObjects } from 'components/pages/dashboard/panels/telemetry';
 import { TelemetryService } from 'services';
 import { TimeRenderer, SeverityRenderer } from 'components/shared/cellRenderers';
-import { AlarmOccurrencesGrid } from 'components/pages/maintenance/grids';
+import { AlertOccurrencesGrid } from 'components/pages/maintenance/grids';
 
 import './ruleDetails.css';
 
@@ -23,13 +24,15 @@ const tabIds = {
 
 const idDelimiter = ' ';
 
+// TODO: For the PcsGrid, fix bug causing the selection to be lost when the grid data updates.
+// TODO: Related, fix bug where the context buttons don't update when the on grid prop changes
 export class RuleDetails extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      selectedAlert: undefined,
+      selectedAlerts: [],
       selectedRule: undefined,
 
       telemetryIsPending: true,
@@ -42,7 +45,7 @@ export class RuleDetails extends Component {
       selectedTab: tabIds.all,
 
       ruleContextBtns: undefined,
-      alarmContextBtns: undefined,
+      alertContextBtns: undefined,
       deviceContextBtns: undefined
     };
 
@@ -92,6 +95,7 @@ export class RuleDetails extends Component {
   handleProps(nextProps) {
     const {
       alerts,
+      alertEntities,
       deviceEntities,
       match,
       rulesEntities
@@ -99,8 +103,8 @@ export class RuleDetails extends Component {
     const selectedId = match.params.id;
     const selectedRule = rulesEntities[selectedId];
     const selectedAlert = alerts.filter(({ ruleId }) => ruleId === selectedId)[0] || {};
-    const occurrences = (selectedAlert.alarms || [])
-      .map(alarm => ({ ...alarm, name: selectedRule.name, severity: selectedRule.severity }));
+    const occurrences = (selectedAlert.alerts || [])
+      .map(alertId => ({ ...alertEntities[alertId], name: selectedRule.name, severity: selectedRule.severity }));
 
     const deviceObjects = (occurrences || []).reduce(
       (acc, { deviceId }) => ({
@@ -128,10 +132,24 @@ export class RuleDetails extends Component {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
+  // TODO: Handle error and isPending states
+  updateAlertStatus = (selectedAlerts, status) =>
+    this.subscriptions.push(
+      Observable.from(selectedAlerts)
+        .flatMap(({ id }) => TelemetryService.updateAlertStatus(id, status))
+        .toArray() // Use toArray to wait for all calls to succeed
+        .subscribe(() => this.props.setAlertStatus(selectedAlerts, status))
+    );
+
+  // TODO: Move constant values to central location
+  closeAlerts = () => this.updateAlertStatus(this.state.selectedAlerts, 'closed');
+
+  ackAlerts = () => this.updateAlertStatus(this.state.selectedAlerts, 'acknowledged');
+
   setTab = selectedTab => () => this.setState({ selectedTab })
 
   onRuleGridReady = gridReadyEvent => this.ruleGridApi = gridReadyEvent.api;
-  onAlarmGridReady = gridReadyEvent => this.alarmGridApi = gridReadyEvent.api;
+  onAlertGridReady = gridReadyEvent => this.alertGridApi = gridReadyEvent.api;
   onDeviceGridReady = gridReadyEvent => this.deviceGridApi = gridReadyEvent.api;
 
   onContextMenuChange = stateKey => contextBtns => this.setState({ [stateKey]: contextBtns });
@@ -141,12 +159,29 @@ export class RuleDetails extends Component {
       if (selectedRows.length > 0) this.deselectOtherGrids(gridName);
     };
 
+  onAlertGridHardSelectChange = selectedRows => {
+    const contextBtns =
+      selectedRows.length > 0
+        ? [
+            <Btn svg={svgs.closeAlert} onClick={this.closeAlerts} key="close">
+              <Trans i18nKey="maintenance.close">Close</Trans>
+            </Btn>,
+            <Btn svg={svgs.ackAlert} onClick={this.ackAlerts} key="ack">
+              <Trans i18nKey="maintenance.acknowledge">Acknowledge</Trans>
+            </Btn>
+          ]
+        : null;
+    this.setState({ selectedAlerts: selectedRows });
+    this.onHardSelectChange('alerts')(selectedRows);
+    this.onContextMenuChange('alertContextBtns')(contextBtns);
+  }
+
   deselectOtherGrids = gridName => {
     if (gridName !== 'rules' && this.ruleGridApi.getSelectedNodes().length > 0) {
       this.ruleGridApi.deselectAll();
     }
-    if (gridName !== 'alarms' && this.alarmGridApi.getSelectedNodes().length > 0) {
-      this.alarmGridApi.deselectAll();
+    if (gridName !== 'alerts' && this.alertGridApi.getSelectedNodes().length > 0) {
+      this.alertGridApi.deselectAll();
     }
     if (gridName !== 'devices' && this.deviceGridApi.getSelectedNodes().length > 0) {
       this.deviceGridApi.deselectAll();
@@ -165,15 +200,14 @@ export class RuleDetails extends Component {
     } = this.props;
     const selectedId = match.params.id;
     const rule = isPending ? undefined : [this.state.selectedRule];
-    const alarmName = (this.state.selectedRule || {}).name || selectedId;
+    const alertName = (this.state.selectedRule || {}).name || selectedId;
 
-    const alarmsGridProps = {
+    const alertsGridProps = {
       rowData: isPending ? undefined : this.state.occurrences,
       pagination: true,
       paginationPageSize: Config.smallGridPageSize,
-      onContextMenuChange: this.onContextMenuChange('alarmContextBtns'),
-      onHardSelectChange: this.onHardSelectChange('alarms'),
-      onGridReady: this.onAlarmGridReady,
+      onHardSelectChange: this.onAlertGridHardSelectChange,
+      onGridReady: this.onAlertGridReady,
       t
     };
 
@@ -183,7 +217,7 @@ export class RuleDetails extends Component {
       <ContextMenu key="context-menu">
         {
           this.state.ruleContextBtns
-          || this.state.alarmContextBtns
+          || this.state.alertContextBtns
           || this.state.deviceContextBtns
         }
         <RefreshBar
@@ -197,7 +231,7 @@ export class RuleDetails extends Component {
         !this.props.error
           ? <div>
               <div className="header-container">
-                <h1 className="maintenance-header">{alarmName}</h1>
+                <h1 className="maintenance-header">{alertName}</h1>
                 <div className="rule-stat-container">
                   <div className="rule-stat-cell">
                     <div className="rule-stat-header">{t('maintenance.total')}</div>
@@ -249,8 +283,8 @@ export class RuleDetails extends Component {
                 rowData={rule}
                 pagination={false} />
 
-              <h4 className="sub-heading">{ t('maintenance.alarmOccurrences') }</h4>
-              <AlarmOccurrencesGrid {...alarmsGridProps} />
+              <h4 className="sub-heading">{ t('maintenance.alertOccurrences') }</h4>
+              <AlertOccurrencesGrid {...alertsGridProps} />
 
               <h4 className="sub-heading">{ t('maintenance.relatedInfo') }</h4>
               <div className="tab-container">
@@ -264,7 +298,7 @@ export class RuleDetails extends Component {
               {
                 (selectedTab === tabIds.all || selectedTab === tabIds.devices) &&
                 [
-                  <h4 className="sub-heading" key="header">{t('maintenance.alarmedDevices')}</h4>,
+                  <h4 className="sub-heading" key="header">{t('maintenance.alertedDevices')}</h4>,
                   <DevicesGrid
                     t={t}
                     onGridReady={this.onDeviceGridReady}
@@ -277,7 +311,7 @@ export class RuleDetails extends Component {
               {
                 !isPending && (selectedTab === tabIds.all || selectedTab === tabIds.telemetry) && Object.keys(this.state.telemetry).length > 0 &&
                 [
-                  <h4 className="sub-heading" key="header">{t('maintenance.alarmedDeviceTelemetry')}</h4>,
+                  <h4 className="sub-heading" key="header">{t('maintenance.alertedDeviceTelemetry')}</h4>,
                   <div className="details-chart-container" key="chart">
                     <TelemetryChart telemetry={this.state.telemetry} theme={theme} colors={chartColorObjects} />
                   </div>

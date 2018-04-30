@@ -21,9 +21,9 @@ export const toRuleModel = (response = {}) => camelCaseReshape(response, {
   'action.type': 'type'
 });
 
-// TODO: Double check the response from alarmsByRule and alarms, might only need one model
-export const toAlarmsModel = (response = {}) => getItems(response)
-  .map((alarm = {}) => camelCaseReshape(alarm, {
+// TODO: Double check the response from alertsByRule and alerts, might only need one model
+export const toAlertsModel = (response = {}) => getItems(response)
+  .map((alert = {}) => camelCaseReshape(alert, {
     'rule.id': 'ruleId',
     'created': 'created',
     'status': 'status',
@@ -37,8 +37,8 @@ export const toAlarmsModel = (response = {}) => getItems(response)
     'groupId': 'groupId'
   }));
 
-export const toActiveAlarmsModel = (response = {}) => getItems(response)
-  .map((alarm = {}) => camelCaseReshape(alarm, {
+export const toActiveAlertsModel = (response = {}) => getItems(response)
+  .map((alert = {}) => camelCaseReshape(alert, {
     'rule.id': 'ruleId',
     'count': 'count',
     'created': 'created',
@@ -47,19 +47,21 @@ export const toActiveAlarmsModel = (response = {}) => getItems(response)
     'rule.description': 'description'
   }));
 
-export const toAlarmsForRuleModel = (response = {}) => getItems(response)
-  .map((alarm = {}) => camelCaseReshape(alarm, {
-    'id': 'id',
-    'dateCreated': 'dateCreated',
-    'dateModified': 'dateModified',
-    'description': 'description',
-    'deviceId': 'deviceId',
-    'eTag': 'eTag',
-    'enabled': 'enabled',
-    'groupId': 'groupId',
-    'status': 'status',
-    'rule.id': 'ruleId'
-  }));
+export const toAlertsForRuleModel = (response = {}) => getItems(response)
+  .map(toAlertForRuleModel);
+
+export const toAlertForRuleModel = (alert = {}) => camelCaseReshape(alert, {
+  'id': 'id',
+  'dateCreated': 'dateCreated',
+  'dateModified': 'dateModified',
+  'description': 'description',
+  'deviceId': 'deviceId',
+  'eTag': 'eTag',
+  'enabled': 'enabled',
+  'groupId': 'groupId',
+  'status': 'status',
+  'rule.id': 'ruleId'
+});
 
 export const toMessagesModel = (response = {}) => getItems(response)
   .map((message = {}) => camelCaseReshape(message, {
