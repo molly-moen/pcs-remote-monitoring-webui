@@ -36,7 +36,8 @@ const Config = {
     open: 'open',
     closed: 'closed',
     acknowledged: 'acknowledged'
-  }
+  },
+  maxLogoFileSizeBytes: 307200
 };
 
 export default Config;
