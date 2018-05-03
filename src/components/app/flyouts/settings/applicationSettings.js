@@ -121,7 +121,7 @@ class ApplicationSettings extends Component {
       validating: true,
       validFile: false
     });
-    if (file.size <= Config.maxLogoFileSizeBytes && isValidExtension(file)) {
+    if (file.size <= Config.maxLogoFileSizeInBytes && isValidExtension(file)) {
       this.setState({
         newLogoName: file.name,
         previewLogo: URL.createObjectURL(file),
