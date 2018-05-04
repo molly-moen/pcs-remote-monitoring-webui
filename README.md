@@ -34,7 +34,7 @@ In order to run the service, the environment variables need to be created at lea
 
 The endpoint given above is the base url you navigate to in order to see your deployed solution.
 
-Running the service from the command line
+Build, run and test locally
 ===========================
 * `cd ~\pcs-remote-monitoring-webui\`
 * `npm install`
