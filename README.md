@@ -89,10 +89,15 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 You can find a guide to using it [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
-Other Technologies Used
-* [Redux](https://redux.js.org/)
-* [Redux-Observabale](https://redux-observable.js.org/)
-* [RxJs](http://reactivex.io/rxjs/)
+## Core technologies overview
+
+- [ReactJS](https://reactjs.org/)
+- [React-Router v4](https://github.com/ReactTraining/react-router)
+- [Redux](https://redux.js.org/)
+- [Redux-Observable](https://redux-observable.js.org/)
+- [RxJs](http://reactivex.io/rxjs/)
+- [SASS](http://sass-lang.com/)
+- [React-i18nnext](https://github.com/i18next/react-i18next)
 
 [build-badge]: https://img.shields.io/travis/Azure/pcs-remote-monitoring-webui.svg
 [build-url]: https://travis-ci.org/Azure/pcs-remote-monitoring-webui
