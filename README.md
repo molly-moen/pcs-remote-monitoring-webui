@@ -27,8 +27,8 @@ It is also possible to [deploy the solution locally](https://docs.microsoft.com/
    - [Sublime Text](https://www.sublimetext.com/)
    -  or other preferred editor
 
-### 3. Environment variables required to run the service
-In order to run the service, the environment variables need to be created at least once. More information on configuring environment variables [here](#configuration-and-environment-variables).
+### 3. Environment variables required to run the Web UI
+In order to run the Web UI, the environment variables need to be created at least once. More information on configuring environment variables [here](#configuration-and-environment-variables).
 
 * `REACT_APP_BASE_SERVICE_URL` = {your-remote-monitoring-endpoint}
 
@@ -45,7 +45,7 @@ Build, run and test locally
 
 Project Structure
 ===========================
-This microservice contains the following sections under [src](src):
+The Web UI contains the following sections under [src](src):
 - `assets`: Contains assets used across the application. These include fonts,
 icons, images, etc.
 - `components`: Contains all the application react components. These in include
@@ -60,7 +60,7 @@ etc.
 Configuration and Environment variables
 ===========================
 
-The service configuration is stored in [app.config.js](src/app.config.js)
+The Web UI configuration is stored in [app.config.js](src/app.config.js)
 
 The configuration files in the repository reference some environment
 variables that need to be created at least once. Depending on your OS and
