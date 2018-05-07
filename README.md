@@ -10,14 +10,14 @@
 Azure PCS Remote Monitoring WebUI
 =================================
 
-Web app for Azure IoT PCS Remote Monitoring Solution [dotnet](https://github.com/Azure/azure-iot-pcs-remote-monitoring-dotnet) and [java](https://github.com/Azure/azure-iot-pcs-remote-monitoring-java).
+Web app for Azure IoT Remote Monitoring Solution [dotnet](https://github.com/Azure/azure-iot-pcs-remote-monitoring-dotnet) and [java](https://github.com/Azure/azure-iot-pcs-remote-monitoring-java).
 
 Prerequisites
 =============
 ### 1. Deploy a Remote Monitoring Solution
-The easiest way to test the Web UI is against a deployed remote monitoring solution. The solution can be deployed via the [web interface](https://docs.microsoft.com/en-us/azure/iot-suite/iot-suite-remote-monitoring-deploy) or via the [command line](https://docs.microsoft.com/en-us/azure/iot-suite/iot-suite-remote-monitoring-deploy-cli).
+The easiest way to test the Web UI is against a deployed remote monitoring solution. The solution can be deployed via the [web interface](https://docs.microsoft.com/azure/iot-suite/iot-suite-remote-monitoring-deploy) or via the [command line](https://docs.microsoft.com/azure/iot-suite/iot-suite-remote-monitoring-deploy-cli).
 
-It is also possible to [deploy the solution locally](https://docs.microsoft.com/en-us/azure/iot-suite/iot-suite-remote-monitoring-deploy-local#deploy-the-azure-services).
+It is also possible to [deploy the solution locally](https://docs.microsoft.com/azure/iot-suite/iot-suite-remote-monitoring-deploy-local#deploy-the-azure-services).
 
 ### 2. Setup Dependencies
 1. Install [node.js](https://nodejs.org/)
