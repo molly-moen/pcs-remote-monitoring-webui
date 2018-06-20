@@ -31,6 +31,7 @@ import InfoIconPath from 'assets/icons/info.svg';
 import LinkToPath from 'assets/icons/linkTo.svg';
 import LoadingToggleIconPath from 'assets/icons/loadingToggle.svg';
 import ManageFiltersIconPath from 'assets/icons/manageFilters.svg';
+import PassedCheckmarkIconPath from 'assets/icons/passedCheck.svg'
 import PhysicalDeviceIconPath from 'assets/icons/physicalDevice.svg';
 import PlusIconPath from 'assets/icons/plus.svg';
 import QuestionMarkIconPath from 'assets/icons/questionMark.svg';
@@ -94,6 +95,7 @@ export const svgs = {
   linkTo: LinkToPath,
   loadingToggle: LoadingToggleIconPath,
   manageFilters: ManageFiltersIconPath,
+  passedCheckmark: PassedCheckmarkIconPath,
   physicalDevice: PhysicalDeviceIconPath,
   plus: PlusIconPath,
   questionMark: QuestionMarkIconPath,

@@ -7,7 +7,7 @@ import { Btn, PcsGrid } from 'components/shared';
 import { rulesColumnDefs, defaultRulesGridProps } from './rulesGridConfig';
 import { checkboxColumn } from 'components/shared/pcsGrid/pcsGridConfig';
 import { isFunc, translateColumnDefs, svgs } from 'utilities';
-import { EditRuleFlyout, RuleStatusContainer } from '../flyouts'
+import { EditRuleFlyout, RuleStatusContainer, DeleteRuleContainer } from '../flyouts'
 
 import './rulesGrid.css';
 
@@ -55,6 +55,10 @@ export class RulesGrid extends Component {
       edit:
         <Btn key="edit" svg={svgs.edit} onClick={this.openEditRuleFlyout}>
           {props.t('rules.flyouts.edit')}
+        </Btn>,
+      delete:
+        <Btn key="delete" svg={svgs.trash} onClick={this.openDeleteFlyout}>
+          <Trans i18nKey="rules.flyouts.delete">Delete</Trans>
         </Btn>
     };
   }
@@ -62,6 +66,8 @@ export class RulesGrid extends Component {
   openEditRuleFlyout = () => this.setState({ openFlyoutName: 'edit' });
 
   openStatusFlyout = () => this.setState({ openFlyoutName: 'status' });
+
+  openDeleteFlyout = () => this.setState({ openFlyoutName: 'delete' });
 
   setSelectedRules = selectedRules => this.setState({ selectedRules });
 
@@ -71,6 +77,8 @@ export class RulesGrid extends Component {
         return <EditRuleFlyout onClose={this.closeFlyout} t={this.props.t} rule={this.state.softSelectedRule || this.state.selectedRules[0]} key="edit-rule-flyout" />
       case 'status':
         return <RuleStatusContainer onClose={this.closeFlyout} t={this.props.t} rules={this.state.selectedRules} key="edit-rule-flyout" />
+      case 'delete':
+        return <DeleteRuleContainer onClose={this.closeFlyout} t={this.props.t} rule={this.state.selectedRules[0]} key="delete-rule-flyout" refresh={this.props.refresh}/>
       default:
         return null;
     }
@@ -90,6 +98,7 @@ export class RulesGrid extends Component {
       } else if (selectedRules.length === 1) {
         this.setSelectedRules(selectedRules);
         onContextMenuChange([
+          this.contextBtns.delete,
           selectedRules[0].enabled ? this.contextBtns.disable : this.contextBtns.enable,
           this.contextBtns.edit
         ]);

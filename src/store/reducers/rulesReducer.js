@@ -30,11 +30,11 @@ const handleError = fromAction => error =>
 const cellResponse = (response, error) => ({ response, error });
 
 export const epics = createEpicScenario({
-  /** Loads the rules */
+  /** Loads the rules, including deleted rules */
   fetchRules: {
     type: 'RULES_FETCH',
     epic: fromAction =>
-      TelemetryService.getRules()
+      TelemetryService.getRules({"includeDeleted": true})
         .flatMap(rules =>
           Observable.from(rules)
             .flatMap(({ id, groupId }) => [
@@ -154,11 +154,12 @@ export const getRulesPendingStatus = state =>
   getPending(getRulesReducer(state), epics.actionTypes.fetchRules);
 export const getRules = createSelector(
   getEntities, getItems, getActiveDeviceGroupId, getActiveDeviceGroupConditions,
-  (entities, items, deviceGroupId, deviceGroupConditions = []) =>
+  (entities, items, deviceGroupId, deviceGroupConditions = [], includeDeleted = false) =>
     items.reduce((acc, id) => {
       const rule = entities[id];
       const activeDeviceGroup = deviceGroupConditions.length > 0 ? deviceGroupId : undefined;
-      return (rule.groupId === activeDeviceGroup || !activeDeviceGroup)
+      return ((rule.groupId === activeDeviceGroup || !activeDeviceGroup) &&
+             (!rule.deleted || includeDeleted))
         ? [...acc, rule]
         : acc
     }, [])

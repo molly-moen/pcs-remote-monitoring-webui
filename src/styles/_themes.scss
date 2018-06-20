@@ -11,6 +11,7 @@ $themes: (
     colorWarning: $colorWarning,
     colorSystem: $colorSystem,
     colorError: $colorError,
+    colorPassed: $colorPassed,
 
     // App - START
     colorSelectionText: $colorWhite,
@@ -154,6 +155,8 @@ $themes: (
 
     colorFormActionsBorderColor: $colorGraphite,
     colorDurationLabelText: $colorSmoke,
+
+    colorPassedIconGrey: rgba(0, 0, 0, 0.25)
     // Forms - END
   ),
   light: (
@@ -162,6 +165,7 @@ $themes: (
     colorWarning: #f4ca2c,
     colorSystem: $colorSystem,
     colorError: $colorError,
+    colorPassed: $colorPassed,
 
     // App - START
     colorSelectionText: #333,
@@ -305,6 +309,8 @@ $themes: (
 
     colorFormActionsBorderColor: $colorGraphite,
     colorDurationLabelText: $colorSmoke,
+
+    colorPassedIconGrey: rgba(0, 0, 0, 0.25)
     // Forms - END
   )
 );

@@ -1,0 +1,85 @@
+// Copyright (c) Microsoft. All rights reserved.
+
+@import 'src/styles/themes';
+@import 'src/styles/mixins';
+
+.delete-rule-flyout-container {
+
+  .padded-top-bottom {
+    margin-left: 0px;
+    @include rem-fallback(padding, 24px, 0px);
+  }
+  .delete-info {
+    display: flex;
+    .asterisk-svg, .check-svg {
+      align-self: flex-start;
+    }
+  }
+
+  .rule-details {
+    border-top-style: none;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+  }
+
+  .rule-delete-error {
+    border: 1px transparent solid;
+    @include rem-fallback(margin, 12px, 0px);
+    @include rem-fallback(padding, 16px);
+  }
+
+  @include themify($themes) {
+
+    .delete-info a { color: themed('colorFlyoutText'); }
+
+    .delete-info {
+      color: themed('colorFlyoutText');
+      @include rem-fallback(font-size, 14px);
+      @include rem-fallback(padding-top, 24px);
+    }
+
+    .rule-details {
+      @include rem-fallback(padding-top, 10px);
+      @include rem-fallback(padding-bottom, 24px);
+    }
+
+    .asterisk-svg svg {
+      @include square-px-rem(12px);
+      @include rem-fallback(margin-right, 6px);
+      @include rem-fallback(margin-top, 2px);
+      fill: themed('colorAlert');
+    }
+
+    .check-svg svg {
+      @include square-px-rem(14px);
+      @include rem-fallback(margin-right, 6px);
+      @include rem-fallback(margin-top, 2px);
+
+      .cls-2 {
+        opacity: 0.75;
+      }
+
+      .cls-3 {
+        opacity: 0.25;
+        fill: themed('colorPassed');
+      }
+
+      .cls-4 {
+        fill:themed('colorPassed');
+      }
+
+      .cls-5 {
+        stroke: themed('colorPassedIconGrey');
+      }
+
+      .cls-5, .cls-6 {
+        stroke-miterlimit: 1;
+        @include rem-fallback(stroke-width, 0.998px);
+      }
+
+      .cls-6 {
+        stroke: themed('colorPassed');
+      }
+    }
+  }
+}
