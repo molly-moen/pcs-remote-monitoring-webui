@@ -9,9 +9,17 @@
     margin-left: 0px;
     @include rem-fallback(padding, 24px, 0px);
   }
+
   .delete-info {
     display: flex;
-    .asterisk-svg, .check-svg {
+    .asterisk-svg {
+      align-self: flex-start;
+    }
+  }
+
+  .delete-confirmation-text {
+    display: flex;
+    .check-svg {
       align-self: flex-start;
     }
   }
@@ -30,10 +38,10 @@
 
   @include themify($themes) {
 
-    .delete-info a { color: themed('colorFlyoutText'); }
+    .delete-info a { color: themed('colorFlyoutConfirmationText'); }
 
     .delete-info {
-      color: themed('colorFlyoutText');
+      color: themed('colorFlyoutConfirmationText');
       @include rem-fallback(font-size, 14px);
       @include rem-fallback(padding-top, 24px);
     }
@@ -52,34 +60,13 @@
 
     .check-svg svg {
       @include square-px-rem(14px);
-      @include rem-fallback(margin-right, 6px);
-      @include rem-fallback(margin-top, 2px);
-
-      .cls-2 {
-        opacity: 0.75;
-      }
-
-      .cls-3 {
-        opacity: 0.25;
-        fill: themed('colorPassed');
-      }
-
-      .cls-4 {
-        fill:themed('colorPassed');
-      }
-
-      .cls-5 {
-        stroke: themed('colorPassedIconGrey');
-      }
-
-      .cls-5, .cls-6 {
-        stroke-miterlimit: 1;
-        @include rem-fallback(stroke-width, 0.998px);
-      }
-
-      .cls-6 {
-        stroke: themed('colorPassed');
-      }
+      @include rem-fallback(margin-left, 14px);
+      fill: themed('colorFlyoutConfirmationText');
     }
+
+    .post-delete-info-text {
+      @include rem-fallback(margin-top, 16px);
+    }
+
   }
 }

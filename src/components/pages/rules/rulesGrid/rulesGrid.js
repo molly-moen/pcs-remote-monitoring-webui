@@ -63,6 +63,25 @@ export class RulesGrid extends Component {
     };
   }
 
+  componentWillReceiveProps({rowData}) {
+    const { selectedRules = [], softSelectedRule } = this.state;
+    if (selectedRules.length || softSelectedRule) {
+      let updatedSoftSelectedRule = undefined;
+      const selectedIds = new Set(selectedRules.map(({ id }) => id));
+      const updatedSelectedRules = rowData.reduce((acc, rule) => {
+        if (selectedIds.has(rule.id)) acc.push(rule);
+        if (softSelectedRule && rule.id === softSelectedRule.id) {
+          updatedSoftSelectedRule = rule;
+        }
+        return acc;
+      }, []);
+      this.setState({
+        selectedRules: updatedSelectedRules,
+        softSelectedRule: updatedSoftSelectedRule
+      });
+    }
+  }
+
   openEditRuleFlyout = () => this.setState({ openFlyoutName: 'edit' });
 
   openStatusFlyout = () => this.setState({ openFlyoutName: 'status' });
@@ -111,7 +130,15 @@ export class RulesGrid extends Component {
     }
   }
 
-  onSoftSelectChange = (rule, rowEvent) => {
+  onGridReady = gridReadyEvent => {
+    this.gridApi = gridReadyEvent.api;
+    if (isFunc(this.props.onGridReady)) {
+      this.props.onGridReady(gridReadyEvent);
+    }
+  }
+
+  onSoftSelectChange = (ruleRowId, rowEvent) => {
+    const rule = (this.gridApi.getDisplayedRowAtIndex(ruleRowId) || {}).data;
     const { onSoftSelectChange, suppressFlyouts } = this.props;
     if (!suppressFlyouts) {
       if (rule) {
@@ -142,6 +169,7 @@ export class RulesGrid extends Component {
       softSelectId: (this.state.softSelectedRule || {}).id,
       deltaRowDataMode: true,
       ...this.props, // Allow default property overrides
+      onGridReady: event => this.onGridReady(event), // Wrap in a function to avoid closure issues
       getRowNodeId: ({ id }) => id,
       enableSorting: true,
       unSortIcon: true,
@@ -151,7 +179,7 @@ export class RulesGrid extends Component {
       /* Grid Events */
       onRowClicked: ({ node }) => node.setSelected(!node.isSelected()),
       onHardSelectChange: this.onHardSelectChange,
-      onSoftSelectChange: this.onSoftSelectChange
+      onSoftSelectChange: rule => this.onSoftSelectChange(rule) // See above comment about closures
     };
 
     return ([

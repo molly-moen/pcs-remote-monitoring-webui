@@ -60,7 +60,8 @@ export class DeleteRule extends Component {
       TelemetryService.deleteRule(rule.id)
         .subscribe(
           updatedRule => {
-            this.props.refresh();
+            //this.props.refresh();
+            this.props.deleteRules([rule]);
             this.setState({ isPending: false, changesApplied: true, ruleDeleted: true });
           },
           error => this.setState({ error, isPending: false, changesApplied: true })
@@ -76,7 +77,7 @@ export class DeleteRule extends Component {
       TelemetryService.updateRule(rule.id, toNewRuleRequestModel(rule))
         .subscribe(
           (updatedRule) => {
-            this.props.refresh();
+            //this.props.refresh();
             this.setState({ isPending: false, changesApplied: true, ruleDeleted: false });
           },
           error => this.setState({ error, isPending: false, changesApplied: true })
@@ -167,17 +168,19 @@ export class DeleteRule extends Component {
   renderConfirmation() {
     const { onClose, t, rule } = this.props;
     const { ruleDeleted } = this.state;
-    const textKey = ruleDeleted ? "rules.flyouts.deleteRule.postDeleteText" : "rules.flyouts.deleteRule.postDisableText"
+    const confirmationKey = ruleDeleted ? "rules.flyouts.deleteRule.deleteConfirmation" : "rules.flyouts.deleteRule.disableConfirmation";
     return (
       <div>
-      <div className="delete-info">
-          <Svg className="check-svg" path={svgs.passedCheckmark} />
-          <div className="delete-info-text">
-            "{rule.name}"
-            <Trans i18nKey={textKey}>
+        <div className="delete-confirmation">
+          <div className="delete-confirmation-text">
+            <Trans i18nKey={confirmationKey}>Disable</Trans>
+            <Svg className="check-svg" path={svgs.checkmark} />
+          </div>
+          {ruleDeleted && <div className="post-delete-info-text">
+            <Trans i18nKey={"rules.flyouts.deleteRule.postDeleteText"}>
               ...<Link to={`/maintenance/rule/${rule.id}`}>{t(`rules.flyouts.deleteRule.maintenancePage`)}</Link>...
             </Trans>
-          </div>
+          </div>}
         </div>
         <BtnToolbar>
           <Btn primary={true} svg={svgs.cancelX} onClick={onClose}>{t('rules.flyouts.deleteRule.close')}</Btn>
