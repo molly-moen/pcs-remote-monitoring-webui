@@ -65,7 +65,7 @@ export class RulesGrid extends Component {
 
   componentWillReceiveProps({rowData}) {
     const { selectedRules = [], softSelectedRule } = this.state;
-    if (selectedRules.length || softSelectedRule) {
+    if (rowData && (selectedRules.length || softSelectedRule)) {
       let updatedSoftSelectedRule = undefined;
       const selectedIds = new Set(selectedRules.map(({ id }) => id));
       const updatedSelectedRules = rowData.reduce((acc, rule) => {

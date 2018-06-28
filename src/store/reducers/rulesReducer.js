@@ -125,20 +125,6 @@ const updateLastTriggerReducer = (state, { payload: { id, lastTrigger } }) => up
   entities: { [id]: { lastTrigger: { $set: lastTrigger } } }
 });
 
-const deleteRulesReducer = (state, { payload }) => {
-  const spliceArr = payload.reduce((idxAcc, payloadItem) => {
-    const idx = state.items.indexOf(payloadItem);
-    if (idx !== -1) {
-      idxAcc.push([idx, 1]);
-    }
-    return idxAcc;
-  }, []);
-  return update(state, {
-    entities: { $unset: payload },
-    items: { $splice: spliceArr }
-  });
-};
-
 /* Action types that cause a pending flag */
 const fetchableTypes = [
   epics.actionTypes.fetchRules
@@ -151,8 +137,7 @@ export const redux = createReducerScenario({
   updateRuleCount: { type: 'RULES_COUNT_UPDATE', reducer: updateCountReducer },
   updateRuleLastTrigger: { type: 'RULES_LAST_TRIGGER_UPDATE', reducer: updateLastTriggerReducer },
   registerError: { type: 'RULES_REDUCER_ERROR', reducer: errorReducer },
-  isFetching: { multiType: fetchableTypes, reducer: pendingReducer },
-  deleteRules: { type: 'RULE_DELETE', reducer: deleteRulesReducer}
+  isFetching: { multiType: fetchableTypes, reducer: pendingReducer }
 });
 
 export const reducer = { rules: redux.getReducer(initialState) };

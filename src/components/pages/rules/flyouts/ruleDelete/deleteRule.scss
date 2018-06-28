@@ -38,9 +38,9 @@
 
   @include themify($themes) {
 
-    .delete-info a { color: themed('colorFlyoutConfirmationText'); }
+    .delete-info a, .delete-confirmation a { color: themed('colorFlyoutConfirmationText'); }
 
-    .delete-info {
+    .delete-info, .delete-confirmation {
       color: themed('colorFlyoutConfirmationText');
       @include rem-fallback(font-size, 14px);
       @include rem-fallback(padding-top, 24px);
@@ -67,6 +67,5 @@
     .post-delete-info-text {
       @include rem-fallback(margin-top, 16px);
     }
-
   }
 }

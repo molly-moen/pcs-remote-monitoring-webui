@@ -31,13 +31,23 @@ export class DeleteRule extends Component {
   }
 
   componentDidMount() {
-    const { rule } = this.props;
-    this.setState({ rule, status: !rule.enabled });
+    if (this.props.rule) {
+      const { rule } = this.props;
+      this.setState({
+        rule,
+        status: !rule.enabled
+      });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { rule } = nextProps;
-    this.setState({ rule, status: !rule.enabled });
+    if (nextProps.rule) {
+      const { rule } = nextProps;
+      this.setState({
+        rule,
+        status: !rule.enabled
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -60,8 +70,7 @@ export class DeleteRule extends Component {
       TelemetryService.deleteRule(rule.id)
         .subscribe(
           updatedRule => {
-            //this.props.refresh();
-            this.props.deleteRules([rule]);
+            this.props.refresh();
             this.setState({ isPending: false, changesApplied: true, ruleDeleted: true });
           },
           error => this.setState({ error, isPending: false, changesApplied: true })
@@ -77,7 +86,7 @@ export class DeleteRule extends Component {
       TelemetryService.updateRule(rule.id, toNewRuleRequestModel(rule))
         .subscribe(
           (updatedRule) => {
-            //this.props.refresh();
+            this.props.refresh();
             this.setState({ isPending: false, changesApplied: true, ruleDeleted: false });
           },
           error => this.setState({ error, isPending: false, changesApplied: true })
@@ -92,9 +101,8 @@ export class DeleteRule extends Component {
   }
 
   render() {
-    const { onClose, t, rule } = this.props;
-    const { isPending, error, changesApplied, confirmed } = this.state;
-
+    const { onClose, t } = this.props;
+    const { isPending, error, changesApplied, confirmed, rule } = this.state;
     const completedSuccessfully = changesApplied && !error;
 
     return (
@@ -105,7 +113,7 @@ export class DeleteRule extends Component {
         </Flyout.Header>
         <Flyout.Content>
           <form onSubmit={this.deleteRule} className="delete-rule-flyout-container">
-            <RuleSummary rule={rule} isPending={isPending} completedSuccessfully={completedSuccessfully} t={t} className="rule-details"/>
+            {rule && <RuleSummary rule={rule} isPending={isPending} completedSuccessfully={completedSuccessfully} t={t} className="rule-details"/>}
             {error && <AjaxError className="rule-delete-error" t={t} error={error} />}
             {!error &&
               (changesApplied
@@ -121,8 +129,8 @@ export class DeleteRule extends Component {
   }
 
   renderDeleteDisableButtons() {
-    const { t, rule } = this.props;
-    const { isPending, status, changesApplied } = this.state;
+    const { t } = this.props;
+    const { isPending, status, changesApplied, rule } = this.state;
     return (
       <div>
         <div className="delete-info">
@@ -166,8 +174,8 @@ export class DeleteRule extends Component {
   }
 
   renderConfirmation() {
-    const { onClose, t, rule } = this.props;
-    const { ruleDeleted } = this.state;
+    const { onClose, t } = this.props;
+    const { ruleDeleted, rule } = this.state;
     const confirmationKey = ruleDeleted ? "rules.flyouts.deleteRule.deleteConfirmation" : "rules.flyouts.deleteRule.disableConfirmation";
     return (
       <div>
