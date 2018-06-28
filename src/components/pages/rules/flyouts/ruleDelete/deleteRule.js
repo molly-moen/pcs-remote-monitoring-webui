@@ -137,7 +137,7 @@ export class DeleteRule extends Component {
           <Svg className="asterisk-svg" path={svgs.error} />
           <div className="delete-info-text">
             <Trans i18nKey="rules.flyouts.deleteRule.preDeleteText">
-              We'll keep...<Link to={`/maintenance/rule/${rule.id}`}>{t(`rules.flyouts.deleteRule.maintenancePage`)}</Link>...to remove
+              keep...<Link to={`/maintenance/rule/${rule.id}`}>{t(`rules.flyouts.deleteRule.maintenancePage`)}</Link>...to remove
             </Trans>
           </div>
         </div>

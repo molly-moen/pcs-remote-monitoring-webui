@@ -64,8 +64,6 @@
       fill: themed('colorFlyoutConfirmationText');
     }
 
-    .post-delete-info-text {
-      @include rem-fallback(margin-top, 16px);
-    }
+    .post-delete-info-text { @include rem-fallback(margin-top, 16px); }
   }
 }

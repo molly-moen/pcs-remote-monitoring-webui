@@ -116,11 +116,16 @@ export class RulesGrid extends Component {
         onContextMenuChange(this.contextBtns.changeStatus);
       } else if (selectedRules.length === 1) {
         this.setSelectedRules(selectedRules);
-        onContextMenuChange([
-          this.contextBtns.delete,
-          selectedRules[0].enabled ? this.contextBtns.disable : this.contextBtns.enable,
-          this.contextBtns.edit
-        ]);
+        if (!selectedRules[0].deleted)
+        {
+          onContextMenuChange([
+            this.contextBtns.delete,
+            selectedRules[0].enabled ? this.contextBtns.disable : this.contextBtns.enable,
+            this.contextBtns.edit
+          ]);
+        } else {
+          onContextMenuChange(null);
+        }
       } else {
         onContextMenuChange(null);
       }
