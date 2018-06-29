@@ -61,10 +61,8 @@ export class TelemetryService {
   }
 
   static deleteAlerts(ids) {
-    const body = {
-      "Items": ids
-    };
-    return HttpClient.post(`${ENDPOINT}alarms!delete`, body);
+    const request = { Items: ids };
+    return HttpClient.post(`${ENDPOINT}alarms!delete`, request);
   }
 
   /** Returns a telemetry events */
@@ -97,7 +95,7 @@ export class TelemetryService {
 
   static deleteRule(id) {
     return HttpClient.delete(`${ENDPOINT}rules/${id}`)
-    .map(() => ({ deletedRuleId: id }));
+      .map(() => ({ deletedRuleId: id }));
   }
 
 }

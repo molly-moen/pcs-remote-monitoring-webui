@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import { Trans } from 'react-i18next';
 import {
   AjaxError,
@@ -102,7 +102,7 @@ export class DeleteRule extends Component {
 
   render() {
     const { onClose, t } = this.props;
-    const { isPending, error, changesApplied, confirmed, rule } = this.state;
+    const { isPending, error, changesApplied, rule } = this.state;
     const completedSuccessfully = changesApplied && !error;
 
     return (
@@ -118,13 +118,18 @@ export class DeleteRule extends Component {
             {!error &&
               (changesApplied
               ? this.renderConfirmation()
-              : confirmed
-                ? this.renderDeleteDisableButtons()
-                : this.renderInitialDeleteButtons())
+              : this.renderButtons())
             }
           </form>
         </Flyout.Content>
       </Flyout.Container>
+    );
+  }
+
+  renderButtons() {
+    const { confirmed } = this.state;
+    return (
+      confirmed ? this.renderDeleteDisableButtons() : this.renderInitialDeleteButtons()
     );
   }
 
@@ -168,7 +173,7 @@ export class DeleteRule extends Component {
 
   renderCancelButton() {
     const { onClose, t } = this.props;
-    return(
+    return (
       <Btn svg={svgs.cancelX} onClick={onClose}>{t('rules.flyouts.deleteRule.cancel')}</Btn>
     );
   }

@@ -116,8 +116,7 @@ export class RulesGrid extends Component {
         onContextMenuChange(this.contextBtns.changeStatus);
       } else if (selectedRules.length === 1) {
         this.setSelectedRules(selectedRules);
-        if (!selectedRules[0].deleted)
-        {
+        if (!selectedRules[0].deleted) {
           onContextMenuChange([
             this.contextBtns.delete,
             selectedRules[0].enabled ? this.contextBtns.disable : this.contextBtns.enable,

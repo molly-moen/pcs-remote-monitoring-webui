@@ -34,7 +34,7 @@ export const epics = createEpicScenario({
   fetchRules: {
     type: 'RULES_FETCH',
     epic: fromAction =>
-      TelemetryService.getRules({"includeDeleted": true})
+      TelemetryService.getRules({includeDeleted: true})
         .flatMap(rules =>
           Observable.from(rules)
             .flatMap(({ id, groupId }) => [
@@ -158,8 +158,7 @@ export const getRules = createSelector(
     items.reduce((acc, id) => {
       const rule = entities[id];
       const activeDeviceGroup = deviceGroupConditions.length > 0 ? deviceGroupId : undefined;
-      return ((rule.groupId === activeDeviceGroup || !activeDeviceGroup) &&
-             (!rule.deleted || includeDeleted))
+      return ((rule.groupId === activeDeviceGroup || !activeDeviceGroup) && (!rule.deleted || includeDeleted))
         ? [...acc, rule]
         : acc
     }, [])

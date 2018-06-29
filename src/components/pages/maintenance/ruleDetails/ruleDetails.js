@@ -164,13 +164,11 @@ export class RuleDetails extends Component {
     const ids = this.state.selectedAlerts.map(x => x.id);
     this.subscriptions.push(
       TelemetryService.deleteAlerts(ids)
-      .subscribe(
-        () => {
-          this.refreshData();
-        },
-        undefined, // TODO: Handle error
-        () => this.setState({ updatingAlertStatus: false })
-      )
+        .subscribe(
+          () => { this.refreshData(); },
+          undefined, // TODO: Handle error
+          () => this.setState({ updatingAlertStatus: false })
+        )
     )
   }
 
@@ -345,7 +343,8 @@ export class RuleDetails extends Component {
                 onContextMenuChange={this.onContextMenuChange('ruleContextBtns')}
                 onHardSelectChange={this.onHardSelectChange('rules')}
                 rowData={rule}
-                pagination={false} />
+                pagination={false}
+                refresh={this.props.fetchRules} />
 
               <h4 className="sub-heading">{ t('maintenance.alertOccurrences') }</h4>
               <AlertOccurrencesGrid {...alertsGridProps} />
