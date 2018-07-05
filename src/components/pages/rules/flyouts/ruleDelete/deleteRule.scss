@@ -51,7 +51,8 @@
     @include rem-fallback(padding, 16px);
   }
 
-  .delete-info, .delete-confirmation {
+  .delete-info,
+  .delete-confirmation {
     @include rem-fallback(font-size, 14px);
     @include rem-fallback(padding-top, 24px);
   }
@@ -63,17 +64,14 @@
       color: themed('colorFlyoutConfirmationText');
     }
 
-    .delete-info, .delete-confirmation {
+    .delete-info,
+    .delete-confirmation {
       color: themed('colorFlyoutConfirmationText');
     }
 
-    .asterisk-svg svg {
-      fill: themed('colorAlert');
-    }
+    .asterisk-svg svg { fill: themed('colorAlert'); }
 
-    .check-svg svg {
-      fill: themed('colorFlyoutConfirmationText');
-    }
+    .check-svg svg { fill: themed('colorFlyoutConfirmationText'); }
 
     .post-delete-info-text { @include rem-fallback(margin-top, 16px); }
   }
