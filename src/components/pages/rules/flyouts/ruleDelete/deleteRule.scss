@@ -60,14 +60,10 @@
   @include themify($themes) {
 
     .delete-info a,
-    .delete-confirmation a {
-      color: themed('colorFlyoutConfirmationText');
-    }
+    .delete-confirmation a { color: themed('colorFlyoutConfirmationText'); }
 
     .delete-info,
-    .delete-confirmation {
-      color: themed('colorFlyoutConfirmationText');
-    }
+    .delete-confirmation { color: themed('colorFlyoutConfirmationText'); }
 
     .asterisk-svg svg { fill: themed('colorAlert'); }
 
